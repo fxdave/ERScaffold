@@ -29,8 +29,7 @@ class Entity extends Element {
             .to({ radius: 5 }, 300, createjs.Ease.linear)
             .call(() => this._startShrink(el))
             .on("change", function () {
-                this.graphics.clear().beginFill("#fff").drawCircle(0, 0, this.radius)
-
+                el.redraw()
             }, el)
     }
 
@@ -40,8 +39,7 @@ class Entity extends Element {
             .to({ radius: 0 }, 100, createjs.Ease.linear)
             .call(this.selfDelete)
             .on("change", function () {
-
-
+                el.redraw()
             }, el)
     }
 
@@ -60,6 +58,7 @@ class Entity extends Element {
     deleteButton: DeleteButton
 
     _constructEntity() {
+        
         // growing by type
         this.textBox = new TextBox(200,50)
 
@@ -81,30 +80,15 @@ class Entity extends Element {
             this.deleteButton.redraw()
         }
 
+        this.addChild(this.bg,this.textBox,this.deleteButton)
+        this.textBox._updateHTMLElement()
+        console.log(this.textBox.parent)
     }
 
     redraw() {
         const bg = new Circle(0);
         this._grow(bg);
-        /*
-                createjs.Ticker.on("tick", () => {
-                    if (this.state == State.Growing)
-                        radius += 2
-                    else if (this.state == State.Shrinking)
-                        radius -= 0.3
-        
-                    if (radius > 10) {
-                        this.state = State.Shrinking
-                    }
-        
-                    if (radius < 1) {
-                        this.state = State.Deleted
-                        this.selfDelete()
-                    }
-                });
-        */
         this.addChild(bg)
-
         bg.addEventListener("click", this._handleSelfCreate.bind(this))
     }
 

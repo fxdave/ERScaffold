@@ -25,7 +25,7 @@ class TextBox extends Element {
     color: string;
     font: string;
 
-    constructor(w: number, h: number, font:string = '18px Arial', color:string = '#fff') {
+    constructor(w: number, h: number, font:string = '18px Arial', color:string = '#000') {
         //init
         super()
 
@@ -75,12 +75,14 @@ class TextBox extends Element {
      * TODO: get absolute position with respect on the parents 
      */
     _createHTMLInputElement() {
+        console.log(this.parent)
         const input = this.input = document.createElement('input')
 
         input.type = 'text'
         input.value = ""
 
         //styling the input
+        input.style.transform = 'translate(-50%, -50%)'
         input.style.position = 'fixed'
         input.style.zIndex = "100"
         input.style.background = 'none'
@@ -96,11 +98,19 @@ class TextBox extends Element {
     }
 
     _updateHTMLElement() {
+        console.log("class szerint:");
+        console.log(this.parent);
+        if(this.parent) {
+            console.log(this.getAbsolutePos())
+            console.log(this.parent.x);
+            console.log(this.parent.parent.x);
+        }
+        
         const s = this.input.style
         s.width = this.w - 2 * this.padding + 'px'
         s.height = this.h - 2 * this.padding + 'px'
-        s.left = this.x + 'px'
-        s.top = this.y + 'px'
+        s.left = this.getAbsolutePos().x + 'px'
+        s.top = this.getAbsolutePos().y + 'px'
         s.color = this.color
         s.font = this.font
         s.padding = this.padding + 'px'
