@@ -1,0 +1,4 @@
+interface StorageInterface {
+    add()
+    remove()
+}

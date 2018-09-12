@@ -79,9 +79,9 @@ class Entity extends Element {
             this.deleteButton.pos = changed.topLeft
             this.deleteButton.redraw()
         }
+        this.textBox.startEdit()
 
         this.addChild(this.bg,this.textBox,this.deleteButton)
-        this.textBox._updateHTMLElement()
         console.log(this.textBox.parent)
     }
 
