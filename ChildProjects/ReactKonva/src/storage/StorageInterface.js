@@ -1,4 +1,0 @@
-interface StorageInterface {
-    add()
-    remove()
-}
