@@ -48,9 +48,11 @@ Viewport.prototype.initKonva = function () {
     this.entityLayer = new Konva.Layer()
     this.tempLayer = new Konva.Layer()
     this.connectionLayer = new Konva.Layer()
+    this.connectionEntityLayer = new Konva.Layer()
     this.stage.add(this.tempLayer)
     this.stage.add(this.connectionLayer)
     this.stage.add(this.entityLayer)
+    this.stage.add(this.connectionEntityLayer)
     /*
     var anim = new Konva.Animation(function(frame) {
         var time = frame.time,

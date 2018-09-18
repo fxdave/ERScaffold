@@ -17,6 +17,10 @@ class __Connection extends Konva.Group {
             this.dispatchEvent(new Event('delete'));
         })
 
+        this.RelationEntity = new Elements.ConnectionEntity();
+
+        _V.connectionEntityLayer.add(this.RelationEntity)
+
         this.from.on("dragmove", e => {
             this.update()
         })
@@ -46,6 +50,10 @@ class __Connection extends Konva.Group {
                 x: this.to.x(),
                 y: this.to.y()
         })
+
+        this.RelationEntity.x(half.x)
+        this.RelationEntity.y(half.y)
+        _V.connectionEntityLayer.draw()
     }
 
     getHalfway(from, to) {
