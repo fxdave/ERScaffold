@@ -9,8 +9,8 @@ class __BelongsToRelationHandle extends Elements.RelationHandle {
             fill: '#ff006f',
             closed:true
         });
-        
         this.add(this.triangle)
+        this.triangle.setZIndex(0)
         this.directToDefault()
 
     }

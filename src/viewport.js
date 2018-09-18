@@ -65,14 +65,15 @@ Viewport.prototype.addConnection = function (from, to, type = "hasMany") {
 
         let connection = null
 
-        this.connectionLayer.children.map(v => {
+        let ret = false
+        this.connectionLayer.children.forEach(v => {
             if (v.from == to && v.to == from) {
                 if (v instanceof Elements.Connections.OneToOne) {
                     // if not one to one then action
                     if (type != "hasOne")
                         v.remove()
                     else
-                        return
+                        ret = true
                 } else if (v instanceof Elements.Connections.OneToMany) {
                     // if not one to one and not belongsTo then action
                     if (type == "hasMany") {
@@ -80,9 +81,9 @@ Viewport.prototype.addConnection = function (from, to, type = "hasMany") {
                         type = "belongsToMany"
                     }
                     else
-                        return
+                        ret = true
                 } else if (v instanceof Elements.Connections.ManyToMany) {
-                    return
+                    ret = true
                 }
             } else if (v.from == from && v.to == to) {
                 if (v instanceof Elements.Connections.OneToOne) {
@@ -90,22 +91,30 @@ Viewport.prototype.addConnection = function (from, to, type = "hasMany") {
                     if (type != "hasOne")
                         v.remove()
                     else
-                        return
+                        ret = true
                 } else if (v instanceof Elements.Connections.OneToMany) {
                     // if not one to one and not belongsTo then action
                     if (type == "belongsTo") {
                         v.remove()
                         type = "belongsToMany"
                     } else {
-                        return
+                        ret = true
                     }
                 } else if (v instanceof Elements.Connections.ManyToMany) {
-                    return
+                    ret = true
                 }
             }
         })
 
+        if(ret) return
+
         switch (type) {
+            case "hasOne":
+                connection = new Elements.Connections.OneToOne({
+                    from: from,
+                    to: to
+                })
+                break
             case "hasMany":
                 connection = new Elements.Connections.OneToMany({
                     from: from,
@@ -126,7 +135,7 @@ Viewport.prototype.addConnection = function (from, to, type = "hasMany") {
                 break
         }
 
-        if(connection === null) return
+        if (connection === null) return
 
         connection.addEventListener("delete", () => {
             connection.remove()
@@ -146,11 +155,11 @@ const _V = new Viewport()
 
 let anim = new Konva.Animation(frame => {
     _V.arranger.tick()
-},_V.entityLayer)
+}, _V.entityLayer)
 anim.start()
 
 // handle event
-window.addEventListener("resize", function() {
+window.addEventListener("resize", function () {
     _V.stage.width(window.innerWidth)
     _V.stage.height(window.innerHeight)
 });

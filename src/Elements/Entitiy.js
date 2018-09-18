@@ -41,27 +41,33 @@ class __Entity extends Konva.Group {
         })
 
         this.hasManyRelationHandle = new Elements.HasManyRelationHandle({
-            rotation : 30
+            rotation : 22.5
         })
 
         this.belongsToRelationHandle = new Elements.BelongsToRelationHandle({
-            rotation : 60
+            rotation : 45
+        })
+
+        this.hasOneRelationHandle = new Elements.HasOneRelationHandle({
+            rotation : 67.5
         })
 
         this.add(
             this.propertyAdder,
             this.hasManyRelationHandle,
+            this.hasOneRelationHandle,
             this.belongsToRelationHandle,
             this.rect,
             this.deleteButton,
             this.text
         )
-        this.belongsToRelationHandle.setZIndex(0)
-        this.hasManyRelationHandle.setZIndex(0)
         this.propertyAdder.setZIndex(0)
         this.text.setZIndex(2)
         this.deleteButton.setZIndex(2)
         this.rect.setZIndex(1)
+        this.belongsToRelationHandle.setZIndex(0)
+        this.hasManyRelationHandle.setZIndex(0)
+        this.hasOneRelationHandle.setZIndex(0)
 
         /*
          *  Registering events
@@ -141,6 +147,7 @@ class __Entity extends Konva.Group {
             rect = this.rect,
             deleteButton = this.deleteButton,
             hasManyRelationHandle = this.hasManyRelationHandle,
+            hasOneRelationHandle = this.hasOneRelationHandle,
             belongsToRelationHandle = this.belongsToRelationHandle,
             propertyAdder = this.propertyAdder
 
@@ -170,6 +177,8 @@ class __Entity extends Konva.Group {
         hasManyRelationHandle.y(rect.height() /2 - 5)
         belongsToRelationHandle.x(rect.width() /2 - 5)
         belongsToRelationHandle.y(rect.height() /2 - 5)
+        hasOneRelationHandle.x(rect.width() /2 - 5)
+        hasOneRelationHandle.y(rect.height() /2 - 5)
 
         //adjust properties
 

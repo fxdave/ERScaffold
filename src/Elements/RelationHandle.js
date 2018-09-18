@@ -9,7 +9,8 @@ class __RelationHandle extends Konva.Group {
                     x: this.getAbsolutePosition().x,
                     y: this.getAbsolutePosition().y
                 }
-            }
+            },
+            opacity: 0.5
         })
 
         this.me = null
@@ -63,6 +64,13 @@ class __RelationHandle extends Konva.Group {
 
             _V.addConnection(this.parent,to,this.me.type)
             
+        })
+        
+        this.on("mouseover",e => {
+            this.opacity(1)
+        })
+        this.on("mouseleave",e => {
+            this.opacity(0.5)
         })
 
     }
