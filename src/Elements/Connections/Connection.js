@@ -17,9 +17,14 @@ class __Connection extends Konva.Group {
             this.dispatchEvent(new Event('delete'));
         })
 
-        this.RelationEntity = new Elements.ConnectionEntity();
+        this.relationEntity = new Elements.ConnectionEntity();
 
-        _V.connectionEntityLayer.add(this.RelationEntity)
+
+        this.relationEntity.addEventListener("delete",()=>{
+            this.dispatchEvent(new Event("delete"))
+        })
+
+        _V.connectionEntityLayer.add(this.relationEntity)
 
         this.from.on("dragmove", e => {
             this.update()
@@ -51,8 +56,8 @@ class __Connection extends Konva.Group {
                 y: this.to.y()
         })
 
-        this.RelationEntity.x(half.x)
-        this.RelationEntity.y(half.y)
+        this.relationEntity.x(half.x)
+        this.relationEntity.y(half.y)
         _V.connectionEntityLayer.draw()
     }
 

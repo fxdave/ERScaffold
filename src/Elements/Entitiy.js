@@ -37,7 +37,7 @@ class __Entity extends Konva.Group {
 
         this.properties = []
         this.propertyAdder = new Elements.PropertyAdder({
-            opacity: 0.8
+            opacity: 0.5
         })
 
         this.hasManyRelationHandle = new Elements.HasManyRelationHandle({
@@ -90,13 +90,13 @@ class __Entity extends Konva.Group {
             console.log("Delete entity");
             this.dispatchEvent(new Event('delete'));
         })
-        this.deleteButton.opacity(0.8)
+        this.deleteButton.opacity(0)
 
-        this.deleteButton.addEventListener("mouseover",e=>{
+        this.addEventListener("mouseover",e=>{
             this.deleteButton.opacity(1)
         })
-        this.deleteButton.addEventListener("mouseleave",e=>{
-            this.deleteButton.opacity(0.8)
+        this.addEventListener("mouseleave",e=>{
+            this.deleteButton.opacity(0)
         })
         this.propertyAdder.addEventListener("mouseover",e=>{
             this.propertyAdder.opacity(1)

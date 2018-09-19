@@ -62,6 +62,14 @@ Viewport.prototype.initKonva = function () {
     */
 }
 
+Viewport.prototype.removeConnection = function (connection) {
+    this.arranger.remove(connection.relationEntity)
+    connection.relationEntity.remove()
+    connection.remove()
+    this.connectionLayer.draw()
+    this.connectionEntityLayer.draw()
+}
+
 Viewport.prototype.addConnection = function (from, to, type = "hasMany") {
     if (from instanceof Elements.Entity && to instanceof Elements.Entity) {
 
@@ -73,13 +81,13 @@ Viewport.prototype.addConnection = function (from, to, type = "hasMany") {
                 if (v instanceof Elements.Connections.OneToOne) {
                     // if not one to one then action
                     if (type != "hasOne")
-                        v.remove()
+                        this.removeConnection(v)
                     else
                         ret = true
                 } else if (v instanceof Elements.Connections.OneToMany) {
                     // if not one to one and not belongsTo then action
                     if (type == "hasMany") {
-                        v.remove()
+                        this.removeConnection(v)
                         type = "belongsToMany"
                     }
                     else
@@ -91,13 +99,13 @@ Viewport.prototype.addConnection = function (from, to, type = "hasMany") {
                 if (v instanceof Elements.Connections.OneToOne) {
                     // if not one to one then action
                     if (type != "hasOne")
-                        v.remove()
+                        this.removeConnection(v)
                     else
                         ret = true
                 } else if (v instanceof Elements.Connections.OneToMany) {
                     // if not one to one and not belongsTo then action
                     if (type == "belongsTo") {
-                        v.remove()
+                        this.removeConnection(v)
                         type = "belongsToMany"
                     } else {
                         ret = true
@@ -108,7 +116,7 @@ Viewport.prototype.addConnection = function (from, to, type = "hasMany") {
             }
         })
 
-        if(ret) return
+        if (ret) return
 
         switch (type) {
             case "hasOne":
@@ -140,8 +148,7 @@ Viewport.prototype.addConnection = function (from, to, type = "hasMany") {
         if (connection === null) return
 
         connection.addEventListener("delete", () => {
-            connection.remove()
-            this.connectionLayer.draw()
+            this.removeConnection(connection)
         })
 
 
@@ -158,8 +165,9 @@ const _V = new Viewport()
 let anim = new Konva.Animation(frame => {
     _V.arranger.tick()
 }, _V.entityLayer)
+anim.addLayer(_V.connectionEntityLayer)
+anim.addLayer(_V.connectionLayer)
 anim.start()
-
 // handle event
 window.addEventListener("resize", function () {
     _V.stage.width(window.innerWidth)

@@ -72,8 +72,8 @@ class Arranger {
                 let l = Math.sqrt(Math.pow(avgVector.x, 2) + Math.pow(avgVector.y, 2))
 
                 if (l != 0) {
-                    elem.x(elem.x() + avgVector.x / l)
-                    elem.y(elem.y() + avgVector.y / l)
+                    elem.x(elem.x() + avgVector.x / l *2)
+                    elem.y(elem.y() + avgVector.y / l *2)
                 } else {
                     elem.x(elem.x() + Math.random()-0.5)
                     elem.y(elem.y() + Math.random()-0.5)
