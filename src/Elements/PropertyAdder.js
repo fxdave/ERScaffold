@@ -1,6 +1,6 @@
+import Konva from '../Vendor/Konva'
 
-
-class __PropertyAdder extends Konva.Group {
+class PropertyAdder extends Konva.Group {
     constructor(props) {
         super(props)
 
@@ -37,4 +37,4 @@ class __PropertyAdder extends Konva.Group {
     }
 }
 
-Elements.PropertyAdder = __PropertyAdder
+export default PropertyAdder

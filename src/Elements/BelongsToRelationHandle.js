@@ -1,4 +1,7 @@
-class __BelongsToRelationHandle extends Elements.RelationHandle {
+import RelationHandle from './RelationHandle'
+import Konva from '../Vendor/Konva'
+
+class BelongsToRelationHandle extends RelationHandle {
     constructor(props) {
         super(props)
 
@@ -28,4 +31,4 @@ class __BelongsToRelationHandle extends Elements.RelationHandle {
     }
 }
 
-Elements.BelongsToRelationHandle = __BelongsToRelationHandle
+export default BelongsToRelationHandle

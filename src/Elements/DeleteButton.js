@@ -1,6 +1,8 @@
+import Konva from '../Vendor/Konva'
 
+//we must create styles
 
-class __DeleteButton extends Konva.Group {
+class DeleteButton extends Konva.Group {
     constructor(props) {
         super(props)
 
@@ -27,4 +29,4 @@ class __DeleteButton extends Konva.Group {
     }
 }
 
-Elements.DeleteButton = __DeleteButton
+export default DeleteButton

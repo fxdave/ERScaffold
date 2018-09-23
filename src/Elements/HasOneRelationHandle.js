@@ -1,4 +1,9 @@
-class __HasOneRelationHandle extends Elements.RelationHandle {
+import RelationHandle from './RelationHandle'
+import Konva from '../Vendor/Konva'
+
+// _V is deprecated
+
+class HasOneRelationHandle extends RelationHandle {
     constructor(props) {
         super(props)
 
@@ -27,4 +32,4 @@ class __HasOneRelationHandle extends Elements.RelationHandle {
     }
 }
 
-Elements.HasOneRelationHandle = __HasOneRelationHandle
+export default HasOneRelationHandle

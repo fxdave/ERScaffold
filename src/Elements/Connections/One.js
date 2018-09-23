@@ -1,5 +1,7 @@
+import Konva from '../../Vendor/Konva'
 
-class __One extends Konva.Line {
+// _V is depreacted
+class One extends Konva.Line {
     constructor(props) {
         super({
             points: [0,0,0,0],
@@ -25,4 +27,4 @@ class __One extends Konva.Line {
     
 }
 
-Elements.Connections.One = __One
+export default One

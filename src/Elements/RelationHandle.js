@@ -1,5 +1,10 @@
+import Konva from '../Vendor/Konva'
+import Entity from './Entity'
 
-class __RelationHandle extends Konva.Group {
+//we need to separate the dropable implementation to a different file
+//_V is deprecated
+
+class RelationHandle extends Konva.Group {
     constructor(props) {
         super({
             ...props,
@@ -55,11 +60,11 @@ class __RelationHandle extends Konva.Group {
             var shape = _V.entityLayer.getIntersection(pos);
             
             let to = shape.parent
-            if(!(to instanceof Elements.Entity))
+            if(!(to instanceof Entity))
                 to = to.parent
-            if(!(to instanceof Elements.Entity))
+            if(!(to instanceof Entity))
                 to = to.parent
-            if(!(to instanceof Elements.Entity))
+            if(!(to instanceof Entity))
                 to = to.parent
 
             _V.addConnection(this.parent,to,this.me.type)
@@ -85,4 +90,4 @@ class __RelationHandle extends Konva.Group {
     }
 }
 
-Elements.RelationHandle = __RelationHandle
+export default RelationHandle

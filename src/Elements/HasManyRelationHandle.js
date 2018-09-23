@@ -1,4 +1,6 @@
-class __HasManyRelationHandle extends Elements.RelationHandle {
+import RelationHandle from './RelationHandle'
+import MathHelper from '../Utils/MathHelper'
+class HasManyRelationHandle extends RelationHandle {
     constructor(props) {
         super(props)
 
@@ -20,11 +22,11 @@ class __HasManyRelationHandle extends Elements.RelationHandle {
      * @param {x,y} to 
      */
     direct(from,to) {
-        let proj = Math.triangularProjection(from,to,3)
+        let proj = MathHelper.triangularProjection(from,to,3)
         this.triangle.points([from.x,from.y,proj[0],proj[1],proj[4],proj[5]])
         _V.entityLayer.draw()
         _V.tempLayer.draw()
     }
 }
 
-Elements.HasManyRelationHandle = __HasManyRelationHandle
+export default HasManyRelationHandle

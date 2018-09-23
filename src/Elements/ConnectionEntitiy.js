@@ -1,4 +1,16 @@
-class __ConnectionEntity extends Konva.Group {
+import Konva from '../Vendor/Konva'
+import EditableText from './EditableText'
+import DeleteButton from './DeleteButton'
+import PropertyAdder from './PropertyAdder'
+import Property from './Property'
+
+
+// _V is deprecated
+// must use styles
+// must make an abstraction for entity like elements
+
+
+class ConnectionEntity extends Konva.Group {
     constructor(props) {
         super(props)
         
@@ -10,10 +22,10 @@ class __ConnectionEntity extends Konva.Group {
             fill:'#fff'
           });
 
-        this.text = new Elements.EditableText()
-        this.deleteButton = new Elements.DeleteButton()
+        this.text = new EditableText()
+        this.deleteButton = new DeleteButton()
         this.properties = []
-        this.propertyAdder = new Elements.PropertyAdder()
+        this.propertyAdder = new PropertyAdder()
         this.add(this.bg,this.text, this.deleteButton,this.propertyAdder)
         
         
@@ -59,7 +71,7 @@ class __ConnectionEntity extends Konva.Group {
     addProperty() {
         console.log("Add Property")
 
-        const P = new Elements.Property()
+        const P = new Property()
         
         //requesting name
         P.text.editText()
@@ -97,7 +109,7 @@ class __ConnectionEntity extends Konva.Group {
         } else {
 
             this.propertyAdder.opacity(1)
-            this.bg.radius(this.text.width())
+            this.bg.radius(this.text.width()/2 + 10)
             this.deleteButton.x(this.bg.radius()/1.14)
             this.propertyAdder.y(-this.bg.radius()-15)
             this.propertyAdder.direct({x:0,y:0})
@@ -118,4 +130,4 @@ class __ConnectionEntity extends Konva.Group {
    
 }
 
-Elements.ConnectionEntity = __ConnectionEntity
+export default ConnectionEntity

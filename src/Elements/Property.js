@@ -1,6 +1,11 @@
+import Konva from '../Vendor/Konva'
+import EditableText from './EditableText'
+import DeleteButton from './DeleteButton'
 
+//we must introduce relative styles for creating only one class
+//we must add the get nearest point to the math
 
-class __Property extends Konva.Group {
+class Property extends Konva.Group {
     constructor(props) {
         super({
             ...props,
@@ -18,7 +23,7 @@ class __Property extends Konva.Group {
             strokeWidth: 1
         });
 
-        this.text = new Elements.EditableText({
+        this.text = new EditableText({
             x: -3,
             y: -6,
             fontSize: 14,
@@ -26,7 +31,7 @@ class __Property extends Konva.Group {
             fill: '#000'
         })
 
-        this.deleteButton = new Elements.DeleteButton()
+        this.deleteButton = new DeleteButton()
 
         this.line = new Konva.Line({
             points: [0, 0, 0, 0],
@@ -61,16 +66,19 @@ class __Property extends Konva.Group {
         this.on("mouseover", e => {
             this.deleteButton.opacity(1)
         })
-        this.on("mouseleave", e=> {
+        this.on("mouseleave", e => {
             this.deleteButton.opacity(0)
         })
 
-        this.optimalDistanceSquare = Math.pow(30,2)
+        this.optimalDistanceSquare = Math.pow(30, 2)
         this.add(this.line, this.circle, this.text, this.deleteButton)
     }
 
     update() {
-        this.direct({ x: 0, y: 0 })
+        this.direct({
+            x: 0,
+            y: 0
+        })
     }
 
     direct(to) {
@@ -85,11 +93,11 @@ class __Property extends Konva.Group {
             y: 20
         })
 
-        this.deleteButton.x(this.circle.width()/2/1.41)
-        this.deleteButton.y(-this.circle.height()/2/1.41)
+        this.deleteButton.x(this.circle.width() / 2 / 1.41)
+        this.deleteButton.y(-this.circle.height() / 2 / 1.41)
     }
 
-    
+
     getNearestPoint(to) {
         let abs = this.getAbsolutePosition()
         let x = abs.x,
@@ -98,43 +106,44 @@ class __Property extends Konva.Group {
             h = this.circle.radius().y
 
         let LTC = {
-            x,y
+            x,
+            y
         }
 
         let RBC = {
-            x: x+ w,
-            y: y+ h
+            x: x + w,
+            y: y + h
         }
 
-        let x_out,y_out
+        let x_out, y_out
 
         let centerX = false
         let centerY = false
 
-        if(to.x <= LTC.x) {
+        if (to.x <= LTC.x) {
             x_out = LTC.x
-        } else if(to.x > LTC.x && to.x < RBC.x) {
+        } else if (to.x > LTC.x && to.x < RBC.x) {
             x_out = to.x
             centerX = true
         } else if (to.x >= RBC.x) {
             x_out = RBC.x
         }
 
-        if(to.y <= LTC.y) {
+        if (to.y <= LTC.y) {
             y_out = LTC.y
-        } else if(to.y > LTC.y && to.y < RBC.y) {
+        } else if (to.y > LTC.y && to.y < RBC.y) {
             y_out = to.y
             centerY = true
         } else if (to.y >= RBC.y) {
             y_out = RBC.y
         }
 
-/*
-        if(centerX && centerY) {
-            x_out = x+w/2
-            y_out = y+h/2
-        }
-*/
+        /*
+                if(centerX && centerY) {
+                    x_out = x+w/2
+                    y_out = y+h/2
+                }
+        */
         return {
             x: x_out,
             y: y_out
@@ -144,4 +153,4 @@ class __Property extends Konva.Group {
 
 }
 
-Elements.Property = __Property
+export default Property

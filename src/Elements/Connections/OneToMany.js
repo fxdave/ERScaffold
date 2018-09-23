@@ -1,12 +1,13 @@
-
-
-class __OneToMany extends Elements.Connections.Connection {
+import Connection from './Connection'
+import Many from './Many'
+import One from './One'
+class OneToMany extends Connection {
     constructor(props) {
         super(props)
 
-        this.fromOne = new Elements.Connections.One()
+        this.fromOne = new One()
 
-        this.toOne = new Elements.Connections.Many()
+        this.toOne = new Many()
 
         this.add(this.fromOne)
         this.add(this.toOne)
@@ -14,8 +15,7 @@ class __OneToMany extends Elements.Connections.Connection {
         this.update()
 
     }
-
-
 }
 
-Elements.Connections.OneToMany = __OneToMany
+
+export default OneToMany

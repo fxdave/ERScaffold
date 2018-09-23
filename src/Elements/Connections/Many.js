@@ -1,5 +1,7 @@
-
-class __Many extends Konva.Group {
+import Konva from '../../Vendor/Konva'
+import MathHelper from '../../Utils/MathHelper'
+// _V is deprecated
+class Many extends Konva.Group {
     constructor(props) {
         super(props)
 
@@ -31,7 +33,7 @@ class __Many extends Konva.Group {
     }
 
     change(from,to) {
-        let p = Math.triangularProjection(from,to,6)
+        let p = MathHelper.triangularProjection(from,to,6)
 
         this.changeLine(from,{x:p[0], y: p[1]},this.lines[0])
         this.changeLine(from,{x:p[2], y: p[3]},this.lines[1])
@@ -53,4 +55,4 @@ class __Many extends Konva.Group {
     
 }
 
-Elements.Connections.Many = __Many
+export default Many

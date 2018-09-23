@@ -1,4 +1,6 @@
-class __EditableText extends Konva.Text {
+import Konva from '../Vendor/Konva'
+
+class EditableText extends Konva.Text {
     constructor(props) {
         super(props)
         this.on("dblclick", e => {
@@ -19,4 +21,4 @@ class __EditableText extends Konva.Text {
 
 }
 
-Elements.EditableText = __EditableText
+export default EditableText

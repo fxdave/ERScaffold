@@ -1,6 +1,10 @@
+import Konva from '../../Vendor/Konva'
+import ConnectionEntity from '../ConnectionEntitiy'
+// we musnt use connection entitiy here 
+// this must be independent
+// _V is deprecated 
 
-
-class __Connection extends Konva.Group {
+class Connection extends Konva.Group {
     constructor(props) {
         super(props)
 
@@ -17,7 +21,7 @@ class __Connection extends Konva.Group {
             this.dispatchEvent(new Event('delete'));
         })
 
-        this.relationEntity = new Elements.ConnectionEntity();
+        this.relationEntity = new ConnectionEntity();
 
 
         this.relationEntity.addEventListener("delete",()=>{
@@ -69,4 +73,4 @@ class __Connection extends Konva.Group {
     }
 }
 
-Elements.Connections.Connection = __Connection
+export default Connection
