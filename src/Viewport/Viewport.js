@@ -1,6 +1,8 @@
 import Arranger from './Arranger'
 import Stage from './Stage'
-import Connections from '../Elements/Connections/Connections'
+
+import Elements from '../Elements/Elements'
+
 class Viewport {
     /**
      * initialize arranger and stage
@@ -148,12 +150,12 @@ class Viewport {
                     to: to
                 })
             case "hasMany":
-                return new OneToMany({
+                return new Elements.Connections.OneToMany({
                     from: from,
                     to: to
                 })
             case "belongsTo":
-                return new OneToMany({
+                return new Elements.Connections.OneToMany({
                     from: to,
                     to: from
                 })
