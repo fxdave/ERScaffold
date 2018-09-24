@@ -27,8 +27,12 @@ class HasOneRelationHandle extends RelationHandle {
      */
     direct(from,to) {
         this.line.points([from.x,from.y,to.x,to.y])
-        _V.entityLayer.draw()
-        _V.tempLayer.draw()
+        
+        let layer
+        if( layer = this.getLayer())
+            layer.draw()
+        //_V.entityLayer.draw()
+        //_V.tempLayer.draw()
     }
 }
 

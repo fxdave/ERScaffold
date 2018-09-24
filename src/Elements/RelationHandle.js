@@ -1,6 +1,6 @@
 import Konva from '../Vendor/Konva'
 import Entity from './Entity'
-
+import viewport from '../Viewport/ViewportInstance'
 //we need to separate the dropable implementation to a different file
 //_V is deprecated
 
@@ -56,8 +56,8 @@ class RelationHandle extends Konva.Group {
             this.moveTo(this.oldState.parent)
             this.directToDefault()
     
-            var pos = _V.stage.getPointerPosition();
-            var shape = _V.entityLayer.getIntersection(pos);
+            var pos = viewport.stage.getPointerPosition();
+            var shape = viewport.entityLayer.getIntersection(pos);
             
             let to = shape.parent
             if(!(to instanceof Entity))
@@ -67,7 +67,7 @@ class RelationHandle extends Konva.Group {
             if(!(to instanceof Entity))
                 to = to.parent
 
-            _V.addConnection(this.parent,to,this.me.type)
+            viewport.addConnection(this.parent,to,this.me.type)
             
         })
         

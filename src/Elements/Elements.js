@@ -1,7 +1,7 @@
 import Entity from './Entity'
-import Connections from './Connections/Connections'
+import * as Connections from './Connections/Connections'
 
-export const {
+export {
     Entity,
     Connections
 }

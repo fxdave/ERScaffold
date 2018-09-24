@@ -13,7 +13,7 @@ import HasOneRelationHandle from './HasOneRelationHandle'
 // we must add styles 
 
 
-class __Entity extends Konva.Group {
+class Entity extends Konva.Group {
     constructor(props) {
         super({
             ...props,
@@ -167,8 +167,9 @@ class __Entity extends Konva.Group {
 
         //adjust properties
 
-
-        _V.entityLayer.draw()
+        let layer
+        if( layer = this.getLayer())
+            layer.draw()
     }
 
     getNearestPoint(to) {

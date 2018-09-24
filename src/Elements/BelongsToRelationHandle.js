@@ -1,5 +1,6 @@
 import RelationHandle from './RelationHandle'
 import Konva from '../Vendor/Konva'
+import MathHelper from '../Utils/MathHelper';
 
 class BelongsToRelationHandle extends RelationHandle {
     constructor(props) {
@@ -24,10 +25,15 @@ class BelongsToRelationHandle extends RelationHandle {
      * @param {x,y} to 
      */
     direct(from,to) {
-        let proj = Math.triangularProjection(to,from,3)
+        let proj = MathHelper.triangularProjection(to,from,3)
         this.triangle.points([to.x,to.y,proj[0],proj[1],proj[4],proj[5]])
-        _V.entityLayer.draw()
-        _V.tempLayer.draw()
+        
+        let layer
+        if( layer = this.getLayer())
+            layer.draw()
+            
+        //_V.entityLayer.draw()
+        //_V.tempLayer.draw()
     }
 }
 

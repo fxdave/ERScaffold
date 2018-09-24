@@ -24,8 +24,12 @@ class HasManyRelationHandle extends RelationHandle {
     direct(from,to) {
         let proj = MathHelper.triangularProjection(from,to,3)
         this.triangle.points([from.x,from.y,proj[0],proj[1],proj[4],proj[5]])
-        _V.entityLayer.draw()
-        _V.tempLayer.draw()
+        
+        let layer
+        if( layer = this.getLayer())
+            layer.draw()
+        //_V.entityLayer.draw()
+        //_V.tempLayer.draw()
     }
 }
 

@@ -1,7 +1,7 @@
 import Arranger from './Arranger'
 import Stage from './Stage'
 
-import Elements from '../Elements/Elements'
+import * as Elements from '../Elements/Elements'
 
 class Viewport {
     /**
@@ -10,6 +10,8 @@ class Viewport {
     constructor() {
         this.arranger = new Arranger()
         this.stage = new Stage()
+
+        this._setEvenetListeners()
     }
 
     /**
