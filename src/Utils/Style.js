@@ -2,6 +2,7 @@ class Style {}
 
 Style.Class = class {
     constructor(props) {
+        this.builtIns = ["hover", "duration", "easing", "cursor", "click"]
         this.props = props
         this.saves = []
         this.easing = [
@@ -38,7 +39,17 @@ Style.Class = class {
         if(this.props.click) {
             this.setEvent(element,"mousedown","mouseup",this.props.click)
         }
+        if(this.props.children) {
+            this.setStyleForChildren(this.props.children, element)
+        }
     }
+
+    setStyleForChildren(children) {
+        for(index in children) {
+            children[index].apply(element[index])
+        }
+    }
+
 
     setEvent(element,startEventName,endEventName,props) {
         const T = this.props.duration
@@ -79,7 +90,7 @@ Style.Class = class {
     }
 
     isBuiltIn(id) {
-        return ["hover", "duration", "easing", "cursor", "click"].includes(id) != true
+        return this.builtIns.includes(id) != true
     }
 
 }
