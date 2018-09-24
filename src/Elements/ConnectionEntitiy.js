@@ -13,7 +13,10 @@ import MathHelper from '../Utils/MathHelper';
 
 class ConnectionEntity extends Konva.Group {
     constructor(props) {
-        super(props)
+        super({
+            ...props,
+            draggable : true
+        })
         
         this.bg = new Konva.RegularPolygon({
             sides: 4,
@@ -56,6 +59,9 @@ class ConnectionEntity extends Konva.Group {
             this.deleteButton.opacity(1)
         })
 
+        this.on("dragmove",e => {
+            this.getParent().update()
+        })
 
         this.on("mouseleave",e => {
             this.deleteButton.opacity(0)

@@ -67,13 +67,16 @@ class Viewport extends Stage {
             //add to the entitiy
             E.add(P)
 
+            P.mounted()
             P.setZIndex(0)
             P.addEventListener("delete", (e)=> {
                 this._deleteProperty(P)
             })
+            
         })
 
         this.entityLayer.add(E)
+        E.mounted()
         this.arranger.add(E)
         this.entityLayer.draw()
     }
@@ -191,6 +194,7 @@ class Viewport extends Stage {
                 this.arranger.add(P)
                 //add to the entitiy
                 connection.relationEntity.add(P)
+                P.mounted()
     
                 P.setZIndex(0)
                 P.addEventListener("delete", (e)=> {

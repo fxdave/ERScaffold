@@ -1,99 +1,131 @@
-class Style {}
+class Style { }
 
 Style.Class = class {
     constructor(props) {
-        this.builtIns = ["hover", "duration", "easing", "cursor", "click"]
+        this.NotBuiltIns = ["hover", "duration", "easing", "cursor", "click", "children"]
         this.props = props
         this.saves = []
         this.easing = [
-            {name: 'Linear', color:'blue'},
-            {name: 'EaseIn', color:'green'},
-            {name: 'EaseOut', color:'green'},
-            {name: 'EaseInOut', color:'green'},
-            {name: 'BackEaseIn', color:'blue'},
-            {name: 'BackEaseOut', color:'blue'},
-            {name: 'BackEaseInOut', color:'blue'},
-            {name: 'ElasticEaseIn', color:'green'},
-            {name: 'ElasticEaseOut', color:'green'},
-            {name: 'ElasticEaseInOut', color:'green'},
-            {name: 'BounceEaseIn', color:'blue'},
-            {name: 'BounceEaseOut', color:'blue'},
-            {name: 'BounceEaseInOut', color:'blue'},
-            {name: 'StrongEaseIn', color:'green'},
-            {name: 'StrongEaseOut', color:'green'},
-            {name: 'StrongEaseInOut', color:'green'}
+            { name: 'Linear', color: 'blue' },
+            { name: 'EaseIn', color: 'green' },
+            { name: 'EaseOut', color: 'green' },
+            { name: 'EaseInOut', color: 'green' },
+            { name: 'BackEaseIn', color: 'blue' },
+            { name: 'BackEaseOut', color: 'blue' },
+            { name: 'BackEaseInOut', color: 'blue' },
+            { name: 'ElasticEaseIn', color: 'green' },
+            { name: 'ElasticEaseOut', color: 'green' },
+            { name: 'ElasticEaseInOut', color: 'green' },
+            { name: 'BounceEaseIn', color: 'blue' },
+            { name: 'BounceEaseOut', color: 'blue' },
+            { name: 'BounceEaseInOut', color: 'blue' },
+            { name: 'StrongEaseIn', color: 'green' },
+            { name: 'StrongEaseOut', color: 'green' },
+            { name: 'StrongEaseInOut', color: 'green' }
         ]
     }
 
     apply(element) {
 
-        for(let id in this.props) {
-            if(this.isBuiltIn(id))
-            element[id](this.props[id])
+        this.preFilterProps()
+        
+
+        for (let id in this.props) {
+            if (this.isBuiltIn(id))
+                element[id](this.props[id])
         }
-    
-        element.getLayer().draw()
-        if(this.props.hover) {
-            this.setEvent(element,"mouseover","mouseleave",this.props.hover)
+
+
+        let layer = element.getLayer()
+        if (layer) {
+            element.getLayer().draw()
+        } else {
+            console.error("Style: layer is required for making stlye");
+            return
         }
-        if(this.props.click) {
-            this.setEvent(element,"mousedown","mouseup",this.props.click)
-        }
-        if(this.props.children) {
+
+        if (this.props.children) {
             this.setStyleForChildren(this.props.children, element)
+        }
+
+        if (this.props.hover) {
+            let props = this.props.hover
+            this.setEvent(element, element, "mouseover", "mouseleave", props)
+
+            if (props.children) {
+                for (let index in props.children) {
+                    let hoverPropsForChild = props.children[index].props
+                    this.setEvent(element, element[index], "mouseover", "mouseleave", hoverPropsForChild)
+                }
+            }
+        }
+        if (this.props.click) {
+            this.setEvent(element, element, "mousedown", "mouseup", this.props.click)
         }
     }
 
-    setStyleForChildren(children) {
-        for(index in children) {
+    preFilterProps(){
+        if (this.props.zIndex !== undefined ) {
+            this.props.setZIndex = this.props.zIndex
+            delete this.props['zIndex']
+        }
+    }
+
+    setStyleForChildren(children, element) {
+
+        for (let index in children) {
+
             children[index].apply(element[index])
         }
     }
 
 
-    setEvent(element,startEventName,endEventName,props) {
-        const T = this.props.duration
-        const E = this.props.easing
+    setEvent(elementForEvent, elementToTween, startEventName, endEventName, props) {
+        const Time = this.props.duration ? this.props.duration : 0
+        const Easing = this.props.easing ? Konva.Easings[this.props.easing] : Konva.Easings.Linear
 
-        
+
         let finish = () => {
             tween.reverse()
-
-            if(props.cursor) {
+        
+            if (props.cursor) {
                 document.body.style.cursor = "inherit"
             }
         }
 
         let tweenProps = {
-            node: element,
+            node: elementToTween,
             ...props,
-            easing: E ? Konva.Easings[E] : Konva.Easings.Linear,
-            duration: T ? T : 0
+            easing: Easing,
+            duration: Time
         }
+        
 
-        if(startEventName == endEventName){
-            tweenProps.onFinish= finish
+        if (startEventName == endEventName) {
+            tweenProps.onFinish = finish
         } else {
-            element.on(endEventName, e => {
+            elementForEvent.on(endEventName, e => {
                 finish()
             })
         }
 
         var tween = new Konva.Tween(tweenProps);
-
-        element.on(startEventName, e => {
+        window.tween = tween
+        
+        elementForEvent.on(startEventName, e => {
             tween.play()
-            if(props.cursor) {
+            if (props.cursor) {
                 document.body.style.cursor = props.cursor
             }
         })
     }
 
     isBuiltIn(id) {
-        return this.builtIns.includes(id) != true
+        return this.NotBuiltIns.includes(id) != true
     }
 
 }
 
 
 
+export default Style

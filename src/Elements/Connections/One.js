@@ -8,7 +8,8 @@ class One extends Konva.Line {
             stroke: 'black',
             strokeWidth: 2,
             lineCap: 'round',
-            lineJoin: 'round'
+            lineJoin: 'round',
+            tension : 1
         })
     }
 

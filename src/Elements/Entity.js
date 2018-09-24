@@ -5,8 +5,8 @@ import PropertyAdder from './PropertyAdder'
 import HasManyRelationHandle from './HasManyRelationHandle'
 import BelongsToRelationHandle from './BelongsToRelationHandle'
 import HasOneRelationHandle from './HasOneRelationHandle'
-
-
+import MathHelper from '../Utils/MathHelper'
+import EntityStyle from './Styles/EntityStyle'
 //too many imports is it really needed?
 // _V is deprecated 
 // we must add math function in getnearestpoint
@@ -27,43 +27,13 @@ class Entity extends Konva.Group {
          *  Registering components
          */
 
-        this.rect = new Konva.Rect({
-            x : - this.width / 2,
-            y :  - this.height / 2,
-            width : this.width,
-            height: this.height,
-            cornerRadius: 10,
-            fill: '#2f2f2f'
-        });
-
-        this.deleteButton = new DeleteButton({
-            x:this.width /2 - 3,
-            y:-this.height /2 + 3
-        })
-
-        this.text = new EditableText({
-            fontSize:22,
-            text : 'Entity',
-            fill: '#fff',
-            fontFamily: 'Open Sans'
-        })
-
-        this.properties = []
-        this.propertyAdder = new PropertyAdder({
-            opacity: 0.5
-        })
-
-        this.hasManyRelationHandle = new HasManyRelationHandle({
-            rotation : 22.5
-        })
-
-        this.belongsToRelationHandle = new BelongsToRelationHandle({
-            rotation : 45
-        })
-
-        this.hasOneRelationHandle = new HasOneRelationHandle({
-            rotation : 67.5
-        })
+        this.bg = new Konva.Rect();
+        this.deleteButton = new DeleteButton()
+        this.text = new EditableText()
+        this.propertyAdder = new PropertyAdder()
+        this.hasManyRelationHandle = new HasManyRelationHandle()
+        this.belongsToRelationHandle = new BelongsToRelationHandle()
+        this.hasOneRelationHandle = new HasOneRelationHandle()
 
         this.hasManyRelationHandle.addEventListener("connect",e => {
             this.dispatchEvent(e)
@@ -81,19 +51,19 @@ class Entity extends Konva.Group {
             this.propertyAdder,
             this.hasManyRelationHandle,
             this.hasOneRelationHandle,
-            this.belongsToRelationHandle,
-            this.rect,
+            this.bg,
             this.deleteButton,
             this.text
         )
+        /*
         this.propertyAdder.setZIndex(0)
         this.text.setZIndex(2)
         this.deleteButton.setZIndex(2)
-        this.rect.setZIndex(1)
+        this.bg.setZIndex(1)
         this.belongsToRelationHandle.setZIndex(0)
         this.hasManyRelationHandle.setZIndex(0)
         this.hasOneRelationHandle.setZIndex(0)
-
+*/
         /*
          *  Registering events
          */
@@ -107,7 +77,7 @@ class Entity extends Konva.Group {
             this.dispatchEvent(new Event("addproperty"))
         })
 
-        this.rect.on("dblclick", e => {
+        this.bg.on("dblclick", e => {
             e.cancelBubble = true;
         })
 
@@ -115,33 +85,20 @@ class Entity extends Konva.Group {
             console.log("Delete entity");
             this.dispatchEvent(new Event('delete'));
         })
-        this.deleteButton.opacity(0)
-
-        this.addEventListener("mouseover",e=>{
-            this.deleteButton.opacity(1)
-        })
-        this.addEventListener("mouseleave",e=>{
-            this.deleteButton.opacity(0)
-        })
-        this.propertyAdder.addEventListener("mouseover",e=>{
-            this.propertyAdder.opacity(1)
-        })
-        this.propertyAdder.addEventListener("mouseleave",e=>{
-            this.propertyAdder.opacity(0.5)
-        })
-
-        /*
-         * adjust and start editing 
-         */
-        this.centering()
-        this.text.editText()
         
+        
+        this.text.editText()
+    }
+
+    mounted() {
+        EntityStyle.apply(this)
+        this.centering()
     }
 
     centering() {
 
         let text = this.text,
-            rect = this.rect,
+            bg = this.bg,
             deleteButton = this.deleteButton,
             hasManyRelationHandle = this.hasManyRelationHandle,
             hasOneRelationHandle = this.hasOneRelationHandle,
@@ -155,27 +112,27 @@ class Entity extends Konva.Group {
         text.y(-text.height()/2)
 
         //adjust rectangle
-        rect.width(text.width() + PADDING*2)
+        bg.width(text.width() + PADDING*2)
         
         //centering the rectangle
-        rect.x(-rect.width()/2)
-        rect.y(-rect.height()/2)
+        bg.x(-bg.width()/2)
+        bg.y(-bg.height()/2)
 
         //adjust deleteButton
-        deleteButton.x(rect.width() /2 - 3)
-        deleteButton.y(-rect.height() /2 + 3)
+        deleteButton.x(bg.width() /2 - 3)
+        deleteButton.y(-bg.height() /2 + 3)
 
         //adjust propertyAdder
-        propertyAdder.y(-rect.height()/2 - 15)
+        propertyAdder.y(-bg.height()/2 - 15)
         propertyAdder.direct({x:0,y:0})
 
         //adjust relationHandle
-        hasManyRelationHandle.x(rect.width() /2 - 5)
-        hasManyRelationHandle.y(rect.height() /2 - 5)
-        belongsToRelationHandle.x(rect.width() /2 - 5)
-        belongsToRelationHandle.y(rect.height() /2 - 5)
-        hasOneRelationHandle.x(rect.width() /2 - 5)
-        hasOneRelationHandle.y(rect.height() /2 - 5)
+        hasManyRelationHandle.x(bg.width() /2 - 5)
+        hasManyRelationHandle.y(bg.height() /2 - 5)
+        belongsToRelationHandle.x(bg.width() /2 - 5)
+        belongsToRelationHandle.y(bg.height() /2 - 5)
+        hasOneRelationHandle.x(bg.width() /2 - 5)
+        hasOneRelationHandle.y(bg.height() /2 - 5)
 
         //adjust properties
 
@@ -185,54 +142,11 @@ class Entity extends Konva.Group {
     }
 
     getNearestPoint(to) {
-        let abs = this.getAbsolutePosition()
-        let x = abs.x,
-            y = abs.y,
-            w = this.rect.width(),
-            h = this.rect.height()
+        let abs = this.getAbsolutePosition(),
+            w = this.bg.width(),
+            h = this.bg.height()
 
-        let LTC = {
-            x,y
-        }
-
-        let RBC = {
-            x: x+ w,
-            y: y+ h
-        }
-
-        let x_out,y_out
-
-        let centerX = false
-        let centerY = false
-
-        if(to.x <= LTC.x) {
-            x_out = LTC.x
-        } else if(to.x > LTC.x && to.x < RBC.x) {
-            x_out = to.x
-            centerX = true
-        } else if (to.x >= RBC.x) {
-            x_out = RBC.x
-        }
-
-        if(to.y <= LTC.y) {
-            y_out = LTC.y
-        } else if(to.y > LTC.y && to.y < RBC.y) {
-            y_out = to.y
-            centerY = true
-        } else if (to.y >= RBC.y) {
-            y_out = RBC.y
-        }
-
-/*
-        if(centerX && centerY) {
-            x_out = x+w/2
-            y_out = y+h/2
-        }
-*/
-        return {
-            x: x_out,
-            y: y_out
-        }
+        return MathHelper.getNearestPointToRectangle(abs,to,w,h)
     }
 }
 

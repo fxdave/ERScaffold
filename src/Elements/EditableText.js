@@ -11,7 +11,7 @@ class EditableText extends Konva.Text {
 
 
     editText() {
-        let val = prompt("Type the name of the entity.")
+        let val = prompt("Type the name")
         if (val != "")
             this.text(val)
         else

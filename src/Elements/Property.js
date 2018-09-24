@@ -1,6 +1,7 @@
 import Konva from '../Vendor/Konva'
 import EditableText from './EditableText'
 import DeleteButton from './DeleteButton'
+import PropertyStyle from './Styles/PropertyStyle';
 
 //we must introduce relative styles for creating only one class
 //we must add the get nearest point to the math
@@ -13,30 +14,11 @@ class Property extends Konva.Group {
         })
 
 
-        this.circle = new Konva.Ellipse({
-            radius: {
-                x: 30,
-                y: 20
-            },
-            fill: '#fff',
-            stroke: 'black',
-            strokeWidth: 1
-        });
-
-        this.text = new EditableText({
-            x: -3,
-            y: -6,
-            fontSize: 14,
-            text: 'Name',
-            fill: '#000'
-        })
-
+        this.circle = new Konva.Ellipse();
+        this.text = new EditableText()
         this.deleteButton = new DeleteButton()
-
         this.line = new Konva.Line({
             points: [0, 0, 0, 0],
-            stroke: 'black',
-            strokeWidth: 1,
         })
 
         this.direct({
@@ -63,15 +45,12 @@ class Property extends Konva.Group {
             this.update()
         })
 
-        this.on("mouseover", e => {
-            this.deleteButton.opacity(1)
-        })
-        this.on("mouseleave", e => {
-            this.deleteButton.opacity(0)
-        })
-
         this.optimalDistanceSquare = Math.pow(30, 2)
         this.add(this.line, this.circle, this.text, this.deleteButton)
+    }
+
+    mounted() {
+        PropertyStyle.apply(this)
     }
 
     update() {
