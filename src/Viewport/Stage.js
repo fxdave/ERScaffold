@@ -12,13 +12,13 @@ class Stage extends Konva.Stage {
         this.entityLayer = new Konva.Layer()
         this.tempLayer = new Konva.Layer()
         this.connectionLayer = new Konva.Layer()
-        this.connectionEntityLayer = new Konva.Layer()
+        //this.connectionEntityLayer = new Konva.Layer()
 
         this.add(
-            this.entityLayer,
-            this.tempLayer,
             this.connectionLayer,
-            this.connectionEntityLayer
+            //this.connectionEntityLayer,
+            this.entityLayer,
+            this.tempLayer
         )
 
         this._addEvents()

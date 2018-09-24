@@ -65,6 +65,18 @@ class Entity extends Konva.Group {
             rotation : 67.5
         })
 
+        this.hasManyRelationHandle.addEventListener("connect",e => {
+            this.dispatchEvent(e)
+        })
+
+        this.belongsToRelationHandle.addEventListener("connect",e => {
+            this.dispatchEvent(e)
+        })
+
+        this.hasOneRelationHandle.addEventListener("connect",e => {
+            this.dispatchEvent(e)
+        })
+
         this.add(
             this.propertyAdder,
             this.hasManyRelationHandle,
@@ -92,7 +104,7 @@ class Entity extends Konva.Group {
 
         this.propertyAdder.on("click", e => {
             e.cancelBubble = true;
-            this.addProperty()
+            this.dispatchEvent(new Event("addproperty"))
         })
 
         this.rect.on("dblclick", e => {

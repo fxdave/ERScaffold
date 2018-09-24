@@ -1,6 +1,5 @@
 import Konva from '../Vendor/Konva'
 import Entity from './Entity'
-import viewport from '../Viewport/ViewportInstance'
 //we need to separate the dropable implementation to a different file
 //_V is deprecated
 
@@ -32,9 +31,12 @@ class RelationHandle extends Konva.Group {
             }
             this.rotation(0)
             let pos = this.getAbsolutePosition()
-            this.moveTo(_V.tempLayer)
-            this.x(pos.x - _V.stage.x())
-            this.y(pos.y - _V.stage.y())
+            let stage = this.getStage()
+            if(stage) {
+                this.moveTo(stage.tempLayer)
+                this.x(pos.x - stage.x())
+                this.y(pos.y - stage.y())
+            }
         })
 
         this.on("dragmove", (e)=>{
@@ -56,18 +58,18 @@ class RelationHandle extends Konva.Group {
             this.moveTo(this.oldState.parent)
             this.directToDefault()
     
-            var pos = viewport.stage.getPointerPosition();
-            var shape = viewport.entityLayer.getIntersection(pos);
-            
-            let to = shape.parent
-            if(!(to instanceof Entity))
-                to = to.parent
-            if(!(to instanceof Entity))
-                to = to.parent
-            if(!(to instanceof Entity))
-                to = to.parent
 
-            viewport.addConnection(this.parent,to,this.me.type)
+            this.dispatchEvent(new CustomEvent("connect",{
+                detail: {
+                    from : this.parent,
+                    type : this.me.type
+                }
+            }))
+
+            let stage = this.getStage()
+            if(stage) {
+                stage.tempLayer.draw()
+            }
             
         })
         

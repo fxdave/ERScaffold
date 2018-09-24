@@ -3,13 +3,13 @@ import Stage from './Stage'
 
 import * as Elements from '../Elements/Elements'
 
-class Viewport {
+class Viewport extends Stage {
     /**
      * initialize arranger and stage
      */
     constructor() {
+        super()
         this.arranger = new Arranger()
-        this.stage = new Stage()
 
         this._setEvenetListeners()
     }
@@ -19,7 +19,7 @@ class Viewport {
      */
     _setEvenetListeners() {
         //adding entity
-        this.stage.addEventListener('dblclick', (e) => {
+        this.addEventListener('dblclick', (e) => {
             this.addEntityTo(e.clientX, e.clientY)
         })
     }
@@ -32,19 +32,60 @@ class Viewport {
      */
     addEntityTo(x, y) {
         const E = new Elements.Entity({
-            x: x - this.stage.x(),
-            y: y - this.stage.y()
+            x: x - this.x(),
+            y: y - this.y()
         })
+
         E.addEventListener("delete", () => {
             E.remove()
             this.arranger.remove(E)
-            this.stage.entityLayer.draw()
+            this.entityLayer.draw()
         })
-        this.stage.entityLayer.add(E)
+
+        E.addEventListener("connect", (e) => {
+            var pos = this.getPointerPosition();
+            var shape = this.entityLayer.getIntersection(pos);
+            
+            let to = shape.parent
+            if(!(to instanceof Elements.Entity))
+                to = to.parent
+            if(!(to instanceof Elements.Entity))
+                to = to.parent
+            if(!(to instanceof Elements.Entity))
+                to = to.parent
+
+            this.addConnection(e.detail.from,to,e.detail.type)
+        })
+
+        E.addEventListener("addproperty", (e) => {
+            const P = new Elements.Property()
+        
+            //requesting name
+            P.text.editText()
+            //add to arranger
+            this.arranger.add(P)
+            //add to the entitiy
+            E.add(P)
+
+            P.setZIndex(0)
+            P.addEventListener("delete", (e)=> {
+                this._deleteProperty(P)
+            })
+        })
+
+        this.entityLayer.add(E)
         this.arranger.add(E)
-        this.stage.entityLayer.draw()
+        this.entityLayer.draw()
     }
 
+    /**
+     * 
+     * @param {Elements.Property} property 
+     */
+    _deleteProperty(property) {
+        this.arranger.remove(property)
+        property.remove()
+    }
 
     /**
      * 
@@ -53,7 +94,7 @@ class Viewport {
      * @param {string} type 
      */
     addConnection(from, to, type) {
-        if (from instanceof Elements.Entity && to instanceof Elements.Entity) {
+        if (!from instanceof Elements.Entity && !to instanceof Elements.Entity) {
             console.error("Adding connection is failed due to parameters are not entities", from, to)
             return;
         }
@@ -65,12 +106,13 @@ class Viewport {
          * type can be null if no action is needed (same connection exsists)
          */
 
-        type = this.handleOverlap(from, to, type)
+        type = this._handleOverlap(from, to, type)
 
+        console.log(type);
         //make connection
 
         if (type)
-            this.makeConnection(from, to, type)
+            this._makeConnection(from, to, type)
 
     }
 
@@ -83,8 +125,7 @@ class Viewport {
         this.arranger.remove(connection.relationEntity)
         connection.relationEntity.remove()
         connection.remove()
-        this.stage.connectionLayer.draw()
-        this.stage.connectionEntityLayer.draw()
+        this.connectionLayer.draw()
     }
     
     /**
@@ -94,26 +135,31 @@ class Viewport {
      * @param {string} type 
      */
     _handleOverlap(from, to, type) {
-        let same = this.stage.connectionLayer.children.find(old => {
+        
+        let same = Array.from(this.connectionLayer.children).find(old => {
             return old.to == to && old.from == from
         })
 
-        let reversed = this.stage.connectionLayer.children.find(old => {
+        let reversed = Array.from(this.connectionLayer.children).find(old => {
             return old.from == to && old.to == from
         })
 
+        console.log(same);
+        console.log(reversed);
+        
+        
         if (same) {
             let reversedType = type.replace("belongsTo", "hasMany")
-            type = this._getOverridingConnectionType(reversedType, old)
+            type = this._getOverridingConnectionType(reversedType, same)
+            if (type !== null) this.removeConnection(same)
         }
 
         if (reversed) {
-            type = this._getOverridingConnectionType(type, same)
+            type = this._getOverridingConnectionType(type, reversed)
+            if (type !== null) this.removeConnection(reversed)
         }
 
-        if (same || reversed) {
-            if (type !== null) this.removeConnection(old)
-        }
+        return type
 
     }
 
@@ -125,14 +171,35 @@ class Viewport {
      * @param {string} type 
      */
     _makeConnection(from, to, type) {
+        
         let connection = this._getConnectionInstance(from, to, type)
+        this.arranger.add(connection.relationEntity)
         if (connection) {
+
+            
             connection.addEventListener("delete", () => {
                 this.removeConnection(connection)
+                this.arranger.remove(connection.relationEntity)
             })
 
-            this.stage.connectionLayer.add(connection)
-            this.stage.connectionLayer.draw()
+            connection.relationEntity.addEventListener("addproperty", (e) => {
+                const P = new Elements.Property()
+            
+                //requesting name
+                P.text.editText()
+                //add to arranger
+                this.arranger.add(P)
+                //add to the entitiy
+                connection.relationEntity.add(P)
+    
+                P.setZIndex(0)
+                P.addEventListener("delete", (e)=> {
+                    this._deleteProperty(P)
+                })
+            })
+
+            this.connectionLayer.add(connection)
+            this.connectionLayer.draw()
         }
     }
 

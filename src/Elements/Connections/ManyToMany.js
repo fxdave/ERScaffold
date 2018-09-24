@@ -11,7 +11,10 @@ class ManyToMany extends Connection {
 
         this.add(this.fromOne)
         this.add(this.toOne)
-    
+        
+        this.fromOne.setZIndex(0)
+        this.toOne.setZIndex(0)
+
         this.update()
 
     }

@@ -22,7 +22,9 @@ class One extends Konva.Line {
         old[3] = to.y
 
         this.points(old)
-        _V.connectionLayer.draw()
+        let layer = this.getLayer()
+        if(layer)
+            layer.draw()
     }
     
 }

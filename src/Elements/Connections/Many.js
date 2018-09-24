@@ -38,7 +38,10 @@ class Many extends Konva.Group {
         this.changeLine(from,{x:p[0], y: p[1]},this.lines[0])
         this.changeLine(from,{x:p[2], y: p[3]},this.lines[1])
         this.changeLine(from,{x:p[4], y: p[5]},this.lines[2])
-        _V.connectionLayer.draw()
+        
+        let layer = this.getLayer()
+        if(layer)
+            layer.draw()
     }
 
     changeLine(from,to,line) {

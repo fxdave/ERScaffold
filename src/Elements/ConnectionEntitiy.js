@@ -3,6 +3,7 @@ import EditableText from './EditableText'
 import DeleteButton from './DeleteButton'
 import PropertyAdder from './PropertyAdder'
 import Property from './Property'
+import MathHelper from '../Utils/MathHelper';
 
 
 // _V is deprecated
@@ -36,7 +37,7 @@ class ConnectionEntity extends Konva.Group {
 
         this.propertyAdder.on("click", e => {
             e.cancelBubble = true;
-            this.addProperty()
+            this.dispatchEvent(new Event("addproperty"))
         })
 
         this.bg.on("dblclick",e => {
@@ -47,7 +48,6 @@ class ConnectionEntity extends Konva.Group {
 
         this.deleteButton.on("click", e=> {
             e.cancelBubble = true;
-            _V.arranger.remove(this)
             this.dispatchEvent(new Event("delete"))
         })
 
@@ -63,7 +63,6 @@ class ConnectionEntity extends Konva.Group {
 
         this.optimalDistanceSquare = Math.pow(30,2)
 
-        _V.arranger.add(this)
         this.centering()
     }
 
@@ -76,7 +75,7 @@ class ConnectionEntity extends Konva.Group {
         //requesting name
         P.text.editText()
         //add to arranger
-        _V.arranger.add(P)
+        //_V.arranger.add(P)
         //add to this group
         this.add(P)
         //set z-index
@@ -90,7 +89,7 @@ class ConnectionEntity extends Konva.Group {
             this.properties = this.properties.filter(v => {
                 return v != P
             })
-            _V.arranger.remove(P)
+            //_V.arranger.remove(P)
             P.remove()
         })
 
@@ -116,14 +115,16 @@ class ConnectionEntity extends Konva.Group {
             this.deleteButton.y(0)
         }
         
-
-        _V.connectionEntityLayer.draw()
+        let layer = this.getLayer()
+        if(layer) {
+            layer.draw()
+        }
     }
     
     getNearestPoint(to) {
         let abs = this.getAbsolutePosition()
 
-        let near =  Math.getNearestPointToCircle(abs,to,this.bg.radius())
+        let near =  MathHelper.getNearestPointToCircle(abs,to,this.bg.radius())
         
         return near
     }
