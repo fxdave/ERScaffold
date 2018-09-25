@@ -1,6 +1,7 @@
 class Arranger {
     constructor() {
         this.arrangables = []
+        this.animationSpeed = 2
     }
 
     /**
@@ -36,8 +37,10 @@ class Arranger {
             this.arrangables.forEach(env_elem => {
                 if (env_elem != elem && elem != env_elem.parent) {
 
-                    // it is needed to be arranged
-
+                    /*
+                     * Getting distance
+                     */
+                    
                     let envAbs = env_elem.getAbsolutePosition()
                     let elemAbs = elem.getAbsolutePosition()
                     let near = elem.getNearestPoint({
@@ -47,26 +50,20 @@ class Arranger {
 
                     let nearBack = env_elem.getNearestPoint(near)
 
-                    /*
-                    nearBack = elem.getNearestPoint(nearBack)
-                    nearBack = env_elem.getNearestPoint(nearBack)
-                    */
-
-
                     let dist = this._distanceSquare(near, nearBack)
           
+                    /*
+                     * Checking distance
+                     */
                     
                     if (dist < elem.optimalDistanceSquare || dist < env_elem.optimalDistanceSquare) {
-                        
-                        // UNCOMMENT IT FOR DEBUG
-                        //env_elem.opacity(Math.random()*0.5+0.5)
-
+                        // Vector from env to elem
                         let V = {
                             x: elemAbs.x - envAbs.x,
                             y: elemAbs.y - envAbs.y
                         }
-
-
+                        
+                        // Add to sum
                         sumVector.x += V.x
                         sumVector.y += V.y
                         relatedCount++;
@@ -75,19 +72,22 @@ class Arranger {
             })
 
             if (relatedCount != 0) {
+                
+                // calculate avarage
                 let avgVector = {
                     x: sumVector.x / relatedCount,
                     y: sumVector.y / relatedCount
                 }
 
-                let l = Math.sqrt(Math.pow(avgVector.x, 2) + Math.pow(avgVector.y, 2))
+                let l = this._length(avgVector)
 
                 if (l != 0) {
-                    elem.x(elem.x() + avgVector.x / l *2)
-                    elem.y(elem.y() + avgVector.y / l *2)
+                    elem.x(elem.x() + avgVector.x / l * this.animationSpeed)
+                    elem.y(elem.y() + avgVector.y / l * this.animationSpeed)
                 } else {
-                    elem.x(elem.x() + Math.random()-0.5)
-                    elem.y(elem.y() + Math.random()-0.5)
+                    //when 
+                    elem.x(elem.x() + (Math.random()-0.5) * this.animationSpeed)
+                    elem.y(elem.y() + (Math.random()-0.5) * this.animationSpeed)
                 }
                 elem.dispatchEvent(new Event("arrange"))
             }
@@ -114,12 +114,47 @@ class Arranger {
     }
     
     /**
-     * Simple distance calculation between two points
+     * Simple distance^2 calculation between two points
      * @param {Object} a {x: number, y: number}
      * @param {Object} b {x: number, y: number}
+     * @returns {number}
      */
     _distanceSquare(a, b) {
-        return Math.pow(b.x - a.x, 2) + Math.pow(b.y - a.y, 2)
+        return return this._lengthSquare({
+            x: b.x - a.x,
+            y: b.y - a.y
+        })
+    }
+    
+    /**
+     * Simple length^2 calculation 
+     * @param {Object} a {x: number, y: number}
+     * @returns {number}
+     */
+    _lengthSquare(a) {
+        return Math.pow(a.x, 2) + Math.pow(a.y, 2)
+    }
+    
+    /**
+     * @param {Object} a {x: number, y: number}
+     * @returns {number}
+     */
+    _length(a) {
+        return Math.sqrt(this._lengthSquare(a))
+    }
+    
+    /**
+     * TODO: make separate Vector class 
+     * @param {Object} a {x: number, y: number}
+     * @returns {Object} the normalized Vector {x: number, y: number}
+     */
+    _normalized(a) {
+        let l = this._length(a)
+        if(l == 0)
+        return {
+            x: a.x / l ,
+            y: a.y / l
+        }
     }
 }
 
