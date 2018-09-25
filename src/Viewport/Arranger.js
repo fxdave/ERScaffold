@@ -3,17 +3,28 @@ class Arranger {
         this.arrangables = []
     }
 
+    /**
+     * adds an object to the arrangables
+     * @param {Object} arrangable
+     */
     add(arrangable) {
         this._setDefaults(arrangable)
         this.arrangables.push(arrangable)
     }
 
+    /**
+     * removes an object from the arrangables
+     * @param {Object} arrangable
+     */
     remove(arrangable) {
         this.arrangables = this.arrangables.filter(v => {
             return v != arrangable
         })
     }
 
+    /**
+     * arranges all elements that is needed to be arranged
+     */    
     tick() {
         this.arrangables.forEach(elem => {
 
@@ -83,6 +94,11 @@ class Arranger {
         })
     }
 
+    /**
+     * Arrangables should have optimalDistanceSquare property , and getNearestPoint method.
+     * This method adds these params to the object if they aren't exsisted
+     * @param {Object} elem
+     */
     _setDefaults(elem) {
         if (!elem.optimalDistanceSquare) {
             elem.optimalDistanceSquare = 3000
@@ -96,7 +112,12 @@ class Arranger {
             }
         }
     }
-
+    
+    /**
+     * Simple distance calculation between two points
+     * @param {Object} a {x: number, y: number}
+     * @param {Object} b {x: number, y: number}
+     */
     _distanceSquare(a, b) {
         return Math.pow(b.x - a.x, 2) + Math.pow(b.y - a.y, 2)
     }
