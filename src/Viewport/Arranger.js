@@ -1,7 +1,9 @@
+import Vector from '../Utils/Math/Vector'
+
 class Arranger {
     constructor() {
         this.arrangables = []
-        this.animationSpeed = 2
+        this.animationSpeed = 1.5
     }
 
     /**
@@ -29,11 +31,13 @@ class Arranger {
     tick() {
         this.arrangables.forEach(elem => {
 
-            let sumVector = {
-                x: 0,
-                y: 0
-            }
+            // init of sumVector for avarage calculation
+            let sumVector = new Vector(0,0)
+            // counter of how many elements are related with the actual elem
             let relatedCount = 0
+            // the absolute position of the actual elem
+            let elemAbs = Vector.fromObject(elem.getAbsolutePosition())
+
             this.arrangables.forEach(env_elem => {
                 if (env_elem != elem && elem != env_elem.parent) {
 
@@ -41,31 +45,31 @@ class Arranger {
                      * Getting distance
                      */
                     
-                    let envAbs = env_elem.getAbsolutePosition()
-                    let elemAbs = elem.getAbsolutePosition()
-                    let near = elem.getNearestPoint({
-                        x: envAbs.x,
-                        y: envAbs.y
-                    })
+                    // the absolute position of the environment element
+                    let envAbs = Vector.fromObject(env_elem.getAbsolutePosition())
 
+                    // one iteration for getting the nearest point for each other
+                    let near = elem.getNearestPoint(envAbs)
                     let nearBack = env_elem.getNearestPoint(near)
 
-                    let dist = this._distanceSquare(near, nearBack)
+                    // convert to vector
+                    let nearPoint = Vector.fromObject(near)
+                    let nearBackPoint = Vector.fromObject(nearBack)
+
+                    // calculate the distanceSquare
+                    let distSquare = Vector.getDistanceSquare(nearPoint,nearBackPoint)
           
                     /*
                      * Checking distance
                      */
                     
-                    if (dist < elem.optimalDistanceSquare || dist < env_elem.optimalDistanceSquare) {
-                        // Vector from env to elem
-                        let V = {
-                            x: elemAbs.x - envAbs.x,
-                            y: elemAbs.y - envAbs.y
-                        }
+                    if (distSquare < elem.optimalDistanceSquare || distSquare < env_elem.optimalDistanceSquare) {
+                        // Vector pointing from env to elem
+                        let V = Vector.sub(elemAbs,envAbs)
+
+                        //add to sum
+                        sumVector.add(V)
                         
-                        // Add to sum
-                        sumVector.x += V.x
-                        sumVector.y += V.y
                         relatedCount++;
                     }
                 }
@@ -74,18 +78,12 @@ class Arranger {
             if (relatedCount != 0) {
                 
                 // calculate avarage
-                let avgVector = {
-                    x: sumVector.x / relatedCount,
-                    y: sumVector.y / relatedCount
-                }
-
-                let l = this._length(avgVector)
-
-                if (l != 0) {
-                    elem.x(elem.x() + avgVector.x / l * this.animationSpeed)
-                    elem.y(elem.y() + avgVector.y / l * this.animationSpeed)
-                } else {
-                    //when 
+                let avgVector = sumVector.divEachBy(relatedCount)
+                try {
+                    avgVector.normalize()
+                    elem.x(elem.x() + avgVector.x * this.animationSpeed)
+                    elem.y(elem.y() + avgVector.y * this.animationSpeed)
+                } catch(e) {
                     elem.x(elem.x() + (Math.random()-0.5) * this.animationSpeed)
                     elem.y(elem.y() + (Math.random()-0.5) * this.animationSpeed)
                 }
@@ -105,57 +103,11 @@ class Arranger {
         }
         if (!elem.getNearestPoint) {
             elem.getNearestPoint = to => {
-                return {
-                    x: elem.getAbsolutePosition().x,
-                    y: elem.getAbsolutePosition().y
-                }
+                return elem.getAbsolutePosition()
             }
         }
     }
-    
-    /**
-     * Simple distance^2 calculation between two points
-     * @param {Object} a {x: number, y: number}
-     * @param {Object} b {x: number, y: number}
-     * @returns {number}
-     */
-    _distanceSquare(a, b) {
-        return return this._lengthSquare({
-            x: b.x - a.x,
-            y: b.y - a.y
-        })
-    }
-    
-    /**
-     * Simple length^2 calculation 
-     * @param {Object} a {x: number, y: number}
-     * @returns {number}
-     */
-    _lengthSquare(a) {
-        return Math.pow(a.x, 2) + Math.pow(a.y, 2)
-    }
-    
-    /**
-     * @param {Object} a {x: number, y: number}
-     * @returns {number}
-     */
-    _length(a) {
-        return Math.sqrt(this._lengthSquare(a))
-    }
-    
-    /**
-     * TODO: make separate Vector class 
-     * @param {Object} a {x: number, y: number}
-     * @returns {Object} the normalized Vector {x: number, y: number}
-     */
-    _normalized(a) {
-        let l = this._length(a)
-        if(l == 0)
-        return {
-            x: a.x / l ,
-            y: a.y / l
-        }
-    }
+
 }
 
 export default Arranger
