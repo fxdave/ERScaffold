@@ -63,6 +63,10 @@ class ConnectionEntity extends Konva.Group {
             this.getParent().update()
         })
 
+        this.addEventListener("arrange",e => {
+            this.getParent().update()
+        })
+
         this.on("mouseleave",e => {
             this.deleteButton.opacity(0)
         })

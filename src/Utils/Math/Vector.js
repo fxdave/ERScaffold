@@ -113,7 +113,7 @@ export default class Vector {
      * @returns {number}
      */
     getLengthSquare() {
-        return Math.pow(this.x,2) + Math.pow(this.x,2)
+        return Math.pow(this.x,2) + Math.pow(this.y,2)
     }
 
     /**
@@ -153,11 +153,15 @@ export default class Vector {
      * divides each coordinate of this vector by the given number
      * @param {number} divisor 
      * @return {Vector} this
+     * @throws {string} "nullDivisor"
      */
     divEachBy(divisor) {
-        this.x /= divisor
-        this.y /= divisor
-        return this
+        if(divisor != 0) {
+            this.x /= divisor
+            this.y /= divisor
+            return this
+        }
+        throw "nullDivisor"
     }
 
     /**
@@ -220,10 +224,16 @@ export default class Vector {
      * divide each coordinate of this vector by the given vector's coordinates
      * @param {Vector} vector 
      * @return {Vector} this
+     * @throws {string} nullVectorCoordinateDivision
      */
     div(vector) {
-        this.x /= vector.x
-        this.y /= vector.y
-        return this
+
+        if(vector.x != 0 && vector.y != 0) {
+            this.x /= vector.x
+            this.y /= vector.y
+            return this
+        } 
+
+        throw "nullVectorCoordinateDivision"
     }
 }

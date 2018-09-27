@@ -8,14 +8,19 @@
     },
     "scripts": {
         "build": "webpack",
-        "start": "webpack-dev-server --host 0.0.0.0 --port 3000"
+        "start": "webpack-dev-server --host 0.0.0.0 --port 3000",
+        "test": "mocha --compilers js:@babel/register ./src/**/*.test.js",
+        "test:single": "mocha --compilers js:@babel/register"
     },
     "dependencies": {
         "@babel/core": "^7.1.0",
         "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
         "@babel/preset-env": "^7.1.0",
+        "@babel/register": "^7.0.0",
+        "chai": "^4.2.0",
         "css-loader": "^1.0.0",
         "file-loader": "^2.0.0",
+        "mocha": "^5.2.0",
         "node-sass": "^4.9.3",
         "sass-loader": "^7.1.0",
         "style-loader": "^0.23.0"
