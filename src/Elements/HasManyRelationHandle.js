@@ -1,5 +1,5 @@
 import RelationHandle from './RelationHandle'
-import MathHelper from '../Utils/MathHelper'
+import MathHelper from '../Utils/Math/MathHelper'
 class HasManyRelationHandle extends RelationHandle {
     constructor(props) {
         super(props)

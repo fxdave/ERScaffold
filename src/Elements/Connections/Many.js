@@ -1,5 +1,5 @@
 import Konva from '../../Vendor/Konva'
-import MathHelper from '../../Utils/MathHelper'
+import MathHelper from '../../Utils/Math/MathHelper'
 // _V is deprecated
 class Many extends Konva.Group {
     constructor(props) {

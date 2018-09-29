@@ -28,6 +28,15 @@ export default class Vector {
     }
 
     /**
+     * returns one of the normals of the 'vec' Vector
+     * @param {Vector} vec
+     * @returns {Vector}
+     */
+    static getNormal(vec) {
+        return new Vector(vec.y,-vec.x)
+    }
+
+    /**
      * returns the square of the distance of two Point (vector)
      * @param {Vector} a 
      * @param {Vector} b 

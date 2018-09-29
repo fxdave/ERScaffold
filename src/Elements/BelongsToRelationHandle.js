@@ -1,6 +1,6 @@
 import RelationHandle from './RelationHandle'
 import Konva from '../Vendor/Konva'
-import MathHelper from '../Utils/MathHelper';
+import MathHelper from '../Utils/Math/MathHelper';
 
 class BelongsToRelationHandle extends RelationHandle {
     constructor(props) {

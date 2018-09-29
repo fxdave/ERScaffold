@@ -5,7 +5,7 @@ import PropertyAdder from './PropertyAdder'
 import HasManyRelationHandle from './HasManyRelationHandle'
 import BelongsToRelationHandle from './BelongsToRelationHandle'
 import HasOneRelationHandle from './HasOneRelationHandle'
-import MathHelper from '../Utils/MathHelper'
+import MathHelper from '../Utils/Math/MathHelper'
 import EntityStyle from './Styles/EntityStyle'
 //too many imports is it really needed?
 // _V is deprecated 

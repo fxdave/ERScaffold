@@ -251,6 +251,15 @@ describe('Vector', function() {
             }
         })
     })
+    
+    describe('getNormal', function() {
+        let a = new Vector(-2, 2)
+        it('', function() {
+            let b = Vector.getNormal(a)
+            let dot = Vector.dot(a,b)
+            assert.equal(dot,0)
+        })
+    })
 
 
 

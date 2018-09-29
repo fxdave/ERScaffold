@@ -3,7 +3,7 @@ import EditableText from './EditableText'
 import DeleteButton from './DeleteButton'
 import PropertyAdder from './PropertyAdder'
 import Property from './Property'
-import MathHelper from '../Utils/MathHelper';
+import MathHelper from '../Utils/Math/MathHelper';
 
 
 // _V is deprecated
