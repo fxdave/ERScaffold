@@ -91,7 +91,7 @@ class Arranger {
                     elem.y(elem.y() + (Math.random() - 0.5) * this.animationSpeed)
                 }
                 elem.dispatchEvent(new Event("arrange"))
-            } else if (elem.shouldBeAt && willRelatedCount == 0) {
+            } else if (elem.shouldBeAt /* && willRelatedCount == 0*/) {
                 try {
                     let should = Vector.fromObject(elem.shouldBeAt)
                     let push = Vector.sub(should, elemAbs)
