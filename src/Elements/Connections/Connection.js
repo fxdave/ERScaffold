@@ -11,11 +11,11 @@ class Connection extends Konva.Group {
         const from = this.from = props.from
         const to = this.to = props.to
 
-        from.addEventListener("delete", ()=>{
+        from.addEventListener("delete", () => {
             console.log("Delete connection");
             this.dispatchEvent(new Event('delete'));
         })
-        
+
         to.addEventListener("delete", () => {
             console.log("Delete connection");
             this.dispatchEvent(new Event('delete'));
@@ -26,7 +26,7 @@ class Connection extends Konva.Group {
 
 
 
-        this.relationEntity.addEventListener("delete",()=>{
+        this.relationEntity.addEventListener("delete", () => {
             this.dispatchEvent(new Event("delete"))
         })
 
@@ -34,7 +34,7 @@ class Connection extends Konva.Group {
         this.add(this.relationEntity)
         this.relationEntity.setZIndex(2)
 
-        let half = this.getHalfway(this.from,this.to)
+        let half = this.getHalfway(this.from, this.to)
         this.relationEntity.x(half.x)
         this.relationEntity.y(half.y)
 
@@ -61,15 +61,31 @@ class Connection extends Konva.Group {
             y: this.relationEntity.y()
         }
 
-        this.fromOne.change(half,{
-            x: this.from.x(),
-            y: this.from.y()
-        })
-
-        this.toOne.change(half, {
+        this.fromOne.change(
+            half,
+            {
+                x: this.from.x(),
+                y: this.from.y()
+            },
+            {
                 x: this.to.x(),
                 y: this.to.y()
-        })
+            },
+            -1
+        )
+
+        this.toOne.change(
+            half,
+            {
+                x: this.to.x(),
+                y: this.to.y()
+            },
+            {
+                x: this.from.x(),
+                y: this.from.y()
+            },
+            1
+        )
 
         this.relationEntity.x(half.x)
         this.relationEntity.y(half.y)

@@ -30,10 +30,11 @@ export default class Vector {
     /**
      * returns one of the normals of the 'vec' Vector
      * @param {Vector} vec
+     * @param {number} normalID -1 or 1
      * @returns {Vector}
      */
-    static getNormal(vec) {
-        return new Vector(vec.y,-vec.x)
+    static getNormal(vec, normalID) {
+        return new Vector(vec.y*normalID,-vec.x*normalID)
     }
 
     /**
@@ -108,6 +109,26 @@ export default class Vector {
     static div(a,b) {
         return a.clone().div(b)
     }
+
+    /**
+     * project a to the b 
+     * @param {Vector} a 
+     * @param {Vector} b 
+     * @returns {Vector}
+     */
+    static project(a,b) {
+        let ls = b.getLengthSquare()
+
+        if(ls) {
+            let furrier = Vector.dot(a,b) / ls
+            b = b.clone()
+            b.mulEachBy(furrier)
+            return b
+        } else {
+            return new Vector(0,0)
+        }
+    }
+
 
     /**
      * returns the length

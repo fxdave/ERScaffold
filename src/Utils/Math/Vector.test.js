@@ -261,6 +261,31 @@ describe('Vector', function() {
         })
     })
 
+    
+    describe('project', function() {
+        it('basic', function() {
+            let a = new Vector(10, 4)
+            let b = new Vector(15, 0)
+            let p = Vector.project(a,b)
+            assert.equal(p.x,10)
+            assert.equal(p.y,0)
+        })
+        it('other lengths', function() {
+            let a = new Vector(15, 4)
+            let b = new Vector(10, 0)
+            let p = Vector.project(a,b)
+            assert.equal(p.x,15)
+            assert.equal(p.y,0)
+        })
+        it('other direction', function() {
+            let a = new Vector(15, 4)
+            let b = new Vector(-10, 0)
+            let p = Vector.project(a,b)
+            assert.equal(p.x,15)
+            assert.equal(p.y,0)
+        })
+    })
+
 
 
 
