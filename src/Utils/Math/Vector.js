@@ -33,7 +33,7 @@ export default class Vector {
      * @param {number} normalID -1 or 1
      * @returns {Vector}
      */
-    static getNormal(vec, normalID) {
+    static getNormal(vec, normalID = 1) {
         return new Vector(vec.y*normalID,-vec.x*normalID)
     }
 

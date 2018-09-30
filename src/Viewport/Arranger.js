@@ -27,14 +27,15 @@ class Arranger {
 
     /**
      * arranges all elements that is needed to be arranged
-     */    
+     */
     tick() {
         this.arrangables.forEach(elem => {
 
             // init of sumVector for avarage calculation
-            let sumVector = new Vector(0,0)
+            let sumVector = new Vector(0, 0)
             // counter of how many elements are related with the actual elem
             let relatedCount = 0
+            let willRelatedCount = 0
             // the absolute position of the actual elem
             let elemAbs = Vector.fromObject(elem.getAbsolutePosition())
 
@@ -44,7 +45,7 @@ class Arranger {
                     /*
                      * Getting distance
                      */
-                    
+
                     // the absolute position of the environment element
                     let envAbs = Vector.fromObject(env_elem.getAbsolutePosition())
 
@@ -57,37 +58,52 @@ class Arranger {
                     let nearBackPoint = Vector.fromObject(nearBack)
 
                     // calculate the distanceSquare
-                    let distSquare = Vector.getDistanceSquare(nearPoint,nearBackPoint)
-          
+                    let distSquare = Vector.getDistanceSquare(nearPoint, nearBackPoint)
+
                     /*
                      * Checking distance
                      */
-                    
+
                     if (distSquare < elem.optimalDistanceSquare || distSquare < env_elem.optimalDistanceSquare) {
                         // Vector pointing from env to elem
-                        let V = Vector.sub(elemAbs,envAbs)
+                        let V = Vector.sub(elemAbs, envAbs)
 
                         //add to sum
                         sumVector.add(V)
-                        
+
                         relatedCount++;
+                    } else if (distSquare < elem.optimalDistanceSquare+100 || distSquare < env_elem.optimalDistanceSquare+100) {
+                        willRelatedCount++;
                     }
                 }
             })
 
             if (relatedCount != 0) {
-                
+
                 // calculate avarage
                 let avgVector = sumVector.divEachBy(relatedCount)
                 try {
                     avgVector.normalize()
                     elem.x(elem.x() + avgVector.x * this.animationSpeed)
                     elem.y(elem.y() + avgVector.y * this.animationSpeed)
-                } catch(e) {
-                    elem.x(elem.x() + (Math.random()-0.5) * this.animationSpeed)
-                    elem.y(elem.y() + (Math.random()-0.5) * this.animationSpeed)
+                } catch (e) {
+                    elem.x(elem.x() + (Math.random() - 0.5) * this.animationSpeed)
+                    elem.y(elem.y() + (Math.random() - 0.5) * this.animationSpeed)
                 }
                 elem.dispatchEvent(new Event("arrange"))
+            } else if (elem.shouldBeAt && willRelatedCount == 0) {
+                try {
+                    let should = Vector.fromObject(elem.shouldBeAt)
+                    let push = Vector.sub(should, elemAbs)
+                    if (push.getLengthSquare() > 100) {
+                        push.normalize()
+                        elem.x(elem.x() + push.x * this.animationSpeed)
+                        elem.y(elem.y() + push.y * this.animationSpeed)
+                        elem.dispatchEvent(new Event("arrange"))
+                    }
+                } catch (e) {
+                    // if no then no .. 
+                }
             }
         })
     }
