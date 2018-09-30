@@ -46,6 +46,10 @@ class Viewport extends Stage {
             var pos = this.getPointerPosition();
             var shape = this.entityLayer.getIntersection(pos);
             
+            if(!shape) {
+                return
+            }
+
             let to = shape.parent
             if(!(to instanceof Elements.Entity))
                 to = to.parent
