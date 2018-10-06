@@ -157,6 +157,11 @@ class Viewport extends Stage {
             type = this._getOverridingConnectionType(type, reversed)
             if (type !== null) this.removeConnection(reversed)
         }
+        
+        if(same && same.from == same.to && same instanceof Elements.Connections.OneToMany){
+            type = "belongsToMany"
+            if (type !== null) this.removeConnection(same)
+        }
 
         return type
 
@@ -172,6 +177,7 @@ class Viewport extends Stage {
     _makeConnection(from, to, type) {
         
         let connection = this._getConnectionInstance(from, to, type)
+        console.log(connection);
         this.arranger.add(connection.relationEntity)
         if (connection) {
 
