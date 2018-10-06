@@ -51,11 +51,7 @@ class Viewport extends Stage {
             }
 
             let to = shape.parent
-            if(!(to instanceof Elements.Entity))
-                to = to.parent
-            if(!(to instanceof Elements.Entity))
-                to = to.parent
-            if(!(to instanceof Elements.Entity))
+            while(!(to instanceof Elements.Entity))
                 to = to.parent
 
             this.addConnection(e.detail.from,to,e.detail.type)
@@ -114,10 +110,6 @@ class Viewport extends Stage {
          */
 
         type = this._handleOverlap(from, to, type)
-
-        console.log(type);
-        //make connection
-
         if (type)
             this._makeConnection(from, to, type)
 

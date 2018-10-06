@@ -58,7 +58,7 @@ class Connection extends Konva.Group {
     update() {
 
         if(this.from != this.to) {
-            let halfWay = this.getHalfway(this.from,this.to)
+            let halfWay = this.getAbsHalfway(this.from,this.to)
             this.relationEntity.shouldBeAt = halfWay
         }
 
@@ -99,6 +99,13 @@ class Connection extends Konva.Group {
     }
 
     getHalfway(from, to) {
+        return {
+            x: (from.x() + to.x()) / 2,
+            y: (from.y() + to.y()) / 2
+        }
+    }
+
+    getAbsHalfway(from, to) {
         let fromAbs = from.getAbsolutePosition()
         let toAbs = to.getAbsolutePosition()
         return {
