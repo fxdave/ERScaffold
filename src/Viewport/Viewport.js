@@ -1,8 +1,10 @@
 import Arranger from './Arranger'
 import Stage from './Stage'
-
+import Exporter from './Exporter'
 import * as Elements from '../Elements/Elements'
-
+import ViewportStorage from '../Models/ViewportStorage'
+import EntityModel from '../Models/Entity'
+import Vector from '../Utils/Math/Vector';
 class Viewport extends Stage {
     /**
      * initialize arranger and stage
@@ -10,7 +12,7 @@ class Viewport extends Stage {
     constructor() {
         super()
         this.arranger = new Arranger()
-
+        this.viewportStorage = new ViewportStorage()
         this._setEvenetListeners()
     }
 
@@ -22,6 +24,11 @@ class Viewport extends Stage {
         this.addEventListener('dblclick', (e) => {
             this.addEntityTo(e.clientX, e.clientY)
         })
+
+        document.getElementById("export").addEventListener("click", ()=>{
+            let exporter = new Exporter(this.viewportStorage)
+            exporter.export()
+        })
     }
 
     /**
@@ -31,18 +38,19 @@ class Viewport extends Stage {
      * @param {number} y 
      */
     addEntityTo(x, y) {
-        const E = new Elements.Entity({
-            x: x - this.x(),
-            y: y - this.y()
-        })
+        const ENTITIY_MODEL = new EntityModel("empty",new Vector(
+            x - this.x(),
+            y - this.y()
+        ))
+        const ENTITY_VIEW = new Elements.Entity(ENTITIY_MODEL)
 
-        E.addEventListener("delete", () => {
-            E.remove()
+        ENTITY_VIEW.addEventListener("delete", () => {
+            ENTITY_VIEW.remove()
             this.arranger.remove(E)
             this.entityLayer.draw()
         })
 
-        E.addEventListener("connect", (e) => {
+        ENTITY_VIEW.addEventListener("connect", (e) => {
             var pos = this.getPointerPosition();
             var shape = this.entityLayer.getIntersection(pos);
             
@@ -57,7 +65,7 @@ class Viewport extends Stage {
             this.addConnection(e.detail.from,to,e.detail.type)
         })
 
-        E.addEventListener("addproperty", (e) => {
+        ENTITY_VIEW.addEventListener("addproperty", (e) => {
             const P = new Elements.Property()
         
             //requesting name
@@ -65,7 +73,7 @@ class Viewport extends Stage {
             //add to arranger
             this.arranger.add(P)
             //add to the entitiy
-            E.add(P)
+            ENTITY_VIEW.add(P)
 
             P.mounted()
             P.setZIndex(0)
@@ -75,10 +83,11 @@ class Viewport extends Stage {
             
         })
 
-        this.entityLayer.add(E)
-        E.mounted()
-        this.arranger.add(E)
+        this.entityLayer.add(ENTITY_VIEW)
+        ENTITY_VIEW.mounted()
+        this.arranger.add(ENTITY_VIEW)
         this.entityLayer.draw()
+        this.viewportStorage.addEntity(EntityModel)
     }
 
     /**

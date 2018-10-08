@@ -1,6 +1,6 @@
-function mix() {
+export function mix() {
     let mixins = {}
-    for (i = 0; i < arguments.length; i++) {
+    for (let i = 0; i < arguments.length; i++) {
         if(i != 0) {
             mixins = {
                 ...mixins,

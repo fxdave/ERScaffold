@@ -3,7 +3,7 @@ import Vector from '../Utils/Math/Vector'
 class Arranger {
     constructor() {
         this.arrangables = []
-        this.animationSpeed = 1.5
+        this.animationSpeed = 5
     }
 
     /**

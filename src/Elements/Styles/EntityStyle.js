@@ -1,6 +1,8 @@
 import Style from '../../Utils/Style'
 
 export default new Style.Class({
+    width: 100,
+    height: 60,
     duration: 0.2,
     children: {
         propertyAdder: new Style.Class({

@@ -7,6 +7,7 @@ import BelongsToRelationHandle from './BelongsToRelationHandle'
 import HasOneRelationHandle from './HasOneRelationHandle'
 import MathHelper from '../Utils/Math/MathHelper'
 import EntityStyle from './Styles/EntityStyle'
+import EntitiyView from '../Models/Entity'
 //too many imports is it really needed?
 // _V is deprecated 
 // we must add math function in getnearestpoint
@@ -14,15 +15,17 @@ import EntityStyle from './Styles/EntityStyle'
 
 
 class Entity extends Konva.Group {
-    constructor(props) {
+    /**
+     * 
+     * @param {EntitiyView} model 
+     */
+    constructor(model) {
         super({
-            ...props,
             draggable:true
         })
 
-        this.width= 100
-        this.height=60
-
+        this.x(model.pos.x)
+        this.y(model.pos.y)
         /*
          *  Registering components
          */
@@ -55,20 +58,13 @@ class Entity extends Konva.Group {
             this.deleteButton,
             this.text
         )
-        /*
-        this.propertyAdder.setZIndex(0)
-        this.text.setZIndex(2)
-        this.deleteButton.setZIndex(2)
-        this.bg.setZIndex(1)
-        this.belongsToRelationHandle.setZIndex(0)
-        this.hasManyRelationHandle.setZIndex(0)
-        this.hasOneRelationHandle.setZIndex(0)
-*/
+
         /*
          *  Registering events
          */
 
         this.text.addEventListener("change", e => {
+            model.name = this.text.text()
             this.centering()
         })
 
