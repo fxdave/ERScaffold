@@ -1,5 +1,5 @@
-import Konva from '../Vendor/Konva'
-
+import Konva from '../Vendor/MyKonva'
+import LifeCycleDecorator from '../Utils/Decorators/LifeCycleDecorator'
 class Stage extends Konva.Stage {
     constructor(){
         super({
@@ -12,7 +12,6 @@ class Stage extends Konva.Stage {
         this.entityLayer = new Konva.Layer()
         this.tempLayer = new Konva.Layer()
         this.connectionLayer = new Konva.Layer()
-        //this.connectionEntityLayer = new Konva.Layer()
 
         this.add(
             this.connectionLayer,

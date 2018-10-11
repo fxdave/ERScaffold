@@ -5,6 +5,7 @@ import * as Elements from '../Elements/Elements'
 import ViewportStorage from '../Models/ViewportStorage'
 import EntityModel from '../Models/Entity'
 import Vector from '../Utils/Math/Vector';
+
 class Viewport extends Stage {
     /**
      * initialize arranger and stage
@@ -38,15 +39,26 @@ class Viewport extends Stage {
      * @param {number} y 
      */
     addEntityTo(x, y) {
+        /**
+         * make model
+         */
         const ENTITIY_MODEL = new EntityModel("empty",new Vector(
             x - this.x(),
             y - this.y()
         ))
+        this.viewportStorage.addEntity(ENTITIY_MODEL)
+
+        /**
+         * make view
+         */
         const ENTITY_VIEW = new Elements.Entity(ENTITIY_MODEL)
 
+        /**
+         * make controller
+         */
         ENTITY_VIEW.addEventListener("delete", () => {
             ENTITY_VIEW.remove()
-            this.arranger.remove(E)
+            this.arranger.remove(ENTITY_VIEW)
             this.entityLayer.draw()
         })
 
@@ -75,7 +87,6 @@ class Viewport extends Stage {
             //add to the entitiy
             ENTITY_VIEW.add(P)
 
-            P.mounted()
             P.setZIndex(0)
             P.addEventListener("delete", (e)=> {
                 this._deleteProperty(P)
@@ -84,10 +95,8 @@ class Viewport extends Stage {
         })
 
         this.entityLayer.add(ENTITY_VIEW)
-        ENTITY_VIEW.mounted()
         this.arranger.add(ENTITY_VIEW)
         this.entityLayer.draw()
-        this.viewportStorage.addEntity(EntityModel)
     }
 
     /**
@@ -205,7 +214,6 @@ class Viewport extends Stage {
                 this.arranger.add(P)
                 //add to the entitiy
                 connection.relationEntity.add(P)
-                P.mounted()
     
                 P.setZIndex(0)
                 P.addEventListener("delete", (e)=> {
