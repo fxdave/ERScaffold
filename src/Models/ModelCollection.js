@@ -20,10 +20,11 @@ class ModelCollection extends Model {
     }
 
     /**
-     * @param {number} id 
+     * @param {Object} obj 
+     * @param {number} obj.id
      */
-    remove(id) {
-        this.storage.delete(id)
+    remove(obj) {
+        this.storage.delete(obj.id)
     }
 
     /**

@@ -1,5 +1,5 @@
 import RelationHandle from './RelationHandle'
-import Konva from '../Vendor/Konva'
+import Konva from '../Vendor/MyKonva'
 
 // _V is deprecated
 

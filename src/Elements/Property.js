@@ -1,25 +1,25 @@
-import Konva from '../Vendor/Konva'
+import Konva from '../Vendor/MyKonva'
 import EditableText from './EditableText'
 import DeleteButton from './DeleteButton'
 import PropertyStyle from './Styles/PropertyStyle';
-
-//we must introduce relative styles for creating only one class
-//we must add the get nearest point to the math
+import PropertyModel from '../Models/Property'
+import MathHelper from '../Utils/Math/MathHelper'
+import Vector from '../Utils/Math/Vector'
 
 class Property extends Konva.Group {
-    constructor(props) {
+    /**
+     * 
+     * @param {PropertyModel} model 
+     */
+    constructor(model) {
         super({
-            ...props,
             draggable: true
         })
-
 
         this.circle = new Konva.Ellipse();
         this.text = new EditableText()
         this.deleteButton = new DeleteButton()
-        this.line = new Konva.Line({
-            points: [0, 0, 0, 0],
-        })
+        this.line = new Konva.Line()
 
         this.direct({
             x: 0,
@@ -34,19 +34,23 @@ class Property extends Konva.Group {
         this.deleteButton.opacity(0)
 
         this.text.addEventListener("change", e => {
+            model.text = this.text.text()
             this.update()
         })
 
         this.addEventListener("arrange", e => {
+            model.pos = new Vector(this.x(),this.y())
             this.update()
         })
 
         this.addEventListener("dragmove", e => {
+            model.pos = new Vector(this.x(),this.y())
             this.update()
         })
 
         this.optimalDistanceSquare = Math.pow(30, 2)
         this.add(this.line, this.circle, this.text, this.deleteButton)
+        this.text.editText()
     }
 
     mounted() {
@@ -79,54 +83,14 @@ class Property extends Konva.Group {
 
     getNearestPoint(to) {
         let abs = this.getAbsolutePosition()
+
         let x = abs.x,
             y = abs.y,
             w = this.circle.radius().x,
             h = this.circle.radius().y
 
-        let LTC = {
-            x,
-            y
-        }
-
-        let RBC = {
-            x: x + w,
-            y: y + h
-        }
-
-        let x_out, y_out
-
-        let centerX = false
-        let centerY = false
-
-        if (to.x <= LTC.x) {
-            x_out = LTC.x
-        } else if (to.x > LTC.x && to.x < RBC.x) {
-            x_out = to.x
-            centerX = true
-        } else if (to.x >= RBC.x) {
-            x_out = RBC.x
-        }
-
-        if (to.y <= LTC.y) {
-            y_out = LTC.y
-        } else if (to.y > LTC.y && to.y < RBC.y) {
-            y_out = to.y
-            centerY = true
-        } else if (to.y >= RBC.y) {
-            y_out = RBC.y
-        }
-
-        /*
-                if(centerX && centerY) {
-                    x_out = x+w/2
-                    y_out = y+h/2
-                }
-        */
-        return {
-            x: x_out,
-            y: y_out
-        }
+        return MathHelper.getNearestPointToRectangle({x,y},to,w,h)
+        
     }
 
 

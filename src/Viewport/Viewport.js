@@ -4,8 +4,9 @@ import Exporter from './Exporter'
 import * as Elements from '../Elements/Elements'
 import ViewportStorage from '../Models/ViewportStorage'
 import EntityModel from '../Models/Entity'
+import PropertyModel from '../Models/Property'
 import Vector from '../Utils/Math/Vector';
-
+import Konva from '../Vendor/MyKonva'
 class Viewport extends Stage {
     /**
      * initialize arranger and stage
@@ -26,14 +27,14 @@ class Viewport extends Stage {
             this.addEntityTo(e.clientX, e.clientY)
         })
 
-        document.getElementById("export").addEventListener("click", ()=>{
+        document.getElementById("export").addEventListener("click", () => {
             let exporter = new Exporter(this.viewportStorage)
             exporter.export()
         })
     }
 
     /**
-     * adds entitiy and 
+     * adds entity and 
      * 
      * @param {number} x 
      * @param {number} y 
@@ -42,61 +43,78 @@ class Viewport extends Stage {
         /**
          * make model
          */
-        const ENTITIY_MODEL = new EntityModel("empty",new Vector(
+        const ENTITY_MODEL = new EntityModel("empty", new Vector(
             x - this.x(),
             y - this.y()
         ))
-        this.viewportStorage.addEntity(ENTITIY_MODEL)
+        this.viewportStorage.addEntity(ENTITY_MODEL)
 
         /**
          * make view
          */
-        const ENTITY_VIEW = new Elements.Entity(ENTITIY_MODEL)
+        const ENTITY_VIEW = new Elements.Entity(ENTITY_MODEL)
 
         /**
          * make controller
          */
-        ENTITY_VIEW.addEventListener("delete", () => {
-            ENTITY_VIEW.remove()
-            this.arranger.remove(ENTITY_VIEW)
-            this.entityLayer.draw()
+
+        // on delete entity
+        ENTITY_VIEW.addEventListener("delete", e => {
+            this._deleteView(ENTITY_VIEW, this.entityLayer)
+            this.viewportStorage.removeEntity(ENTITY_MODEL)
         })
 
-        ENTITY_VIEW.addEventListener("connect", (e) => {
+        // on connect entity to another one
+        ENTITY_VIEW.addEventListener("connect", e => {
             var pos = this.getPointerPosition();
             var shape = this.entityLayer.getIntersection(pos);
-            
-            if(!shape) {
-                return
+
+            if (shape) {
+                let to = shape.parent
+                while (!(to instanceof Elements.Entity))
+                    to = to.parent
+
+                this.addConnection(e.detail.from, to, e.detail.type)
             }
-
-            let to = shape.parent
-            while(!(to instanceof Elements.Entity))
-                to = to.parent
-
-            this.addConnection(e.detail.from,to,e.detail.type)
         })
 
-        ENTITY_VIEW.addEventListener("addproperty", (e) => {
-            const P = new Elements.Property()
-        
-            //requesting name
-            P.text.editText()
-            //add to arranger
-            this.arranger.add(P)
-            //add to the entitiy
-            ENTITY_VIEW.add(P)
-
-            P.setZIndex(0)
-            P.addEventListener("delete", (e)=> {
-                this._deleteProperty(P)
-            })
-            
+        // on add property
+        ENTITY_VIEW.addEventListener("addproperty", e => {
+            this._addProperty(ENTITY_VIEW,ENTITY_MODEL)
         })
 
+        //
         this.entityLayer.add(ENTITY_VIEW)
         this.arranger.add(ENTITY_VIEW)
         this.entityLayer.draw()
+    }
+
+    /**
+     * 
+     * @param {Konva.Group} view 
+     * @param {EntityModel} model 
+     */
+    _addProperty(view, model) {
+
+        const PROPERTY_MODEL = new PropertyModel("empty",new Vector(0,0))
+        model.addProperty(PROPERTY_MODEL)
+        
+        const PROPERTY_VIEW = new Elements.Property(PROPERTY_MODEL)
+
+        PROPERTY_VIEW.addEventListener("delete", e => {
+            this._deleteProperty(PROPERTY_VIEW)
+            model.removeProperty(PROPERTY_MODEL)
+        })
+
+        //add
+        this.arranger.add(PROPERTY_VIEW)
+        view.add(PROPERTY_VIEW)
+    }
+
+    _deleteView(view, layer) {
+        view.remove()
+        this.arranger.remove(view)
+        layer.draw()
     }
 
     /**
@@ -144,15 +162,15 @@ class Viewport extends Stage {
         connection.remove()
         this.connectionLayer.draw()
     }
-    
+
     /**
      * 
-     * @param {Entitiy} from 
+     * @param {Entity} from 
      * @param {Entity} to 
      * @param {string} type 
      */
     _handleOverlap(from, to, type) {
-        
+
         let same = Array.from(this.connectionLayer.children).find(old => {
             return old.to == to && old.from == from
         })
@@ -163,8 +181,8 @@ class Viewport extends Stage {
 
         console.log(same);
         console.log(reversed);
-        
-        
+
+
         if (same) {
             let reversedType = type.replace("belongsTo", "hasMany")
             type = this._getOverridingConnectionType(reversedType, same)
@@ -175,8 +193,8 @@ class Viewport extends Stage {
             type = this._getOverridingConnectionType(type, reversed)
             if (type !== null) this.removeConnection(reversed)
         }
-        
-        if(same && same.from == same.to && same instanceof Elements.Connections.OneToMany){
+
+        if (same && same.from == same.to && same instanceof Elements.Connections.OneToMany) {
             type = "belongsToMany"
             if (type !== null) this.removeConnection(same)
         }
@@ -193,13 +211,13 @@ class Viewport extends Stage {
      * @param {string} type 
      */
     _makeConnection(from, to, type) {
-        
+
         let connection = this._getConnectionInstance(from, to, type)
         console.log(connection);
         this.arranger.add(connection.relationEntity)
         if (connection) {
 
-            
+
             connection.addEventListener("delete", () => {
                 this.removeConnection(connection)
                 this.arranger.remove(connection.relationEntity)
@@ -207,16 +225,16 @@ class Viewport extends Stage {
 
             connection.relationEntity.addEventListener("addproperty", (e) => {
                 const P = new Elements.Property()
-            
+
                 //requesting name
                 P.text.editText()
                 //add to arranger
                 this.arranger.add(P)
-                //add to the entitiy
+                //add to the entity
                 connection.relationEntity.add(P)
-    
+
                 P.setZIndex(0)
-                P.addEventListener("delete", (e)=> {
+                P.addEventListener("delete", (e) => {
                     this._deleteProperty(P)
                 })
             })

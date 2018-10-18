@@ -1,4 +1,4 @@
-import Konva from '../Vendor/Konva'
+import Konva from '../Vendor/MyKonva'
 import EditableText from './EditableText'
 import DeleteButton from './DeleteButton'
 import PropertyAdder from './PropertyAdder'

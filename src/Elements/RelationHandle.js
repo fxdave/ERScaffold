@@ -1,4 +1,4 @@
-import Konva from '../Vendor/Konva'
+import Konva from '../Vendor/MyKonva'
 import Entity from './Entity'
 //we need to separate the dropable implementation to a different file
 //_V is deprecated

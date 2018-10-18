@@ -1,4 +1,4 @@
-import Konva from '../../Vendor/Konva'
+import Konva from '../../Vendor/MyKonva'
 import Vector from '../../Utils/Math/Vector'
 import MathHelper from '../../Utils/Math/MathHelper';
 // _V is depreacted

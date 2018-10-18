@@ -1,6 +1,7 @@
 import Style from '../../Utils/Style'
 
 export default new Style.Class({
+    zIndex:0,
     duration: 0.2,
     children: {
         circle: new Style.Class({

@@ -1,4 +1,4 @@
-import Konva from '../../Vendor/Konva'
+import Konva from '../../Vendor/MyKonva'
 import ConnectionEntity from '../ConnectionEntitiy'
 // we musnt use connection entitiy here 
 // this must be independent

@@ -67,7 +67,17 @@ MathHelper.getNearestPointToCircle = function (centerOfCircle, to, radius) {
 
     return nearest
 }
-
+/**
+ * 
+ * @param {Vector|Object} from 
+ * @param {number} from.x 
+ * @param {number} from.y
+ * @param {Vector|Object} to 
+ * @param {number} to.x 
+ * @param {number} to.y
+ * @param {number} w 
+ * @param {number} h 
+ */
 MathHelper.getNearestPointToRectangle = function (from, to, w, h) {
     let x = from.x,
         y = from.y

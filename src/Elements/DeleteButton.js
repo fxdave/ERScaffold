@@ -1,4 +1,4 @@
-import Konva from '../Vendor/Konva'
+import Konva from '../Vendor/MyKonva'
 
 //we must create styles
 

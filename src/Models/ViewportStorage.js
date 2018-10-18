@@ -3,6 +3,7 @@ import Connection from './Abstract/Connection'
 import ModelCollection from './ModelCollection'
 import Model from './Abstract/Model'
 class ViewportStorage extends Model {
+    
     constructor() {
         super()
         this.entities = new ModelCollection()
@@ -10,7 +11,6 @@ class ViewportStorage extends Model {
     }
 
     /**
-     * 
      * @param {Entity} entity 
      * @returns {number} id
      */
@@ -19,13 +19,27 @@ class ViewportStorage extends Model {
     }
 
     /**
-     * 
+     * @param {Entity} entity 
+     */
+    removeEntity(entity) {
+        this.entities.remove(entity)
+    }
+
+    /**
      * @param {Connection} connection
      * @returns {number} id 
      */
     addConnection(connection) {
         return this.connections.add(connection)
     }
+
+    /**
+     * @param {Connection} connection
+     */
+    removeConnection(connection) {
+        this.connections.remove(connection)
+    }
+
 }
 
 export default ViewportStorage

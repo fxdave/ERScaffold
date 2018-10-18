@@ -1,5 +1,6 @@
 import Vector from '../Utils/Math/Vector'
 import Model from './Abstract/Model';
+import ModelCollection from './ModelCollection'
 class Entity extends Model {
     /**
      * 
@@ -14,8 +15,8 @@ class Entity extends Model {
         /** @member {Vector} */
         this.pos = pos;
 
-        /** @member {Property[]} */
-        this.props = []
+        /** @member {ModelCollection} */
+        this.props = new ModelCollection
     }
 
 
@@ -25,7 +26,15 @@ class Entity extends Model {
      * @param {Property} prop 
      */
     addProperty(prop){
-        this.props.push(prop)
+        this.props.add(prop)
+    }
+
+    /**
+     * 
+     * @param {Property} prop 
+     */
+    removeProperty(prop){
+        this.props.remove(prop)
     }
 
 

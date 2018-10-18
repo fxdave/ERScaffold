@@ -1,4 +1,4 @@
-import Konva from '../Vendor/Konva'
+import Konva from '../Vendor/MyKonva'
 
 class EditableText extends Konva.Text {
     constructor(props) {
