@@ -5,6 +5,7 @@ import EntityLayer from '../../Layers/EntityLayer'
 import Element from '../../Utils/Element'
 class Entity extends Element {
     constructor() {
+        super()
         this.layer = EntityLayer
         this.model = new EntityModel()
         //this.shape = EntityShape

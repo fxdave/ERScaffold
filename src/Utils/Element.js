@@ -1,8 +1,7 @@
 class Element {
-    static render(element) {
-        let e = new element()
-        return e 
-    } 
+    constructor() {
+        
+    }
 }
 
 export default Element
