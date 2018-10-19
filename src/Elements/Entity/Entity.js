@@ -1,5 +1,5 @@
 import EntityModel from './EntityModel'
-import EntityShape from './EntityShape'
+//import EntityShape from './EntityShape'
 import EntityStyle from './EntityStyle'
 import EntityLayer from '../../Layers/EntityLayer'
 import Element from '../../Utils/Element'
@@ -7,7 +7,7 @@ class Entity extends Element {
     constructor() {
         this.layer = EntityLayer
         this.model = new EntityModel()
-        this.shape = EntityShape
+        //this.shape = EntityShape
         this.style = EntityStyle
     }
 
