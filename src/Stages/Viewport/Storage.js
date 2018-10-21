@@ -2,6 +2,7 @@ import Model from '../../Utils/Model'
 
 class Storage extends Model {
     constructor() {
+        super()
         /** @var {EntityModel} */
         this.entities = []
 

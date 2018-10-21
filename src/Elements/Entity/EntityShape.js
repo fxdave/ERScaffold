@@ -1,5 +1,16 @@
 import Shape from '../../Utils/Element'
-import EditableText from '../../../src/Elements/EditableText';
+import RectangleShape from '../RectangleShape/RectangleShape'
+import EditableText from '../EditableText/EditableText';
+import DeleteButton from '../DeleteButton/DeleteButton'
+import AddButton from '../AddButton/AddButton'
+import HasManyConnectorHandle from '../HasManyConnectorHandle/HasManyConnectorHandle'
+import HasOneConnectorHandle from '../HasOneConnectorHandle/HasOneConnectorHandle'
+import EventRegister from '../../Utils/EventRegister'
+import WidthAnchor from '../../Utils/Anchors/WidthAnchor'
+import PositionAnchor from '../../Utils/Anchors/PositionAnchor'
+import LineAnchor from '../../Utils/Anchors/LineAnchor'
+import LineShape from '../LineShape/LineShape'
+
 export default new Shape({
     children: {
         text: new EditableText,

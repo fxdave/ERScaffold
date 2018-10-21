@@ -1,7 +1,7 @@
 import Model from '../../Utils/Model'
 class EntityModel extends Model {
     constructor() {
-        
+        super()
         /** @var PropertyModel */
         this.properties = []
     }

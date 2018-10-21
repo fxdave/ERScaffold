@@ -3,4 +3,6 @@ import './resources/css/OpenSans.scss'
 import './resources/css/Panel.scss'
 import './resources/css/Global.scss'
 import '../index.html'
-const ERV = new Viewport()
+import StageRenderer from './Utils/StageRenderer'
+const ERV = StageRenderer.render(Viewport)
+
