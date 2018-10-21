@@ -1,0 +1,2 @@
+class HasManyConnectorHandle {}
+export default HasManyConnectorHandle

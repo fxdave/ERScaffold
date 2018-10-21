@@ -2,10 +2,10 @@ import Anchor from './Abstract/Anchor'
 class WidthAnchor extends Anchor {
     constructor(from,to,settings) {
         super()
-        from.setEventListener("update", e => {
+        from.addEventListener("update", e => {
             this.update()
         })
-        to.setEventListener("update", e => {
+        to.addEventListener("update", e => {
             this.update()
         })
     }
