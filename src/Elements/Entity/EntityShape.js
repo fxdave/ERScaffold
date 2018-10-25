@@ -1,4 +1,4 @@
-import Shape from '../../Utils/Element'
+import Shape from '../../Utils/Shape'
 import RectangleShape from '../RectangleShape/RectangleShape'
 import EditableText from '../EditableText/EditableText';
 import DeleteButton from '../DeleteButton/DeleteButton'
@@ -77,6 +77,8 @@ props.anchors = {
         bottom: 0
     })
 }
+let S = new Shape(props)
+console.log(Shape);
+console.log(S);
 
-
-export default new Shape(props)
+export default S
