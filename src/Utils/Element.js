@@ -13,6 +13,12 @@ class Element extends Emitter {
         if( layer = this.shape.getLayer())
             layer.draw()
     }
+
+    remove() {
+        this.shape.remove()
+        this.layer.draw()
+        this.dispatchEvent(new Event("remove"))
+    }
 }
 
 export default Element

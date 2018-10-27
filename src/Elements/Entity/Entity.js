@@ -16,8 +16,14 @@ class Entity extends Element {
         this.getShape("text").edit()
     }
 
-    onTextChange() {
+    onDelete() {
+        console.log("entitiy is deleted!");
+        this.remove()
+    }
 
+    onTextChange() {
+        console.log("text has changed!");
+        
     }
 
     onHasManyConnect() {

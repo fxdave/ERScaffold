@@ -14,6 +14,7 @@ class EditableText extends Element {
             this.shape.text("empty")
 
         this.shape.dispatchEvent(new Event('updated:width'));
+        this.shape.dispatchEvent(new Event('updated:text'));
         this.redraw()
     }
 }

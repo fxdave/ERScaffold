@@ -3,10 +3,10 @@ import Model from '../../Utils/Model'
 class Storage extends Model {
     constructor() {
         super()
-        /** @var {EntityModel} */
+        /** @var {EntityModel[]} */
         this.entities = []
 
-        /** @var {ConnectionModel} */
+        /** @var {ConnectionModel[]} */
         this.connections = []
     }
 

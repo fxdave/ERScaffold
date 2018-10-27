@@ -22,11 +22,7 @@ class Shape extends Konva.Group {
             }
         }
 
-        if(props.anchors) {
-            for(let i in props.anchors) {
-                
-            }
-        }
+        //events are handled by the ElementRenderer
 
         
     }

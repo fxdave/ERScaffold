@@ -27,18 +27,10 @@ function EntityShape() {
     }
 
     props.events = {
-        onTextChange: new EventRegister({
-            shape: props.children.text,
-            eventName: "change"
-        }),
-        onHasManyConnect: new EventRegister({
-            shape: props.children.hasManyConnectorHandle,
-            eventName: "connect"
-        }),
-        onHasOneConnect: new EventRegister({
-            shape: props.children.hasOneConnectorHandle,
-            eventName: "connect"
-        })
+        onDelete: new EventRegister(props.children.deleteButton, "click"),
+        onTextChange: new EventRegister(props.children.text, "updated:text"),
+        onHasManyConnect: new EventRegister(props.children.hasManyConnectorHandle, "connect"),
+        onHasOneConnect: new EventRegister(props.children.hasOneConnectorHandle, "connect")
     }
 
     props.anchors = {

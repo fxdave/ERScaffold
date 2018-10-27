@@ -18,9 +18,19 @@ class ElementRenderer {
         if (elem.style) {
             elem.addEventListener("mounted", () => {
                 elem.style.apply(elem)
-                if(elem.mounted)
+                if (elem.mounted)
                     elem.mounted()
             })
+        }
+
+        if (elem.shape && elem.shape.props && elem.shape.props.events) {
+            let events = elem.shape.props.events
+            for (let i in events) {
+                if(elem[i]) {
+                    elem[i] = elem[i].bind(elem)
+                    events[i].callback = elem[i]
+                }
+            }
         }
 
         toBeInformed.push(elem)
@@ -29,6 +39,9 @@ class ElementRenderer {
             elem.layer.draw()
             ElementRenderer.inform()
         }
+
+
+
 
 
 
