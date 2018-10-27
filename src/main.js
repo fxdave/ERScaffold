@@ -6,3 +6,4 @@ import '../index.html'
 import StageRenderer from './Utils/StageRenderer'
 const ERV = StageRenderer.render(Viewport)
 
+window.ERV = ERV

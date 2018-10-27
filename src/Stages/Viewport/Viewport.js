@@ -15,8 +15,11 @@ class Viewport extends Stage {
 
     handleAddEntity() {
         this.addEventListener("dblclick", e => {
-            const entity = ElementRenderer.render(Entity)
+            const entity = ElementRenderer.render(new Entity)
             this.storage.entities.push(entity.model)
+            entity.shape.x(this.subtractDragX(e.clientX))
+            entity.shape.y(this.subtractDragY(e.clientY))
+            entity.layer.draw()
         })
     }
 }

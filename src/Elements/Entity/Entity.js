@@ -7,9 +7,13 @@ class Entity extends Element {
     constructor() {
         super()
         this.layer = EntityLayer
-        this.model = new EntityModel()
-        this.shape = EntityShape
+        this.model = new EntityModel
+        this.shape = EntityShape()
         this.style = EntityStyle
+    }
+
+    mounted() {
+        this.getShape("text").edit()
     }
 
     onTextChange() {

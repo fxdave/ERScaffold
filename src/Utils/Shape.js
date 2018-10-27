@@ -1,27 +1,33 @@
 import Konva from '../Vendor/Konva'
+import ElementRenderer from './ElementRenderer'
 class Shape extends Konva.Group {
     constructor(props) {
         super({
-            draggable: true
+            draggable: props ? props.draggable : false
         })
+
+        if(!props){
+            props = {}
+        }
+
+        this.props = props
         
 
-        let circle = new Konva.Circle({
-            x : 0,
-            y :  0,
-            radius: 10,
-            fill: '#ff006f',
-            opacity: 0.8
-        });
-
-        this.add(circle)
-/*
         if(props.children) {
             for(let i in props.children) {
-                this.add(props.children[i])
+                if(props.children[i].shape) {
+                    props.children[i].container = this;
+                    ElementRenderer.render(props.children[i], true)
+                }
             }
         }
-*/
+
+        if(props.anchors) {
+            for(let i in props.anchors) {
+                
+            }
+        }
+
         
     }
 }

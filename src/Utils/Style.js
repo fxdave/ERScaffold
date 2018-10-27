@@ -25,27 +25,37 @@ Style.Class = class {
         ]
     }
 
-    apply(element) {
+    apply(el) {
+
+        let element = el.shape
+        if (!element) {
+            console.error("Style: shape is required for applying style");
+            return
+        }
+
+        let layer = element.getLayer()
+        if (!layer) {
+            console.error("Style: layer is required for applying style");
+            return
+        }
 
         this.preFilterProps()
         
 
         for (let id in this.props) {
-            if (this.isBuiltIn(id))
+            if (this.isBuiltIn(id)) {
                 element[id](this.props[id])
+            }
+            element.dispatchEvent(new Event("updated:width"))
+            element.dispatchEvent(new Event("updated:position"))
         }
 
 
-        let layer = element.getLayer()
-        if (layer) {
-            element.getLayer().draw()
-        } else {
-            console.error("Style: layer is required for making stlye");
-            return
-        }
+        
+        layer.draw()
 
         if (this.props.children) {
-            this.setStyleForChildren(this.props.children, element)
+            this.setStyleForChildren(this.props.children, element.props.children)
         }
 
         if (this.props.hover) {
@@ -55,7 +65,7 @@ Style.Class = class {
             if (props.children) {
                 for (let index in props.children) {
                     let hoverPropsForChild = props.children[index].props
-                    this.setEvent(element, element[index], "mouseover", "mouseleave", hoverPropsForChild)
+                    this.setEvent(element, element.props.children[index].shape, "mouseover", "mouseleave", hoverPropsForChild)
                 }
             }
         }
@@ -81,6 +91,10 @@ Style.Class = class {
 
 
     setEvent(elementForEvent, elementToTween, startEventName, endEventName, props) {
+        if(!elementToTween){
+            console.error("Style: shape is required for applying style");
+            return
+        }
         const Time = this.props.duration ? this.props.duration : 0
         const Easing = this.props.easing ? Konva.Easings[this.props.easing] : Konva.Easings.Linear
 

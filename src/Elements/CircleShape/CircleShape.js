@@ -1,10 +1,10 @@
 import Konva from '../../Vendor/Konva'
 import Element from '../../Utils/Element'
-class RectangleShape extends Element {
+class CircleShape extends Element {
     constructor() {
         super()
-        this.shape = new Konva.Rect
+        this.shape = new Konva.Circle
     }
 }
 
-export default RectangleShape
+export default CircleShape
