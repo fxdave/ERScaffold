@@ -16,6 +16,7 @@ class ElementRenderer {
         }
 
         if (elem.shape) {
+            elem.shape.element = elem
             elem.addEventListener('mounted', () => {
                 if (elem.style)
                     elem.style.apply(elem)

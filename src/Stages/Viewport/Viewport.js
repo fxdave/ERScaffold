@@ -14,14 +14,14 @@ class Viewport extends Stage {
     }
 
     handleAddEntity() {
-        this.addEventListener("dblclick", e => {
+        this.addEventListener('dblclick', e => {
             let entity = ElementRenderer.render(new Entity)
             this.storage.entities.push(entity.model)
             entity.shape.x(this.subtractDragX(e.clientX))
             entity.shape.y(this.subtractDragY(e.clientY))
             entity.layer.draw()
 
-            entity.addEventListener("remove", () => {
+            entity.addEventListener('remove', () => {
                 this.storage.entities = this.storage.entities.filter(v => {
                     return v != this
                 })

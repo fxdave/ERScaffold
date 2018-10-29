@@ -2,7 +2,8 @@ import Element from '../../Utils/Element'
 import MathHelper from '../../../oldsrc/Utils/Math/MathHelper'
 import HasManyConnectorHandleShape from './HasManyConnectorHandleShape'
 import HasManyConnectorHandleStyle from './HasManyConnectorHandleStyle'
-
+import EntityLayer from '../../Layers/EntityLayer'
+import Entity from '../Entity/Entity'
 class HasManyConnectorHandle extends Element {
     constructor() {
         super()
@@ -15,17 +16,52 @@ class HasManyConnectorHandle extends Element {
     }
 
     onDrag() {
-        //waitForDrop (moving to temp layer)
+        this.moveToTempLayer()
+        this.setRotation(0)
     }
 
-    onMove() {
-        //direct to the mouse position
+    onMove(e) {
+        e.cancelBubble = true
+
+        this.direct({
+            x: 0, y: 0
+        },{
+            x: e.evt.clientX - this.shape.getAbsolutePosition().x, 
+            y: e.evt.clientY - this.shape.getAbsolutePosition().y
+        })
+
         this.redraw()
     }
 
     onDrop() {
-        //close waiting for drop (moving back to the original layer)
+        this.moveToPreviousLayer()
+        this.direct({ x: 0, y: 0 }, { x: 20, y: 0 })
+        this.setPreviousRotation()
         this.redraw()
+
+        var pos = this.shape.getStage().getPointerPosition()
+        var shape = EntityLayer.getIntersection(pos)
+
+        if (shape) {
+            let to = shape.parent
+            while (!(to.element instanceof Entity))
+                to = to.parent
+
+            this.shape.dispatchEvent(new CustomEvent('connect',{
+                detail: {
+                    to : to.element
+                }
+            }))
+        }
+    }
+
+    setRotation(r) {
+        this.previousRotation = this.shape.rotation()
+        this.shape.rotation(r)
+    }
+
+    setPreviousRotation() {
+        this.shape.rotation(this.previousRotation)
     }
 
     direct(from, to) {

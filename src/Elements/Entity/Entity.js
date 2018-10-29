@@ -13,26 +13,27 @@ class Entity extends Element {
     }
 
     mounted() {
-        this.getShape("text").edit()
+        this.getShape('text').edit()
     }
 
     onEditText(e) {
         e.cancelBubble = true
-        this.getShape("text").edit()
+        this.getShape('text').edit()
     }
 
     onDelete() {
-        console.log("entitiy is deleted!");
+        console.log('entitiy is deleted!')
         this.remove()
     }
 
     onTextChange() {
-        console.log("text has changed!");
+        console.log('text has changed!')
         
     }
 
     onHasManyConnect() {
-
+        console.log("hasManyConnect!!");
+        
     }
 
     onHasOneConnect() {

@@ -7,6 +7,15 @@ export default function () {
     props.children = {
         triangle: new LineShape
     }
+    
+    props.children.triangle.shape.dragBoundFunc (function() {
+        return {
+            x: props.children.triangle.shape.getAbsolutePosition().x,
+            y: props.children.triangle.shape.getAbsolutePosition().y
+        }
+    })
+
+    props.draggable = true
 
     props.events = {
         onDrag: new EventRegister(props.children.triangle, 'dragstart'),
@@ -14,5 +23,7 @@ export default function () {
         onDrop: new EventRegister(props.children.triangle, 'dragend'),
     }
 
-    return new Shape(props)
+    let shape = new Shape(props)
+
+    return shape
 }

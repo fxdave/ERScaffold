@@ -1,3 +1,5 @@
+import TempLayer from './TempLayer'
+
 class StageRenderer {
     static render(stage) {
         const S =  new stage()
@@ -6,10 +8,12 @@ class StageRenderer {
             S.add(S.layers[i])    
         }
 
+        S.add(TempLayer)
 
-        document.querySelectorAll("canvas").forEach(v => {
+
+        document.querySelectorAll('canvas').forEach(v => {
             v.onmousedown = e => {
-                return false;
+                return false
             }
         })
 

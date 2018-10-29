@@ -1,15 +1,12 @@
 import Konva from '../Vendor/Konva'
 import ElementRenderer from './ElementRenderer'
 class Shape extends Konva.Group {
-    constructor(props) {
+    constructor(props = {}) {
         super({
-            draggable: props ? props.draggable : false
+            draggable: props.draggable,
+            dragBoundFunc: props.dragBoundFunc
         })
-
-        if(!props){
-            props = {}
-        }
-
+        
         this.props = props
         
 
