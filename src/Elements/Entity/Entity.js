@@ -31,13 +31,16 @@ class Entity extends Element {
         
     }
 
-    onHasManyConnect() {
-        console.log("hasManyConnect!!");
-        
+    onHasManyConnect(e) {
+        this.dispatchEvent(new CustomEvent('hasManyConnect', {
+            detail: e.evt.detail
+        }))
     }
 
-    onHasOneConnect() {
-        
+    onHasOneConnect(e) {
+        this.dispatchEvent(new CustomEvent('hasOneConnect', {
+            detail: e.evt.detail
+        }))
     }
 }
 

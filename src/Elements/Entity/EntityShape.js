@@ -57,14 +57,14 @@ function EntityShape() {
         }),
         propertyAddLinePos: new LineAnchor(props.children.propertyAddLine, {
             from: {
-                shape: props.children.bg,
+                element: props.children.bg,
                 top: 0,
                 left: 0,
                 right: 0,
                 bottom: 0
             },
             to: {
-                shape: props.children.bg,
+                element: props.children.bg,
                 top: 0,
                 left: 0,
                 right: 0,

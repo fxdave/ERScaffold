@@ -1,23 +1,23 @@
-import Anchor from "./Abstract/Anchor";
+import Anchor from './Abstract/Anchor';
 
 class WidthAnchor extends Anchor {
     constructor(forElement, whatElement, props) {
         super()
 
         if (!forElement.shape || !whatElement.shape) {
-            console.error("WidthAnchor: forElement and whatElement must have shape")
+            console.error('WidthAnchor: forElement and whatElement must have shape')
         } else if (!forElement.shape.x || !whatElement.shape.x) {
-            console.error("WidthAnchor: wrong shape object")
+            console.error('WidthAnchor: wrong shape object')
         } else {
 
             this.forShape = forElement.shape
             this.whatShape = whatElement.shape
             this.props = props
 
-            console.log("WidthAnchor: initialized");
+            console.log('WidthAnchor: initialized')
 
             this.update()
-            forElement.shape.addEventListener("updated:width", () => {
+            forElement.shape.addEventListener('updated:width', () => {
 
                 this.update()
             })
@@ -29,7 +29,7 @@ class WidthAnchor extends Anchor {
     update() {
         let padding = this.props.padding || 0
         this.whatShape.width(this.forShape.width() + padding)
-        this.whatShape.dispatchEvent(new Event("updated:width"))
+        this.whatShape.dispatchEvent(new Event('updated:width'))
     }
 }
 
