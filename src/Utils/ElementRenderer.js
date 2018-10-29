@@ -5,7 +5,7 @@ const toBeInformed = []
 class ElementRenderer {
     static render(elem, child = false) {
         if (!(elem instanceof Element)) {
-            console.log(elem, "is not instance of Element")
+            console.log(elem, 'is not instance of Element')
             return
         }
 
@@ -15,9 +15,10 @@ class ElementRenderer {
             elem.layer.add(elem.shape)
         }
 
-        if (elem.style) {
-            elem.addEventListener("mounted", () => {
-                elem.style.apply(elem)
+        if (elem.shape) {
+            elem.addEventListener('mounted', () => {
+                if (elem.style)
+                    elem.style.apply(elem)
                 if (elem.mounted)
                     elem.mounted()
             })
@@ -26,9 +27,12 @@ class ElementRenderer {
         if (elem.shape && elem.shape.props && elem.shape.props.events) {
             let events = elem.shape.props.events
             for (let i in events) {
-                if(elem[i]) {
-                    elem[i] = elem[i].bind(elem)
-                    events[i].callback = elem[i]
+                let functionName = i
+                if (events[i].callbackName)
+                    functionName = events[i].callbackName
+                if (elem[functionName]) {
+                    elem[functionName] = elem[functionName].bind(elem)
+                    events[i].callback = elem[functionName]
                 }
             }
         }
@@ -40,18 +44,13 @@ class ElementRenderer {
             ElementRenderer.inform()
         }
 
-
-
-
-
-
         return elem
     }
 
     static inform() {
-        let current;
+        let current
         while (current = toBeInformed.pop()) {
-            current.dispatchEvent(new Event("mounted"))
+            current.dispatchEvent(new Event('mounted'))
         }
     }
 }

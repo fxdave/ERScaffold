@@ -1,6 +1,6 @@
 import Shape from '../../Utils/Shape'
 import RectangleShape from '../RectangleShape/RectangleShape'
-import EditableText from '../EditableText/EditableText';
+import EditableText from '../EditableText/EditableText'
 import DeleteButton from '../DeleteButton/DeleteButton'
 import AddButton from '../AddButton/AddButton'
 import HasManyConnectorHandle from '../HasManyConnectorHandle/HasManyConnectorHandle'
@@ -27,10 +27,12 @@ function EntityShape() {
     }
 
     props.events = {
-        onDelete: new EventRegister(props.children.deleteButton, "click"),
-        onTextChange: new EventRegister(props.children.text, "updated:text"),
-        onHasManyConnect: new EventRegister(props.children.hasManyConnectorHandle, "connect"),
-        onHasOneConnect: new EventRegister(props.children.hasOneConnectorHandle, "connect")
+        onEditText: new EventRegister(props.children.bg,'dblclick'),
+        onEditText2: new EventRegister(props.children.text,'dblclick', 'onEditText'),
+        onDelete: new EventRegister(props.children.deleteButton, 'click'),
+        onTextChange: new EventRegister(props.children.text, 'updated:text'),
+        onHasManyConnect: new EventRegister(props.children.hasManyConnectorHandle, 'connect'),
+        onHasOneConnect: new EventRegister(props.children.hasOneConnectorHandle, 'connect')
     }
 
     props.anchors = {

@@ -16,7 +16,7 @@ class Shape extends Konva.Group {
         if(props.children) {
             for(let i in props.children) {
                 if(props.children[i].shape) {
-                    props.children[i].container = this;
+                    props.children[i].container = this
                     ElementRenderer.render(props.children[i], true)
                 }
             }

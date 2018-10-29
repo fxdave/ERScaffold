@@ -8,12 +8,6 @@ class Stage extends Konva.Stage {
             width: window.innerWidth,
             height: window.innerHeight
         })
-
-        document.querySelectorAll("canvas").forEach(v => {
-            v.onmousedown = e => {
-                return false;
-            }
-        })
     }
 
 

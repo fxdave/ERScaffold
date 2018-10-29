@@ -16,6 +16,11 @@ class Entity extends Element {
         this.getShape("text").edit()
     }
 
+    onEditText(e) {
+        e.cancelBubble = true
+        this.getShape("text").edit()
+    }
+
     onDelete() {
         console.log("entitiy is deleted!");
         this.remove()
