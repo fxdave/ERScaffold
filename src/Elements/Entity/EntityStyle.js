@@ -31,8 +31,7 @@ export default new Style.Class({
             zIndex:9,
             fontSize:22,
             fill: '#fff',
-            fontFamily: 'Open Sans',
-            text: "arvíztűrő"
+            fontFamily: 'Open Sans'
         }),
         deleteButton: new Style.Class({
             zIndex:2,

@@ -1,8 +1,10 @@
+import Konva from '../Vendor/Konva'
+
 class Style { }
 
 Style.Class = class {
     constructor(props) {
-        this.NotBuiltIns = ["hover", "duration", "easing", "cursor", "click", "children"]
+        this.NotBuiltIns = ['hover', 'duration', 'easing', 'cursor', 'click', 'children']
         this.props = props
         this.saves = []
         this.easing = [
@@ -29,13 +31,13 @@ Style.Class = class {
 
         let element = el.shape
         if (!element) {
-            console.error("Style: shape is required for applying style");
+            console.error('Style: shape is required for applying style')
             return
         }
 
         let layer = element.getLayer()
         if (!layer) {
-            console.error("Style: layer is required for applying style");
+            console.error('Style: layer is required for applying style')
             return
         }
 
@@ -46,8 +48,8 @@ Style.Class = class {
             if (this.isBuiltIn(id)) {
                 element[id](this.props[id])
             }
-            element.dispatchEvent(new Event("updated:width"))
-            element.dispatchEvent(new Event("updated:position"))
+            element.dispatchEvent(new Event('updated:width'))
+            element.dispatchEvent(new Event('updated:position'))
         }
 
 
@@ -60,17 +62,17 @@ Style.Class = class {
 
         if (this.props.hover) {
             let props = this.props.hover
-            this.setEvent(element, element, "mouseover", "mouseleave", props)
+            this.setEvent(element, element, 'mouseover', 'mouseleave', props)
 
             if (props.children) {
                 for (let index in props.children) {
                     let hoverPropsForChild = props.children[index].props
-                    this.setEvent(element, element.props.children[index].shape, "mouseover", "mouseleave", hoverPropsForChild)
+                    this.setEvent(element, element.props.children[index].shape, 'mouseover', 'mouseleave', hoverPropsForChild)
                 }
             }
         }
         if (this.props.click) {
-            this.setEvent(element, element, "mousedown", "mouseup", this.props.click)
+            this.setEvent(element, element, 'mousedown', 'mouseup', this.props.click)
         }
     }
 
@@ -92,7 +94,7 @@ Style.Class = class {
 
     setEvent(elementForEvent, elementToTween, startEventName, endEventName, props) {
         if(!elementToTween){
-            console.error("Style: shape is required for applying style");
+            console.error('Style: shape is required for applying style')
             return
         }
         const Time = this.props.duration ? this.props.duration : 0
@@ -103,7 +105,7 @@ Style.Class = class {
             tween.reverse()
         
             if (props.cursor) {
-                document.body.style.cursor = "inherit"
+                document.body.style.cursor = 'inherit'
             }
         }
 
@@ -118,15 +120,15 @@ Style.Class = class {
         if (startEventName == endEventName) {
             tweenProps.onFinish = finish
         } else {
-            elementForEvent.on(endEventName, e => {
+            elementForEvent.on(endEventName, () => {
                 finish()
             })
         }
 
-        var tween = new Konva.Tween(tweenProps);
+        var tween = new Konva.Tween(tweenProps)
         window.tween = tween
         
-        elementForEvent.on(startEventName, e => {
+        elementForEvent.on(startEventName, () => {
             tween.play()
             if (props.cursor) {
                 document.body.style.cursor = props.cursor

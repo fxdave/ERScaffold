@@ -1,21 +1,21 @@
-import Anchor from "./Abstract/Anchor";
+import Anchor from './Abstract/Anchor'
 
 class CenterAnchor extends Anchor {
     constructor(whatElement) {
-        super()
+        super(whatElement)
 
         if (!whatElement.shape) {
-            console.error("CenterAnchor: forElement and whatElement must have shape")
+            console.error('CenterAnchor: forElement and whatElement must have shape')
         } else if (!whatElement.shape.x) {
-            console.error("CenterAnchor: wrong shape object")
+            console.error('CenterAnchor: wrong shape object')
         } else {
 
             this.whatShape = whatElement.shape
 
-            console.log("CenterAnchor: initialized");
+            console.log('CenterAnchor: initialized')
 
             this.update()
-            whatElement.shape.addEventListener("updated:width", () => {
+            whatElement.shape.addEventListener('updated:width', () => {
                 this.update()
             })
 
@@ -24,9 +24,10 @@ class CenterAnchor extends Anchor {
     }
 
     update() {
+        super.update()
         this.whatShape.x(-this.whatShape.width()/2)
         this.whatShape.y(-this.whatShape.height()/2)
-        this.whatShape.dispatchEvent(new Event("updated:position"))
+        this.whatShape.dispatchEvent(new Event('updated:position'))
     }
 }
 

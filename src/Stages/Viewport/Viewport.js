@@ -11,8 +11,8 @@ class Viewport extends Stage {
         super()
         this.storage = new Storage()
         this.layers = {
+            connectionLayer: ConnectionLayer,
             entityLayer: EntityLayer,
-            connectionLayer: ConnectionLayer
         }
         this.handleAddEntity()
     }
@@ -27,6 +27,9 @@ class Viewport extends Stage {
             entity.layer.draw()
 
             entity.addEventListener('remove', () => {
+
+                this.removeConnectionsWith(entity)
+
                 this.storage.entities = this.storage.entities.filter(v => {
                     return v != this
                 })
@@ -49,12 +52,32 @@ class Viewport extends Stage {
 
     /**
      * 
+     * @param {Entity} entity 
+     */
+    removeConnectionsWith(entity) {
+        let toDelete = []
+        this.storage.connections.forEach(v => {
+            if(v.hasParticipant(entity))
+                toDelete.push(v)
+        }) 
+
+        this.storage.connections = this.storage.connections.filter(v => {
+            return !(v in toDelete)
+        })
+
+        toDelete.forEach(v => {
+            v.remove()
+        })
+    }
+
+    /**
+     * 
      * @param {Entity} from 
      * @param {Entity} to 
      */
     handleAddConnection(from, to, type) {
-        let connection = ElementRenderer.render(new OneToManyConnection)
-        connection.setAnchor(from,to)
+        let connection = ElementRenderer.render(new OneToManyConnection(from,to))
+        this.storage.connections.push(connection)
     }
 }
 export default Viewport

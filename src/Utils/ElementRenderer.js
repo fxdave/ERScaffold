@@ -38,6 +38,10 @@ class ElementRenderer {
             }
         }
 
+        elem.shape.addEventListener('updated:anchor', () => {
+            elem.redraw()
+        })
+
         toBeInformed.push(elem)
 
         if (!child) {

@@ -2,7 +2,7 @@ class Style { }
 
 Style.Class = class {
     constructor(props) {
-        this.NotBuiltIns = ["hover", "duration", "easing", "cursor", "click", "children"]
+        this.NotBuiltIns = ['hover', 'duration', 'easing', 'cursor', 'click', 'children']
         this.props = props
         this.saves = []
         this.easing = [
@@ -40,7 +40,7 @@ Style.Class = class {
         if (layer) {
             element.getLayer().draw()
         } else {
-            console.error("Style: layer is required for making stlye");
+            console.error('Style: layer is required for making stlye')
             return
         }
 
@@ -50,17 +50,17 @@ Style.Class = class {
 
         if (this.props.hover) {
             let props = this.props.hover
-            this.setEvent(element, element, "mouseover", "mouseleave", props)
+            this.setEvent(element, element, 'mouseover', 'mouseleave', props)
 
             if (props.children) {
                 for (let index in props.children) {
                     let hoverPropsForChild = props.children[index].props
-                    this.setEvent(element, element[index], "mouseover", "mouseleave", hoverPropsForChild)
+                    this.setEvent(element, element[index], 'mouseover', 'mouseleave', hoverPropsForChild)
                 }
             }
         }
         if (this.props.click) {
-            this.setEvent(element, element, "mousedown", "mouseup", this.props.click)
+            this.setEvent(element, element, 'mousedown', 'mouseup', this.props.click)
         }
     }
 
@@ -89,7 +89,7 @@ Style.Class = class {
             tween.reverse()
         
             if (props.cursor) {
-                document.body.style.cursor = "inherit"
+                document.body.style.cursor = 'inherit'
             }
         }
 
@@ -109,7 +109,7 @@ Style.Class = class {
             })
         }
 
-        var tween = new Konva.Tween(tweenProps);
+        var tween = new Konva.Tween(tweenProps)
         window.tween = tween
         
         elementForEvent.on(startEventName, e => {

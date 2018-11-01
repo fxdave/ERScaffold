@@ -1,26 +1,26 @@
-import Anchor from "./Abstract/Anchor";
+import Anchor from './Abstract/Anchor'
 
 class PositionAnchor extends Anchor {
     constructor(forElement, whatElement, props) {
-        super()
+        super(forElement)
 
         if (!forElement.shape || !whatElement.shape) {
-            console.error("PositionAnchor: forElement and whatElement must have shape")
+            console.error('PositionAnchor: forElement and whatElement must have shape')
         } else if (!forElement.shape.x || !whatElement.shape.x) {
-            console.error("PositionAnchor: wrong shape object")
+            console.error('PositionAnchor: wrong shape object')
         } else {
 
             this.forShape = forElement.shape
             this.whatShape = whatElement.shape
             this.props = props
 
-            console.log("PositionAnchor: initialized");
+            console.log('PositionAnchor: initialized')
 
             this.update()
-            forElement.shape.addEventListener("updated:position", () => {
+            forElement.shape.addEventListener('updated:position', () => {
                 this.update()
             })
-            forElement.shape.addEventListener("updated:width", () => {
+            forElement.shape.addEventListener('updated:width', () => {
                 this.update()
             })
 
@@ -29,6 +29,7 @@ class PositionAnchor extends Anchor {
     }
 
     update() {
+        super.update()
 
         let horizontal = this.getOffset(this.props.left, this.props.right, this.forShape.width(), this.whatShape.width())
         if (horizontal) {
@@ -40,7 +41,7 @@ class PositionAnchor extends Anchor {
             this.whatShape.y(vertical + this.forShape.y())
         }
 
-        this.whatShape.dispatchEvent(new Event("updated:position"))
+        this.whatShape.dispatchEvent(new Event('updated:position'))
     }
 
     getOffset(leftOffset, rightOffset, width, myWidth) {

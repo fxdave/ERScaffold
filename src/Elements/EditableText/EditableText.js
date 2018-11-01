@@ -7,14 +7,14 @@ class EditableText extends Element {
     }
 
     edit() {
-        let val = prompt("Type the name")
-        if (val != "")
+        let val = prompt('Type the name')
+        if (val != '')
             this.shape.text(val)
         else
-            this.shape.text("empty")
+            this.shape.text('empty')
 
-        this.shape.dispatchEvent(new Event('updated:width'));
-        this.shape.dispatchEvent(new Event('updated:text'));
+        this.shape.dispatchEvent(new Event('updated:width'))
+        this.shape.dispatchEvent(new Event('updated:text'))
         this.redraw()
     }
 }

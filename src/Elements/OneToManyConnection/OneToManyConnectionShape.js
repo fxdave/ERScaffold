@@ -1,17 +1,15 @@
 import Shape from '../../Utils/Shape'
-import LineShape from '../LineShape/LineShape'
+import One from '../One/One'
+import Many from '../Many/Many'
+import Relation from '../Relation/Relation'
+
 export default function () {
     let props = {}
 
     props.children = {
-        one : new LineShape,
-        many1 : new LineShape,
-        many2 : new LineShape,
-        many3 : new LineShape
-    }
-
-    props.anchors = {
-        
+        one : new One,
+        many: new Many,
+        relation: new Relation
     }
 
     return new Shape(props)

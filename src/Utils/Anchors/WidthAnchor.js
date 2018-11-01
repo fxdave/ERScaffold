@@ -1,8 +1,8 @@
-import Anchor from './Abstract/Anchor';
+import Anchor from './Abstract/Anchor'
 
 class WidthAnchor extends Anchor {
     constructor(forElement, whatElement, props) {
-        super()
+        super(forElement)
 
         if (!forElement.shape || !whatElement.shape) {
             console.error('WidthAnchor: forElement and whatElement must have shape')
@@ -27,6 +27,7 @@ class WidthAnchor extends Anchor {
     }
 
     update() {
+        super.update()
         let padding = this.props.padding || 0
         this.whatShape.width(this.forShape.width() + padding)
         this.whatShape.dispatchEvent(new Event('updated:width'))
