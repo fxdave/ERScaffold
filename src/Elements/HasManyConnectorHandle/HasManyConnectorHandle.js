@@ -1,9 +1,9 @@
 import Element from '../../Utils/Element'
-import MathHelper from '../../../oldsrc/Utils/Math/MathHelper'
 import HasManyConnectorHandleShape from './HasManyConnectorHandleShape'
 import HasManyConnectorHandleStyle from './HasManyConnectorHandleStyle'
 import EntityLayer from '../../Layers/EntityLayer'
 import Entity from '../Entity/Entity'
+import MathHelper from '../../Utils/Math/MathHelper'
 class HasManyConnectorHandle extends Element {
     constructor() {
         super()

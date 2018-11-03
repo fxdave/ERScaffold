@@ -1,6 +1,6 @@
 import Shape from '../../Utils/Shape'
 import One from '../One/One'
-import Many from '../Many/Many'
+
 import Relation from '../Relation/Relation'
 import EventRegister from '../../Utils/EventRegister'
 
@@ -9,7 +9,7 @@ export default function () {
 
     props.children = {
         one : new One,
-        many: new Many,
+        many: new One,
         relation: new Relation
     }
 

@@ -7,7 +7,6 @@ export default new Style.Class({
             y :  0,
             radius: 10,
             fill: '#ff006f',
-            opacity: 0.8
         }),
         text : new Style.Class({
             x: -4,
@@ -16,5 +15,9 @@ export default new Style.Class({
             text : '\u2715',
             fill: '#fff'
         })
+    },
+    opacity: 0.3,
+    hover: {
+        opacity: 0.8
     }
 })

@@ -1,18 +1,18 @@
 import Element from '../../Utils/Element'
-import OneToManyConnectionShape from './OneToManyConnectionShape'
-import OneToManyConnectionStyle from './OneToManyConnectionStyle'
+import ManyToManyConnectionShape from './ManyToManyConnectionShape'
+import ManyToManyConnectionStyle from './ManyToManyConnectionStyle'
 import ConnectionLayer from '../../Layers/ConnectionLayer'
 import LineAnchor from '../../Utils/Anchors/LineAnchor'
 
-class OneToManyConnection extends Element {
+class ManyToManyConnection extends Element {
     constructor(one, many) {
         super()
         this.one = one
         this.many = many
 
         this.layer = ConnectionLayer
-        this.shape = OneToManyConnectionShape()
-        this.style = OneToManyConnectionStyle
+        this.shape = ManyToManyConnectionShape()
+        this.style = ManyToManyConnectionStyle
     }
 
     onDelete() {
@@ -52,7 +52,7 @@ class OneToManyConnection extends Element {
                 }
 
                 let half = this.getHalf(from,to)
-                one.change(from,half)
+                one.change(half,from)
                 many.change(half, to)
 
                 relation.shape.x(half.x)
@@ -85,4 +85,4 @@ class OneToManyConnection extends Element {
     }
 }
 
-export default OneToManyConnection
+export default ManyToManyConnection

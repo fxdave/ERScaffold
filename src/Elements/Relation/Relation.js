@@ -14,6 +14,10 @@ class Relation extends Element {
         this.getShape('text').edit()
         this.redraw()
     }
+
+    onDelete() {
+        this.shape.dispatchEvent(new Event('remove'))
+    }
 }
 
 export default Relation

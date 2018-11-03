@@ -21,9 +21,8 @@ export default new Style.Class({
         }),
         bg : new Style.Class({
             width: 50,
-            height: 100,
             zIndex:1,
-            height: 60,
+            height: 50,
             cornerRadius: 10,
             fill: '#2f2f2f'
         }),
@@ -34,8 +33,7 @@ export default new Style.Class({
             fontFamily: 'Open Sans'
         }),
         deleteButton: new Style.Class({
-            zIndex:2,
-            opacity: 0.1
+            zIndex:2
         }),
         hasManyConnectorHandle: new Style.Class({
             zIndex:0,
@@ -45,12 +43,5 @@ export default new Style.Class({
             zIndex:0,
             rotation : 67.5
         })
-    },
-    hover: {
-        children: {
-            deleteButton: new Style.Class({
-                opacity: 0.9
-            })
-        }
     }
 })

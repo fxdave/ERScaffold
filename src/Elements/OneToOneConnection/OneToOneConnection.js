@@ -1,18 +1,18 @@
 import Element from '../../Utils/Element'
-import OneToManyConnectionShape from './OneToManyConnectionShape'
-import OneToManyConnectionStyle from './OneToManyConnectionStyle'
+import OneToOneConnectionShape from './OneToOneConnectionShape'
+import OneToOneConnectionStyle from './OneToOneConnectionStyle'
 import ConnectionLayer from '../../Layers/ConnectionLayer'
 import LineAnchor from '../../Utils/Anchors/LineAnchor'
 
-class OneToManyConnection extends Element {
+class OneToOneConnection extends Element {
     constructor(one, many) {
         super()
         this.one = one
         this.many = many
 
         this.layer = ConnectionLayer
-        this.shape = OneToManyConnectionShape()
-        this.style = OneToManyConnectionStyle
+        this.shape = OneToOneConnectionShape()
+        this.style = OneToOneConnectionStyle
     }
 
     onDelete() {
@@ -85,4 +85,4 @@ class OneToManyConnection extends Element {
     }
 }
 
-export default OneToManyConnection
+export default OneToOneConnection
