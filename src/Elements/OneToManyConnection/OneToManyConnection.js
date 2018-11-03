@@ -1,14 +1,12 @@
-import Element from '../../Utils/Element'
 import OneToManyConnectionShape from './OneToManyConnectionShape'
 import OneToManyConnectionStyle from './OneToManyConnectionStyle'
 import ConnectionLayer from '../../Layers/ConnectionLayer'
 import LineAnchor from '../../Utils/Anchors/LineAnchor'
+import Connection from '../Abstract/Connection/Connection'
 
-class OneToManyConnection extends Element {
-    constructor(one, many) {
-        super()
-        this.one = one
-        this.many = many
+class OneToManyConnection extends Connection {
+    constructor(from, to) {
+        super(from,to)
 
         this.layer = ConnectionLayer
         this.shape = OneToManyConnectionShape()
@@ -20,7 +18,7 @@ class OneToManyConnection extends Element {
     }
 
     mounted() {
-        this.setAnchor(this.one, this.many)
+        this.setAnchor(this.from, this.to)
     }
 
     setAnchor(one, many) {
@@ -60,21 +58,6 @@ class OneToManyConnection extends Element {
             }
         })
         this.redraw()
-    }
-
-
-    hasFrom(entity) {
-        return this.one == entity
-    }
-
-    hasTo(entity) {
-        return this.many == entity
-    }
-
-    hasParticipant(entity) {
-        if(this.one == entity || this.many == entity) 
-            return true
-        return false
     }
 
     getHalf(from,to) {

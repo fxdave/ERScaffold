@@ -17,13 +17,13 @@ function EntityShape() {
     }
 
     props.children = {
+        hasManyConnectorHandle: new HasManyConnectorHandle,
+        hasOneConnectorHandle: new HasOneConnectorHandle,
         bg: new RectangleShape,
         text: new EditableText,
         deleteButton: new DeleteButton,
         propertyAddButton: new AddButton,
         propertyAddLine: new LineShape,
-        hasManyConnectorHandle: new HasManyConnectorHandle,
-        hasOneConnectorHandle: new HasOneConnectorHandle,
     }
 
     props.events = {
@@ -72,12 +72,12 @@ function EntityShape() {
             }
         }),
         hasManyPos: new PositionAnchor(props.children.bg, props.children.hasManyConnectorHandle, {
-            right: 0,
-            bottom: 0
+            right: 4,
+            bottom: 4
         }),
         hasOnePos: new PositionAnchor(props.children.bg, props.children.hasOneConnectorHandle, {
-            right: 0,
-            bottom: 0
+            right: 4,
+            bottom: 4
         })
     }
 
