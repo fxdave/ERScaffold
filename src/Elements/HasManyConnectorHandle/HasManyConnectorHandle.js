@@ -65,10 +65,10 @@ class HasManyConnectorHandle extends Element {
     }
 
     direct(from, to) {
-        let proj = MathHelper.triangularProjection(from, to, 3)
-        this.getShape('triangle').shape.points([from.x, from.y, proj[0], proj[1], proj[4], proj[5]])
-        
-        
+        let proj = MathHelper.triangularProjection(from, to, 5)
+        let proj2 = MathHelper.triangularProjection(to, from, 1)
+        this.getShape('triangle').shape.points([proj2[0], proj2[1], proj2[4], proj2[5], proj[0], proj[1], proj[4], proj[5]])
+
         this.redraw()
     }
 }
