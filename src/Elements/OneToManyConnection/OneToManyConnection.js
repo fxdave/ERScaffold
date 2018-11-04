@@ -19,25 +19,37 @@ class OneToManyConnection extends Connection {
 
     mounted() {
         this.setAnchor(this.from, this.to)
+
+        let half = this.getHalf({
+            x: this.from.shape.x(),
+            y: this.from.shape.y()
+        }, {
+            x: this.to.shape.x(),
+            y: this.to.shape.y()
+        })
+
+        this.getShape('relation').shape.x(half.x)
+        this.getShape('relation').shape.y(half.y)
     }
 
-    setAnchor(one, many) {
+    setAnchor(oneEntity, manyEntity) {
+
+        let one = this.getShape('one'),
+            many = this.getShape('many'),
+            relation = this.getShape('relation')
+
         this.anchor = new LineAnchor(this.getShape('one'), {
-            from: {
-                element: one,
-            },
-            to: {
-                element: many
+            watch: {
+                from: oneEntity,
+                to: manyEntity,
+                relation,
             },
             /**
              * 
              * @param {Element} from 
              * @param {Element} to 
              */
-            update: (from, to) => {
-                let one = this.getShape('one'),
-                    many = this.getShape('many'),
-                    relation = this.getShape('relation')
+            update: (from, to, relation) => {
 
                 from = {
                     x: from.shape.x(),
@@ -49,12 +61,13 @@ class OneToManyConnection extends Connection {
                     y: to.shape.y()
                 }
 
-                let half = this.getHalf(from,to)
-                one.change(from,half)
-                many.change(half, to)
+                let rel = {
+                    x: relation.shape.x(),
+                    y: relation.shape.y()
+                }
+                one.change(from,rel,to)
+                many.change(rel, to)
 
-                relation.shape.x(half.x)
-                relation.shape.y(half.y)
             }
         })
         this.redraw()

@@ -12,6 +12,8 @@ function RelationShape() {
 
     let props = {}
 
+    props.draggable = true
+
     props.children = {
         bg: new RhombusShape,
         text: new EditableText,

@@ -4,19 +4,20 @@ class LineAnchor extends Anchor {
     constructor(line, props) {
         super(line)
 
+        props.watch = Object.values(props.watch)
         this.props = props
         this.line = line
-        if (!props.to.element.shape || !props.from.element.shape) {
+        if (props.watch.filter(v => {return v.shape}).length != props.watch.length) {
             console.error('LineAchor: elements must have shape')
         } else {
             if(props.update) {
-                props.update(props.from.element,props.to.element) 
-                EventHelper.on(['updated:position', 'dragmove'], [props.to.element.shape, props.from.element.shape], () => {
-                    props.update(props.from.element,props.to.element) 
+                props.update(...props.watch) 
+                EventHelper.on(['updated:position', 'dragmove'], props.watch.map(v => {return v.shape}), () => {
+                    props.update(...props.watch) 
                     super.update()
                 })
             } else {
-                EventHelper.on(['updated:position', 'dragmove'], [props.to.element.shape, props.from.element.shape], () => {
+                EventHelper.on(['updated:position', 'dragmove'], props.watch.map(v => {return v.shape}), () => {
                     this.update()
                 })
             }
@@ -28,10 +29,10 @@ class LineAnchor extends Anchor {
 
     async update() {
         this.line.shape.points([
-            this.props.from.element.shape.x(),
-            this.props.from.element.shape.y(),
-            this.props.to.element.shape.x(),
-            this.props.to.element.shape.y()
+            this.props.watch[0].shape.x(),
+            this.props.watch[0].shape.y(),
+            this.props.watch[1].shape.x(),
+            this.props.watch[1].shape.y()
         ])
         this.line.shape.dispatchEvent(new Event('updated:shape'))
         super.update()

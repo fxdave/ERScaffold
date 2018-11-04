@@ -6,7 +6,7 @@ function OneShape() {
     let props = {}
 
     props.children = {
-        one : new LineShape
+        one : new LineShape(true)
     }
 
     return new Shape(props)

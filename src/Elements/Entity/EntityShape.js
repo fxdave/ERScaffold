@@ -56,19 +56,9 @@ function EntityShape() {
             top: -40
         }),
         propertyAddLinePos: new LineAnchor(props.children.propertyAddLine, {
-            from: {
-                element: props.children.bg,
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0
-            },
-            to: {
-                element: props.children.bg,
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0
+            watch: {
+                from: props.children.bg,
+                to:  props.children.bg,
             }
         }),
         hasManyPos: new PositionAnchor(props.children.bg, props.children.hasManyConnectorHandle, {
