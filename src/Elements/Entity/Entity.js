@@ -16,6 +16,11 @@ class Entity extends Element {
         this.getShape('text').edit()
     }
 
+    onAddProperty() {
+        console.log('prop added')
+        
+    }
+
     onEditText(e) {
         e.cancelBubble = true
         this.getShape('text').edit()

@@ -26,6 +26,7 @@ function EntityShape() {
     }
 
     props.events = {
+        onAddProperty: new EventRegister(props.children.propertyAddButton,'click'),
         onEditText: new EventRegister(props.children.bg,'dblclick'),
         onEditText2: new EventRegister(props.children.text,'dblclick', 'onEditText'),
         onDelete: new EventRegister(props.children.deleteButton, 'click'),
