@@ -79,6 +79,14 @@ class Viewport extends Stage {
      */
     getExistedConnectionType(from, to) {
         for (let v of this.storage.connections) {
+            if(v.hasFrom(from) && v.hasTo(to), from == to){
+                if (v instanceof OneToOneConnection)
+                    return { type: 'OneToOneRecursive', instance: v }
+                if (v instanceof OneToManyConnection)
+                    return { type: 'OneToManyRecursive', instance: v }
+                if (v instanceof ManyToManyConnection)
+                    return { type: 'ManyToManyRecursive', instance: v }
+            }
             if (v.hasFrom(from) && v.hasTo(to)) {
                 if (v instanceof OneToOneConnection)
                     return { type: 'OneToOne', instance: v }
@@ -109,16 +117,23 @@ class Viewport extends Stage {
         let onCreateConfig = {
             hasOne: {
                 OneToOne: null,
+                OneToOneRecursive: null,
                 OneToMany: null,
+                OneToManyRecursive: null,
                 ManyToOne: null,
                 ManyToMany: null,
+                ManyToManyRecursive: null,
                 default: OneToOneConnection
             },
             hasMany: {
                 OneToOne: OneToManyConnection,
+                OneToOneRecursive: OneToManyConnection,
                 OneToMany: null,
+                OneToManyRecursive: ManyToManyConnection,
                 ManyToOne: ManyToManyConnection,
                 ManyToMany: null,
+                ManyToManyRecursive: null,
+                recursive: ManyToManyConnection,
                 default: OneToManyConnection
             }
         }
