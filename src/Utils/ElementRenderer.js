@@ -3,10 +3,14 @@ import Element from './Element'
 
 const toBeInformed = []
 class ElementRenderer {
-    static render(elem, child = false) {
+    static render(elem, child = false, container = undefined) {
         if (!(elem instanceof Element)) {
             console.log(elem, 'is not instance of Element')
             return
+        }
+
+        if(container) {
+            elem.container = container
         }
 
         if (elem.container) {
@@ -45,7 +49,7 @@ class ElementRenderer {
         toBeInformed.push(elem)
 
         if (!child) {
-            elem.layer.draw()
+            elem.redraw()
             ElementRenderer.inform()
         }
 

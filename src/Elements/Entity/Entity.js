@@ -3,6 +3,8 @@ import EntityShape from './EntityShape'
 import EntityStyle from './EntityStyle'
 import EntityLayer from '../../Layers/EntityLayer'
 import Element from '../../Utils/Element'
+import ElementRenderer from '../../Utils/ElementRenderer'
+import PropertyWithLine from '../PropertyWithLine/PropertyWithLine'
 class Entity extends Element {
     constructor() {
         super()
@@ -17,8 +19,14 @@ class Entity extends Element {
     }
 
     onAddProperty() {
-        console.log('prop added')
-        
+        let property = ElementRenderer.render(new PropertyWithLine, false, this.shape)
+        property.addEventListener('remove', () => {
+            console.log('property is needed to be removed')
+            
+        })
+        property.changeText()
+        property.shape.setZIndex(0)
+        this.redraw()
     }
 
     onEditText(e) {
@@ -33,7 +41,7 @@ class Entity extends Element {
 
     onTextChange() {
         console.log('text has changed!')
-        
+
     }
 
     onHasManyConnect(e) {

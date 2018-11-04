@@ -17,7 +17,10 @@ class Element extends Emitter {
 
     remove() {
         this.shape.remove()
-        this.layer.draw()
+        if(this.layer)
+            this.layer.draw()
+        if(this.container)
+            this.container.getLayer().draw()
         this.dispatchEvent(new Event('remove'))
     }
 
