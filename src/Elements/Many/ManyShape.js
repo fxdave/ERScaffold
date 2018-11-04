@@ -1,14 +1,14 @@
 import Shape from '../../Utils/Shape'
-import LineShape from '../LineShape/LineShape'
+import One from '../One/One'
 
 function ManyShape() {
 
     let props = {}
 
     props.children = {
-        line1 : new LineShape,
-        line2 : new LineShape,
-        line3 : new LineShape
+        line1 : new One,
+        line2 : new One,
+        line3 : new One
     }
 
     return new Shape(props)

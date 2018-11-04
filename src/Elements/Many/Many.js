@@ -1,13 +1,11 @@
 
 import Element from '../../Utils/Element'
 import ManyShape from './ManyShape'
-import ManyStyle from './ManyStyle'
 import MathHelper from '../../Utils/Math/MathHelper'
 
 class Many extends Element {
     constructor() {
         super()
-        this.style = ManyStyle
         this.shape = ManyShape()
     }
 
@@ -20,26 +18,11 @@ class Many extends Element {
      * @param {number} to.x
      * @param {number} to.y
       */
-    change(from,to) {
-        let coords = MathHelper.triangularProjection(from,to,7)
-        this.getShape('line1').shape.points([
-            from.x,
-            from.y,
-            coords[0],
-            coords[1]
-        ])
-        this.getShape('line2').shape.points([
-            from.x,
-            from.y,
-            coords[2],
-            coords[3]
-        ])
-        this.getShape('line3').shape.points([
-            from.x,
-            from.y,
-            coords[4],
-            coords[5]
-        ])
+    change(from,trough,to,normalID = 1) {
+        let coords = MathHelper.triangularProjection(trough,from,7)
+        this.getShape('line1').change({x: coords[0], y: coords[1]},trough,to ,normalID)
+        this.getShape('line2').change({x: coords[2], y: coords[3]},trough,to ,normalID)
+        this.getShape('line3').change({x: coords[4], y: coords[5]},trough,to ,normalID)
         this.redraw()
     }
 }

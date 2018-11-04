@@ -7,8 +7,8 @@ export default function () {
     let props = {}
 
     props.children = {
-        one : new Many,
-        many: new Many,
+        from : new Many,
+        to: new Many,
         relation: new Relation
     }
 
