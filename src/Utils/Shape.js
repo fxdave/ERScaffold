@@ -8,7 +8,8 @@ class Shape extends Konva.Group {
         })
         
         this.props = props
-        
+        if(props.arranger_enabled)
+            this.arranger_enabled = props.arranger_enabled
 
         if(props.children) {
             for(let i in props.children) {

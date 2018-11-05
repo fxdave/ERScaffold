@@ -25,6 +25,8 @@ function EntityShape() {
         propertyAddLine: new LineShape,
     }
 
+    props.arranger_enabled=true
+
     props.events = {
         onAddProperty: new EventRegister(props.children.propertyAddButton,'click'),
         onEditText: new EventRegister(props.children.bg,'dblclick'),

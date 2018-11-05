@@ -1,5 +1,5 @@
 import Element from './Element'
-
+import Arranger from './Arranger/Arranger'
 
 const toBeInformed = []
 class ElementRenderer {
@@ -13,6 +13,7 @@ class ElementRenderer {
             elem.container = container
         }
 
+        
         if (elem.container) {
             elem.container.add(elem.shape)
         } else {
@@ -20,6 +21,10 @@ class ElementRenderer {
         }
 
         if (elem.shape) {
+            if(elem.shape.arranger_enabled){
+                Arranger.add(elem)
+            }
+
             elem.shape.element = elem
             elem.addEventListener('mounted', () => {
                 if (elem.style)
