@@ -4,6 +4,7 @@ class CircleShape extends Element {
     constructor() {
         super()
         this.shape = new Konva.Circle
+        this.shape.preCentered = true
     }
 }
 

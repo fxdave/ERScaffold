@@ -78,13 +78,18 @@ MathHelper.getNearestPointToCircle = function (centerOfCircle, to, radius) {
  * @param {number} w 
  * @param {number} h 
  */
-MathHelper.getNearestPointToRectangle = function (from, to, w, h) {
+MathHelper.getNearestPointToRectangle = function (from, to, w, h, preCentered) {
     let x = from.x,
         y = from.y
 
     let LTC = {
         x: x - w / 2,
         y: y - h / 2
+    }
+
+    if(!preCentered) {
+        LTC.x += w/2
+        LTC.y += h/2
     }
 
     let RBC = {

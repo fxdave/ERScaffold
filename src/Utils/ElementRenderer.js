@@ -21,7 +21,7 @@ class ElementRenderer {
         }
 
         if (elem.shape) {
-            if(elem.shape.arranger_enabled){
+            if(elem.shape._arranger_enabled){
                 Arranger.add(elem)
             }
 

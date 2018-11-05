@@ -10,6 +10,7 @@ import WidthAnchor from '../../Utils/Anchors/WidthAnchor'
 import PositionAnchor from '../../Utils/Anchors/PositionAnchor'
 import LineShape from '../LineShape/LineShape'
 import CenterAnchor from '../../Utils/Anchors/CenterAnchor'
+import BoundingBox from '../../Utils/Arranger/BoundingBox'
 function EntityShape() {
     const props = {
         draggable: true
@@ -25,7 +26,10 @@ function EntityShape() {
         propertyAddLine: new LineShape,
     }
 
-    props.arranger_enabled=true
+    props._arranger_enabled = true
+    props._arrangerBoundingType = function(element, to) {
+        return BoundingBox(props.children.bg,to)
+    }
 
     props.events = {
         onAddProperty: new EventRegister(props.children.propertyAddButton,'click'),

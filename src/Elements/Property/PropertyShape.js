@@ -7,6 +7,7 @@ import CustomAnchor from '../../Utils/Anchors/CustomAnchor'
 import CenterAnchor from '../../Utils/Anchors/CenterAnchor'
 import PositionAnchor from '../../Utils/Anchors/PositionAnchor'
 import EventRegister from '../../Utils/EventRegister'
+import BoundingBox from '../../Utils/Arranger/BoundingBox'
 
 function PropertyShape() {
     const props = {}
@@ -18,6 +19,12 @@ function PropertyShape() {
         bg: new EllipseShape,
         text: new EditableText,
         deleteButton: new DeleteButton
+    }
+
+
+    props._arranger_enabled = true
+    props._arrangerBoundingType = function(element, to) {
+        return BoundingBox(props.children.bg,to)
     }
 
     props.events = {

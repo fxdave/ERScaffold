@@ -6,10 +6,18 @@ class Shape extends Konva.Group {
             draggable: props.draggable,
             dragBoundFunc: props.dragBoundFunc
         })
-        
+
         this.props = props
-        if(props.arranger_enabled)
-            this.arranger_enabled = props.arranger_enabled
+        if(props._arranger_enabled)
+            this._arranger_enabled = props._arranger_enabled
+        if(props._arrangerBoundingType)
+            this._arrangerBoundingType = props._arrangerBoundingType
+        if(props._arrangerMinimalSpace)
+            this._arrangerMinimalSpace = props._arrangerMinimalSpace
+
+        if(props.preCentered) {
+            this.preCentered = this.preCentered
+        }
 
         if(props.children) {
             for(let i in props.children) {

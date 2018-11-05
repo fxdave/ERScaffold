@@ -7,6 +7,7 @@ class EllipseShape extends Element {
     constructor() {
         super()
         this.shape = new Konva.Ellipse
+        this.shape.preCentered = true
     }
 }
 

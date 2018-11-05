@@ -1,7 +1,6 @@
 import OneToManyConnectionShape from './OneToManyConnectionShape'
 import OneToManyConnectionStyle from './OneToManyConnectionStyle'
 import ConnectionLayer from '../../Layers/ConnectionLayer'
-import LineAnchor from '../../Utils/Anchors/LineAnchor'
 import Connection from '../Abstract/Connection/Connection'
 
 class OneToManyConnection extends Connection {

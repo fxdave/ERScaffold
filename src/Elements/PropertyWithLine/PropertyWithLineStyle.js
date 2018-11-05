@@ -5,9 +5,6 @@ export default new Style.Class({
         line: new Style.Class({
             stroke: 'black',
             strokeWidth: 1,
-        }),
-        property: new Style.Class({
-            y: 100
         })
     }
 })

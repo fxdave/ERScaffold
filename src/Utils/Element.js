@@ -17,6 +17,9 @@ class Element extends Emitter {
 
     remove() {
         this.shape.remove()
+        this.shape.props.children.forEach(v => {
+            v.remove()
+        })
         if(this.layer)
             this.layer.draw()
         if(this.container)
