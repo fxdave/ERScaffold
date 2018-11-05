@@ -1,11 +1,13 @@
 import Element from '../../../Utils/Element'
 import LineAnchor from '../../../Utils/Anchors/LineAnchor'
+import ConnectionModel from './ConnectionModel'
 
 class Connection extends Element {
     constructor(from, to) {
         super()
         this.from = from
         this.to = to
+        this.model = new ConnectionModel(from.model,to.model)
     }
 
     onDelete() {
@@ -28,7 +30,6 @@ class Connection extends Element {
 
 
     setAnchor(fromEntity, toEntity) {
-
         let fromLine = this.getShape('from'),
             toLine = this.getShape('to'),
             relation = this.getShape('relation')
@@ -69,6 +70,7 @@ class Connection extends Element {
     }
 
     mounted() {
+        this.model.relation = this.getShape('relation').model
         this.setAnchor(this.from, this.to)
 
         let half = this.getHalf({

@@ -7,6 +7,7 @@ import ConnectionLayer from '../../Layers/ConnectionLayer'
 import OneToManyConnection from '../../Elements/OneToManyConnection/OneToManyConnection'
 import OneToOneConnection from '../../Elements/OneToOneConnection/OneToOneConnection'
 import ManyToManyConnection from '../../Elements/ManyToManyConnection/ManyToManyConnection'
+import Exporter from '../../Utils/Exporter'
 
 class Viewport extends Stage {
     constructor() {
@@ -17,6 +18,21 @@ class Viewport extends Stage {
             entityLayer: EntityLayer,
         }
         this.handleAddEntity()
+        this.handleExport()
+        this.handleImport()
+    }
+
+
+    handleExport() {
+        document.querySelector('#export').addEventListener('click', () => {
+            console.log(this.storage.toArray())
+            Exporter.export(this.storage,'ermodel','json')
+        })
+        
+    }
+
+    handleImport() {
+
     }
 
     handleAddEntity() {
@@ -33,7 +49,7 @@ class Viewport extends Stage {
                 this.removeConnectionsWith(entity)
 
                 this.storage.entities = this.storage.entities.filter(v => {
-                    return v != this
+                    return v != entity.model
                 })
 
                 entity = undefined
@@ -63,8 +79,11 @@ class Viewport extends Stage {
                 toDelete.push(v)
         })
 
+        let toDeleteModels = toDelete.map(v => {
+            return v.model
+        })
         this.storage.connections = this.storage.connections.filter(v => {
-            return !(v in toDelete)
+            return !(v in toDeleteModels)
         })
 
         toDelete.forEach(v => {
@@ -147,11 +166,11 @@ class Viewport extends Stage {
             if(existed.type != 'default') type = existed.type
 
             let connection = ElementRenderer.render(new method(from, to))
-            this.storage.connections.push(connection)
+            this.storage.connections.push(connection.model)
 
             connection.addEventListener('remove', ()=>{
                 this.storage.connections = this.storage.connections.filter(v => {
-                    return v != connection
+                    return v != connection.model
                 })
             })
         }

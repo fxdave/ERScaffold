@@ -9,8 +9,8 @@ class Entity extends Element {
     constructor() {
         super()
         this.layer = EntityLayer
-        this.model = new EntityModel
         this.shape = EntityShape()
+        this.model = new EntityModel(this.shape)
         this.style = EntityStyle
     }
 
@@ -20,9 +20,12 @@ class Entity extends Element {
 
     onAddProperty() {
         let property = ElementRenderer.render(new PropertyWithLine, false, this.shape)
+        this.model.properties.push(property.getPropertyModel())
         property.addEventListener('remove', () => {
             console.log('property is needed to be removed')
-            
+            this.model.properties = this.model.properties.filter(v => {
+                return v != property.getPropertyModel()
+            })
         })
         property.changeText()
         property.shape.setZIndex(0)
@@ -40,8 +43,9 @@ class Entity extends Element {
     }
 
     onTextChange() {
-        console.log('text has changed!')
-
+        let text = this.getShape('text').shape.text()
+        console.log('text has changed to: '+text+'!')
+        this.model.name = text
     }
 
     onHasManyConnect(e) {

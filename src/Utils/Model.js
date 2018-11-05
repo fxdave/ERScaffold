@@ -1,6 +1,9 @@
 class Model {
+    getID() {
+        return this._id
+    }
     toArray() {
-        console.error("Not implemented.")
+        return ['toArray is not implemented']
     }
 }
 export default Model

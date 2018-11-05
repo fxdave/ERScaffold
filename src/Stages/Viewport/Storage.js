@@ -12,8 +12,12 @@ class Storage extends Model {
 
     toArray(){
         return {
-            entities: this.entities.toArray(),
-            connections: this.connections.toArray()
+            entities: this.entities.map(v => {
+                return v.toArray()
+            }),
+            connections: this.connections.map(v => {
+                return v.toArray()
+            })
         }
     }
 }

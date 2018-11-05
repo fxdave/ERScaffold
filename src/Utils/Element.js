@@ -17,12 +17,14 @@ class Element extends Emitter {
 
     remove() {
         this.shape.remove()
-        this.shape.props.children.forEach(v => {
-            v.remove()
-        })
+        if(this.shape.props)
+            for(let i in this.shape.props.children) {
+                this.shape.props.children[i].remove()
+            }
+
         if(this.layer)
             this.layer.draw()
-        if(this.container)
+        if(this.container && this.container.getLayer())
             this.container.getLayer().draw()
         this.dispatchEvent(new Event('remove'))
     }

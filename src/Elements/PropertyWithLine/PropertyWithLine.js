@@ -15,6 +15,10 @@ class PropertyWithLine extends Element {
         this.getShape('property').changeText()
     }
 
+    getPropertyModel() {
+        return this.getShape('property').model
+    }
+
     onDelete() {
         this.remove()
     }
