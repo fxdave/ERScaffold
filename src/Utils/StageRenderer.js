@@ -18,6 +18,12 @@ class StageRenderer {
 
         anim.start()
 
+
+        window.addEventListener('resize', () => {
+            S.width(window.innerWidth)
+            S.height(window.innerHeight)
+        })
+
         document.querySelectorAll('canvas').forEach(v => {
             v.onmousedown = () => {
                 return false
