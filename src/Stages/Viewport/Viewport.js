@@ -201,6 +201,8 @@ class Viewport extends Stage {
 
     addConnection(method, from, to) {
         let connection = ElementRenderer.render(new method(from, to))
+        connection.shape.x(0)
+        connection.shape.y(0)
         this.storage.connections.push(connection.model)
 
         connection.addEventListener('remove', ()=>{

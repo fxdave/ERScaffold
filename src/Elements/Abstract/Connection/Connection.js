@@ -72,7 +72,7 @@ class Connection extends Element {
     reconstruct(data) {
         this.getShape('relation').getShape('text').setText(data.name)
         this.getShape('relation').shape.x(data.x)
-        this.getShape('relation').shape.x(data.y)
+        this.getShape('relation').shape.y(data.y)
         this.getShape('relation').shape.dispatchEvent(new Event('updated:position'))
     }
 
@@ -91,6 +91,7 @@ class Connection extends Element {
 
         this.getShape('relation').shape.x(half.x)
         this.getShape('relation').shape.y(half.y)
+        console.log('mounted')
     }
 
 
