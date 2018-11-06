@@ -10,6 +10,8 @@ class OneToOneConnection extends Connection {
         this.layer = ConnectionLayer
         this.shape = OneToOneConnectionShape()
         this.style = OneToOneConnectionStyle
+
+        this.model.connectionType = 'OneToOne'
     }
 }
 

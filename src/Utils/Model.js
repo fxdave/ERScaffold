@@ -5,5 +5,9 @@ class Model {
     toArray() {
         return ['toArray is not implemented']
     }
+
+    getParent() {
+        return this._parent
+    }
 }
 export default Model

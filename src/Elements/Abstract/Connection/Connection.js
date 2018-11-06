@@ -69,8 +69,16 @@ class Connection extends Element {
         this.redraw()
     }
 
+    reconstruct(data) {
+        this.getShape('relation').getShape('text').setText(data.name)
+        this.getShape('relation').shape.x(data.x)
+        this.getShape('relation').shape.x(data.y)
+        this.getShape('relation').shape.dispatchEvent(new Event('updated:position'))
+    }
+
     mounted() {
         this.model.relation = this.getShape('relation').model
+        this.model.relationShape = this.getShape('relation').shape
         this.setAnchor(this.from, this.to)
 
         let half = this.getHalf({

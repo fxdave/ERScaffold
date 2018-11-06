@@ -14,11 +14,16 @@ class Entity extends Element {
         this.style = EntityStyle
     }
 
-    mounted() {
+    editText() {
         this.getShape('text').edit()
     }
 
     onAddProperty() {
+        let property = this.addProperty()
+        property.changeText()
+    }
+
+    addProperty() {
         let property = ElementRenderer.render(new PropertyWithLine, false, this.shape)
         this.model.properties.push(property.getPropertyModel())
         property.addEventListener('remove', () => {
@@ -27,8 +32,20 @@ class Entity extends Element {
                 return v != property.getPropertyModel()
             })
         })
-        property.changeText()
         property.shape.setZIndex(0)
+        return property
+    }
+
+    reconstruct(data) {
+        this.getShape('text').setText(data.name)
+
+        data.properties.forEach(v => {
+            let property = this.addProperty()
+            property.getShape('property').shape.x(v.x)
+            property.getShape('property').shape.y(v.y)
+            property.getShape('property').shape.dispatchEvent(new Event('updated:position'))
+            property.getShape('property').reconstruct(v)
+        })
         this.redraw()
     }
 

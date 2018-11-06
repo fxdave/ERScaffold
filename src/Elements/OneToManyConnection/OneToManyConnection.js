@@ -5,11 +5,13 @@ import Connection from '../Abstract/Connection/Connection'
 
 class OneToManyConnection extends Connection {
     constructor(from, to) {
-        super(from,to)
+        super(from, to)
 
         this.layer = ConnectionLayer
         this.shape = OneToManyConnectionShape()
         this.style = OneToManyConnectionStyle
+
+        this.model.connectionType = 'OneToMany'
     }
 }
 

@@ -61,6 +61,11 @@ class Element extends Emitter {
         this.shape.y(this.oldPos.y)
         TempLayer.draw()
     }
+
+    reconstruct() {
+        console.log('Reconstruction is not implemented')
+        
+    }
 }
 
 export default Element

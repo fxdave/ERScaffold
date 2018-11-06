@@ -23,6 +23,11 @@ class Property extends Element {
         this.changeText()
     }
 
+    reconstruct(data) {
+        this.getShape('text').setText(data.name)
+        this.model.name = data.name
+    }
+
     onDelete() {
         this.shape.dispatchEvent(new Event('delete'))
     }

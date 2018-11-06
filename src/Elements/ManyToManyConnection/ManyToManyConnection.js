@@ -10,6 +10,8 @@ class ManyToManyConnection extends Connection {
         this.layer = ConnectionLayer
         this.shape = ManyToManyConnectionShape()
         this.style = ManyToManyConnectionStyle
+        
+        this.model.connectionType = 'ManyToMany'
     }
 }
 

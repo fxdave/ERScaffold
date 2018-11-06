@@ -13,6 +13,7 @@ class ElementRenderer {
 
         if(elem.model) {
             elem.model._id = lastID
+            elem.model._parent= elem
             lastID += 1
         }
 

@@ -8,7 +8,8 @@ import OneToManyConnection from '../../Elements/OneToManyConnection/OneToManyCon
 import OneToOneConnection from '../../Elements/OneToOneConnection/OneToOneConnection'
 import ManyToManyConnection from '../../Elements/ManyToManyConnection/ManyToManyConnection'
 import Exporter from '../../Utils/Exporter'
-
+import Importer from '../../Utils/Importer'
+import Base64 from '../../Utils/Base64'
 class Viewport extends Stage {
     constructor() {
         super()
@@ -33,38 +34,79 @@ class Viewport extends Stage {
 
     handleImport() {
 
+        document.querySelector('#import').addEventListener('click', () => {
+
+            Importer.import((result) => {
+                let data = result.split(',')
+                let decoded = JSON.parse(Base64.decode(data[1]))
+                this.reconstruct(decoded)                
+            })
+
+        })
+        
+    }
+
+    reconstruct(data) {
+        let entities = {}
+        data.entities.forEach( v => {
+            let entity = this.addEntity({
+                x: v.x,
+                y: v.y
+            })
+
+            entity.reconstruct(v)
+            entities[v.id] = entity
+        })
+        data.connections.forEach( v => {
+            let method = null
+            if(v.type == 'OneToOne') method = OneToOneConnection
+            if(v.type == 'OneToMany') method = OneToManyConnection
+            if(v.type == 'ManyToMany') method = ManyToManyConnection
+
+            let connection = this.addConnection(method, entities[v.from], entities[v.to])
+            connection.reconstruct(v)
+        })
     }
 
     handleAddEntity() {
         this.addEventListener('dblclick', e => {
-
-            let entity = ElementRenderer.render(new Entity)
-            this.storage.entities.push(entity.model)
-            entity.shape.x(this.subtractDragX(e.clientX))
-            entity.shape.y(this.subtractDragY(e.clientY))
-            entity.layer.draw()
-
-            entity.addEventListener('remove', () => {
-
-                this.removeConnectionsWith(entity)
-
-                this.storage.entities = this.storage.entities.filter(v => {
-                    return v != entity.model
-                })
-
-                entity = undefined
+            let entity = this.addEntity({
+                x: this.subtractDragX(e.clientX),
+                y: this.subtractDragY(e.clientY)
             })
 
-            entity.addEventListener('hasManyConnect', e => {
-                this.handleAddConnection(entity, e.detail.to, 'hasMany')
-            })
-
-            entity.addEventListener('hasOneConnect', e => {
-                this.handleAddConnection(entity, e.detail.to, 'hasOne')
-            })
-
-
+            entity.editText()
         })
+
+    }
+
+    addEntity(pos) {
+        let entity = ElementRenderer.render(new Entity)
+        this.storage.entities.push(entity.model)
+        entity.shape.x(pos.x)
+        entity.shape.y(pos.y)
+        entity.layer.draw()
+
+        entity.addEventListener('remove', () => {
+
+            this.removeConnectionsWith(entity)
+
+            this.storage.entities = this.storage.entities.filter(v => {
+                return v != entity.model
+            })
+
+            entity = undefined
+        })
+
+        entity.addEventListener('hasManyConnect', e => {
+            this.handleAddConnection(entity, e.detail.to, 'hasMany')
+        })
+
+        entity.addEventListener('hasOneConnect', e => {
+            this.handleAddConnection(entity, e.detail.to, 'hasOne')
+        })
+
+        return entity
 
     }
 
@@ -97,30 +139,18 @@ class Viewport extends Stage {
      * @param {Entity} to 
      */
     getExistedConnectionType(from, to) {
+        from = from.model
+        to = to.model
+
         for (let v of this.storage.connections) {
-            if(v.hasFrom(from) && v.hasTo(to), from == to){
-                if (v instanceof OneToOneConnection)
-                    return { type: 'OneToOneRecursive', instance: v }
-                if (v instanceof OneToManyConnection)
-                    return { type: 'OneToManyRecursive', instance: v }
-                if (v instanceof ManyToManyConnection)
-                    return { type: 'ManyToManyRecursive', instance: v }
+            if(v.from == from && v.to == to && from == to){
+                return { type: v.connectionType + 'Recursive', instance: v.getParent() }
             }
-            if (v.hasFrom(from) && v.hasTo(to)) {
-                if (v instanceof OneToOneConnection)
-                    return { type: 'OneToOne', instance: v }
-                if (v instanceof OneToManyConnection)
-                    return { type: 'OneToMany', instance: v }
-                if (v instanceof ManyToManyConnection)
-                    return { type: 'ManyToMany', instance: v }
+            if (v.from == from && v.to == to) {
+                return { type: v.connectionType, instance: v.getParent() }
             }
-            if (v.hasFrom(to) && v.hasTo(from)) {
-                if (v instanceof OneToOneConnection)
-                    return { type: 'OneToOne', instance: v }
-                if (v instanceof OneToManyConnection)
-                    return { type: 'ManyToOne', instance: v }
-                if (v instanceof ManyToManyConnection)
-                    return { type: 'ManyToMany', instance: v }
+            if (v.from == to && v.to == from) {
+                return { type: v.connectionType.replace('OneToMany', 'ManyToOne'), instance: v.getParent() }
             }
         }
         return { type: 'default', instance: null }
@@ -165,15 +195,20 @@ class Viewport extends Stage {
 
             if(existed.type != 'default') type = existed.type
 
-            let connection = ElementRenderer.render(new method(from, to))
-            this.storage.connections.push(connection.model)
-
-            connection.addEventListener('remove', ()=>{
-                this.storage.connections = this.storage.connections.filter(v => {
-                    return v != connection.model
-                })
-            })
+            this.addConnection(method, from, to)
         }
+    }
+
+    addConnection(method, from, to) {
+        let connection = ElementRenderer.render(new method(from, to))
+        this.storage.connections.push(connection.model)
+
+        connection.addEventListener('remove', ()=>{
+            this.storage.connections = this.storage.connections.filter(v => {
+                return v != connection.model
+            })
+        })
+        return connection
     }
 }
 export default Viewport
