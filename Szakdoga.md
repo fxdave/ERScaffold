@@ -30,7 +30,7 @@ Relációs adatbázison alapuló weboldalak elkészítését fel lehet gyorsíta
 7. ...
 
 Olyan kód generátor ami ennyi mindent legenerálna, nem létezik jelenleg.
-Az ilyen állításokat nagyon egyszerű megfogalmazni az Entity Relationship[^ERModel] model segítségével.
+Az ilyen állításokat nagyon egyszerű megfogalmazni az Entity Relationship[^1] model segítségével.
 
 ## 2. Összehasonlítás meglévő rendszerekkel
 
@@ -137,8 +137,8 @@ A saját ER modell tervező, majdnem teljesen panel mentes. Az attribútomok kö
 A kódgenerátorral megoldható az, hogy egy szép kód gyorsan elkészüljön. A Terv egy olyan kód generátor, ami egy ER modelhez hasonló modelből, a lehető legtöbb mindent generál. Egy generálási lehetőség a következő fájlokat fogja létrehozni:
 
 - **Adatbázis migrációs fájlok**  
-    Az adatbázis binárisan fájlokban van eltárolva. A git nem tudja jól kezelni a bináris fájlok módosításait, végképp nem lenne jó, ha egy _merge conflict_[^MergeConflict] miatt szöveges módosítást hozna létre a fájlon belül. Az adatbázis sémát migrációs fájlokkal lehet verzió kezelni, ami egyszerű adatbázis utasításokat tartalmaz, annak érdekében hogy egy sémát létrehozzon, vagy töröljön.
-- **Entitás model** (Szükséges az ORM[^ORM] -hez)  
+    Az adatbázis binárisan fájlokban van eltárolva. A git nem tudja jól kezelni a bináris fájlok módosításait, végképp nem lenne jó, ha egy _merge conflict_[^2] miatt szöveges módosítást hozna létre a fájlon belül. Az adatbázis sémát migrációs fájlokkal lehet verzió kezelni, ami egyszerű adatbázis utasításokat tartalmaz, annak érdekében hogy egy sémát létrehozzon, vagy töröljön.
+- **Entitás model** (Szükséges az ORM[^3] -hez)  
     Az Entitás model egy barátságos interfészt biztosít az adatbázis eléréséhez.
 - **Repository**  
      A _repository_ réteg a klasszikus értelemben vett model réteg. Az ORM nem mindenre tud megoldást adni, ezért modelre nem alkalmas. A repository rétegben használhatunk ORM -től független SQL utasításokat is. Sokszor belefutunk olyan tervezési problémába, hogy 3 réteg nem elég. Ugyanazt a lekérdezést több fájlban is szeretnénk használni, viszont a kód duplikálás elkerülése végett ezeket a lekérdezéseket külön fájlba rakjuk, ezek a fájlok alkotják a repository réteget.
@@ -310,6 +310,6 @@ A kód sokkal átláthatóbb. Elkerülhető vele a kód duplikálás. A komponen
 
 A weboldalfejlesztés iránti igények egyre csak nőnek. A fejlesztőkből hiány van. A gyors fejlesztés ugyanolyan fontos mint a minőségi kód, de hogy a fejlesztők kedve ne menjen el, a hasonló kódok újboli megírása miatt ezeket inkább generáljuk.  
 
-[^ERModel]: Az ER (Entity Relationship) modell, nevéből adódóan egyedeket, és azok kapcsolatait képes, hétköznapi emberek számára is érthető formában megjeleníteni.
-[^MergeConflict]: A git verziókezelő rendszer két eltérő módosítás egyesítésekor az adott fájlba beleírja mind a 2 módosítást, és információt az adott módosításról.
-[^ORM]: Az ORM (Object-Relational Mapping) egy olyan rendszer, ami az adatbázis táblákat objektumokra képezi le, ezzel elérve azt, hogy objektum orientált módon lehessen kezelni az adatbázist, az alkalmazáson belül.
+[^1]: Az ER (Entity Relationship) modell, nevéből adódóan egyedeket, és azok kapcsolatait képes, hétköznapi emberek számára is érthető formában megjeleníteni.
+[^2]: A git verziókezelő rendszer két eltérő módosítás egyesítésekor az adott fájlba beleírja mind a 2 módosítást, és információt az adott módosításról.
+[^3]: Az ORM (Object-Relational Mapping) egy olyan rendszer, ami az adatbázis táblákat objektumokra képezi le, ezzel elérve azt, hogy objektum orientált módon lehessen kezelni az adatbázist, az alkalmazáson belül.
