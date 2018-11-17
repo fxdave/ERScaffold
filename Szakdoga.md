@@ -4,14 +4,14 @@
 
 ### 1.1 Jelenlegi fejlesztési problémák
 
-A weboldalak fejlesztése gyakran olyan technológiák felhasználásával jár, ami nem a kívánt célra lett kifejlesztve, ami jelentős hátrányokkal jár, továbbfejlesztés, és egyedi igények kielégítése szempontjából.
-Ezeket a technológiákat a weboldal jelentős sebességgel való elindításáért használják. Az egyik ilyen eszköz a `Wordpress`.
+A weboldalak fejlesztése gyakran olyan technológiák felhasználásával jár, ami nem a kívánt célra lett kifejlesztve, ami nagy  hátrányokat okoz a továbbfejlesztésben, és az egyedi igények kielégítése szempontjából.
+Ezeket a technológiák a weboldal elindulásának gyorsaságát jelentősen befolyásolják. Az egyik ilyen eszköz a `Wordpress`.
 
 A `Wordpress` egy web platformon futó tartalomkezelő rendszer, ami blogok készítésére lett kifejlesztve. Ennek ellenére ugyanúgy használatos online áruházak létrehozására is. Számos bővítmény áll rendelkezésünkre, amik segítik, hogy egy projekt gyorsan elindulhasson. A bővítmények általában nem jól dokumentáltak. A dokumentáltság hiánya megnehezíti a követelmények teljesítését.
 
-A fejlesztők nem írhatják át a komponenseket, hanem helyette olyan bővítményeket hoznak létre, ami majd elvégzi a kívánt módosítást. Ennek eléréséhez úgynevezett `hook`okat használ a rendszer, amit a komponensek készítői tesznek bele a függvények lényegi elemei elé és után, hogy ott lefuthasson egy másik bővítményben egy mások által írt kód. A `hook`okat nem minden bővítmény készítője teszi bele és biztos hogy nem minden függvénybe és nagyobb módosítást ezekkel sem lehet jól kivitelezni.
+A fejlesztők nem írhatják át a komponenseket, hanem helyette olyan bővítményeket hoznak létre, melyek majd elvégzik a kívánt módosításokat. Ennek eléréséhez úgynevezett `hook`okat használ a rendszer, ezeket a komponensek készítői teszik bele a függvények lényegi elemei elé és után, hogy ott lefuthasson egy már létező bővítményben további személyek által írt kód. A `hook`okat nem minden bővítmény készítője használja és főleg nem minden függvényben továbbá a nagyobb volumenű módosítások gyakorlatilag kivitelezhetetlenek.
 
-A `wordpress` egy blogrendszer, nincs arra felkészítve, hogy más célú weboldalak elkészülhessenek benne. Ez azt vonja maga után, hogy mind a kód mind az adatbázis nem követi az üzleti logikát.
+A `wordpress` egy blogrendszer, nem alkalmas arra, hogy más célú weboldalak elkészülhessenek benne. Ez azt vonja maga után, hogy mind a kód mind az adatbázis nem követi az üzleti logikát.
 
 ### 1.2 Kód generátorokról általánosságban
 
