@@ -311,5 +311,7 @@ A kód sokkal átláthatóbb. Elkerülhető vele a kód duplikálás. A komponen
 A weboldalfejlesztés iránti igények egyre csak nőnek. A fejlesztőkből hiány van. A gyors fejlesztés ugyanolyan fontos mint a minőségi kód, de hogy a fejlesztők kedve ne menjen el, a hasonló kódok újboli megírása miatt ezeket inkább generáljuk.  
 
 [^1]: Az ER (Entity Relationship) modell, nevéből adódóan egyedeket, és azok kapcsolatait képes, hétköznapi emberek számára is érthető formában megjeleníteni.
+
 [^2]: A git verziókezelő rendszer két eltérő módosítás egyesítésekor az adott fájlba beleírja mind a 2 módosítást, és információt az adott módosításról.
+
 [^3]: Az ORM (Object-Relational Mapping) egy olyan rendszer, ami az adatbázis táblákat objektumokra képezi le, ezzel elérve azt, hogy objektum orientált módon lehessen kezelni az adatbázist, az alkalmazáson belül.
