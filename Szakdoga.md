@@ -1,10 +1,25 @@
 # Szakdolgozat
 
-## Koncepció
+## 1. Motiváció
 
-Kód generátorok léteznek, és használjuk is őket, hogy gyorsabban elkészüljünk az alkalmazással. A Legtöbb kód generátornak nem lehet sok paramétert átadni, és nem is csinálnak sokat. Legtöbbször egy osztály vagy modul generálására használatosak.
+### 1.1 Jelenlegi fejlesztési problémák
 
-Relációs adatbázison alapuló weboldalak elkészítését fel lehet gyorsítani egy olyan kód generátorral ami bizonyos kapcsolatoknak a megszokott Model, Controller, View -t és egyben adatbázis sémát is generál. Például a ˙Egy bejegyzésnek van sok kommentje˙ alapján létre tudunk hozni egy bekonfigurált kész oldalt ahol a következő nézetek vannak:
+A weboldalak fejlesztése gyakran olyan technológiák felhasználásával jár, ami nem a kívánt célra lett kifejlesztve, ami jelentős hátrányokkal jár, továbbfejlesztés, és egyedi igények kielégítése szempontjából.
+Ezeket a technológiákat a weboldal jelentős sebességgel való elindításáért használják. Az egyik ilyen eszköz a `Wordpress`.
+
+A `Wordpress` egy web platformon futó tartalomkezelő rendszer, ami blogok készítésére lett kifejlesztve. Ennek ellenére ugyanúgy használatos online áruházak létrehozására is. Számos bővítmény áll rendelkezésünkre, amik segítik, hogy egy projekt gyorsan elindulhasson. A bővítmények általában nem jól dokumentáltak. A dokumentáltság hiánya megnehezíti a követelmények teljesítést.
+
+A fejlesztők nem írhatják át a komponenseket, hanem helyette olyan bővítményeket hoznak létre, ami majd elvégzi a kívánt módosítást. Ennek eléréséhez úgynevezett `hook`okat használ a rendszer, amit a komponensek készítői tesznek bele a függvények lényegi elemei elé és után, hogy ott lefuthasson egy másik bővítményben egy mások által írt kód. A `hook`okat nem minden bővítmény készítője teszi bele, és biztos hogy nem minden függvénybe, és nagyobb módosítást ezekkel sem lehet jól kivitelezni.
+
+A `wordpress` egy blogrendszer, nincs arra felkészítve, hogy más célú weboldalak elkészülhessenek benne. Ez azt vonja maga után, hogy mind a kód mind az adatbázis nem követi az üzleti logikát.
+
+### 1.2 Kód generátorokról általánosságban
+
+A fejlesztést számos módszerrel fel lehet gyorsítani. Ha a programkódban ismétlődés van, akkor annak egy része generálható. Egy magasabb szintű információ magábafoglal több alacsonyabb szintű információt. Magasabb szinten, kevesebb idő megfogalmazni információkat, mint alacsony szinten, habár alacsony szintent sokkal specifikusabb információkat adhatunk meg. Így az az ideális, hogyha elősször magasabb szinten fogalmazzuk meg az igényeinket, és azután alacsonyabb szintre generálájuk, majd testreszabjuk alacsony szinten. Ezért szükségesek a gódgenerátorok.
+
+### 1.3 Fejlesztés felgyorsítása, a kód minőség megmaradásával
+
+Relációs adatbázison alapuló weboldalak elkészítését fel lehet gyorsítani egy olyan kód generátorral ami bizonyos kapcsolatoknak a megszokott Model, Controller, View -t és egyben adatbázis sémát is generál. Például a `Egy bejegyzésnek van sok kommentje` alapján létre tudunk hozni egy bekonfigurált kész oldalt, ahol a következő nézetek vannak:
 
 1. Bejegyzések és a hozzá tartozó kommentek
 2. Csak bejegyzések
@@ -15,77 +30,160 @@ Relációs adatbázison alapuló weboldalak elkészítését fel lehet gyorsíta
 7. ...
 
 Olyan kód generátor ami ennyi mindent legenerálna, nem létezik jelenleg.
-Az ilyen állításokat nagyon egyszerű megfogalmazni az Entity Relationship model segítségével.
+Az ilyen állításokat nagyon egyszerű megfogalmazni az Entity Relationship[^ERModel] model segítségével.
 
-## Jelenlegi fejlesztési módszer
+## 2. Összehasonlítás meglévő rendszerekkel
 
-Jelenleg leginkább komponens alapú fejlesztés folyik és az egyik legsűrűbben használt eszköz a WordPress. A WordPress egy webes tartalomkezelő rendszer, ami alapjáraton blogok készítésére fejlesztettek ki. Sajnos megérkeztek hozzá olyan pluginok, amik webshopok létrehozását teszik lehetővé bennük, és ezt kihasználva, a webfejlesztők is WordPress -el fejlesztenek webshopokat.
+### 2.1 Meglévő kódgenerátorok
 
-### Amiért nem jó
+#### 2.1.1 Emmet
 
-- A komponensek általában nem jól dokumentáltak, rendszerint a fejlesztő a stackoverflow-on köt ki ha a legkisebb módosítást is el kell végeznie.
-- A fejlesztők nem írhatják át a komponenseket, hanem helyette olyan plugin-t hoznak létre ami majd elvégzi a kívánt módosítást. Ennek eléréséhez úgynevezett hookokat használ a rendszer, amit a komponens készítője tesz bele a függvények lényegi elemei elé és után, hogy ott lefuthasson egy mások által írt kód. Ezeket a hookokat nem minden plugin fejlesztő teszi bele a kódjába, és ha bele is tenné akkor sem lenne determinisztikus a viselkedése, ugyanis függ a plugin betöltési sorrendjétől a működés (ami beállítására egyébként szintén van egy plugin), valamint nem tudja a webfejlesztő garantálni azt hogy az úgy fog működni ahogy annak kell.
-- A wordpress egy blogrendszer, nincs arra felkészítve, hogy más célú weboldal elkészülhessen benne. Ez sajnos azt vonja maga után, hogy mind a kód mind az adatbázis nem követi az üzleti logikát.
+HTML elemek generálására használják. Jelentősen felgyorsítja a html kód írását.
 
-### Persze azért vannak előnye is
+<table>
+<tr>
+<th>
 
-- Pár perc alatt telepíthető egy webshop, és már használható is
+**Kifejezés**
 
-### Konklúzió a jelenlegi fejlesztési módszerről
+</th>
+<th>
 
-Habár gyors, nem lehet egyedi igényeket jól kielégíteni vele. Későbbi továbbfejlesztés céljából is rossz választás lehet. Az alkalmazásfejlesztés nagyjából a mások kódjának az értelmezése, és a stackoverflow nézegetéséből áll.
+**Generált HTML**
 
-### Amit lehet helyette használni
+</th>
+</tr>
+<tr>
+<td>
 
-A fast prototyping egy olyan fejlesztési forma, ahol viszonylag kevés idő alatt készíthető egy prototípus, aminek az a célja hogy felmérje a felhasználói igényeket. Lényegében itt van nagy szerepe a kód generátoroknak, hogy ez a prototípus minél közelebb legyen az ügyfél által leírt alkalmazáshoz és a lehető legkevesebb idő alatt készüljön el.
+   
+`.osztaly>article>h1+p` 
 
-## Cél
+</td>
+<td>
 
-A kódgenerátorral megoldható az, hogy egy szép kód gyorsan elkészüljön. Ha vannak kapcsolataink, akkor fel kell ajánlani a lehető legtöbb olyan lehetőséget ami ezekből a kapcsolatokból létrehozható, különben nem lesz gyors a fejlesztés. Egy generálási lehetőség a következő fájlokat fogja legenerálni:
+```html
+<div class="osztaly">
+    <article>
+        <h1></h1>
+        <p></p>
+    </article>
+</div>
+```
+
+</td>
+</tr>
+</table>
+
+#### 2.1.2 A phoenix CLI (Command Line Interface) beépített kód generátora
+
+A `phoenix` az egy MVC (Model View Controller) tervezési mintán alapuló webes keretrendszer. Egy működő kezelőfelületet hoz létre egy bizonyos adatbázistáblához.
+
+<table>
+<tr>
+<th>
+
+**Kifejezés**
+
+</th>
+<th>
+
+**Legenerált fájlok**
+
+</th>
+</tr>
+<tr>
+<td>
+
+`mix phx.gen.html Accounts User users name:string age:integer`
+
+</td>
+<td>
+
+ - context: `lib/app/accounts/accounts.ex` az Accounts API -hoz  
+ - schema: `lib/app/accounts/user.ex`, és hozzá egy user adatbázis tábla  
+ - view: `lib/app_web/views/user_view.ex`  
+ - controller: `lib/app_web/controllers/user_controller.ex`  
+ - templates: `lib/app_web/templates/user` (listázás, szerkesztés, hozzáadás, stb..)
+
+</td>
+</tr>
+</table>
+
+A legfőbb hiányossága, hogy nem lehet kapcsolatokat megadni.
+A kapcsolatok megadása lehetővé tenné, hogy komplexebb logikát is letudjon generálni. A parancssoros megfogalmazás nem túl felhasználóbarát, de kevés idő alatt megtanulható.
+
+### 2.2 Meglévő ER modell tervező eszközök
+
+Egyes cselekvések Lépésszámainak összehasonlítása (a kevesebb a jobb).
+
+| Ezköz | Egyed létrehozás | Attribútum hozzáadás | Össze-kapcsolás | Törlés |
+| --- | --- | --- | --- | --- |
+| erdplus.com   | 2   | 4   | 2 + kapcsolat beállítása | 2 |
+| draw.io       | sok | sok | túl sok                  | 2 |
+| gliffy.com    | sok | sok | túl sok                  | 2 |
+| sqldbm.com    | 3   | sok | 3 + kapcsolat beállítás  | 3 |
+| smartdraw.com | 2   | sok | too many                 | 2 |
+| Saját         | 1   | 1   | 1                        | 1 |
+
+Az összehasonlított rendszerek közül egyik sem volt felhasználóbarát. A sok panel miatt a diagramból kevés látszik. Az egyes elemek rendezése gondott okozott.
+
+A saját ER modell tervező, majdnem teljesen panel mentes. Az attribútomok kötve vannak az entitásokhoz mozgatáskor. Az objektumok elrendezésével kevesebbet kell törődni, az automatikus rendezés miatt.
+
+## 3. Alkalmazás terv
+
+### 3.1 Generálandó fájlok
+
+A kódgenerátorral megoldható az, hogy egy szép kód gyorsan elkészüljön. A Terv egy olyan kód generátor, ami egy ER modelhez hasonló modelből, a lehető legtöbb mindent generál. Egy generálási lehetőség a következő fájlokat fogja létrehozni:
 
 - **Adatbázis migrációs fájlok**  
-    (Az adatbázis sémát migrációs fájlokkal lehet verzió kezelni, ezért ezek szükségesek ha csapatban kell fejleszteni.)
-- **Model**  
-    (A model felelős az adatok lekérdezésért, módosításáért, törléséért.)
-    A model egy Object Relational Mapping (ORM) rendszerben fog működni annak érdekében hogy ne kelljen SQL lekérdezéseket írni, hanem minél gyorsabban hozzá lehessen férni az adatokhoz.
+    Az adatbázis binárisan fájlokban van eltárolva. A git nem tudja jól kezelni a bináris fájlok módosításait, végképp nem lenne jó, ha egy _merge conflict_[^MergeConflict] miatt szöveges módosítást hozna létre a fájlon belül. Az adatbázis sémát migrációs fájlokkal lehet verzió kezelni, ami egyszerű adatbázis utasításokat tartalmaz, annak érdekében hogy egy sémát létrehozzon, vagy töröljön.
+- **Entitás model** (Szükséges az ORM[^ORM] -hez)  
+    Az Entitás model egy barátságos interfészt biztosít az adatbázis eléréséhez.
 - **Repository**  
-     Ez lesz lényegében a klasszikus értelemben vett model réteg. Az lesz a feladata hogy minden adatlekérés biztosítva legyen egy fájlban. És bármikor ha változna az üzleti logika akkor nem kell minden Presenterben átírni a lekérdezést.
+     A _repository_ réteg a klasszikus értelemben vett model réteg. Az ORM nem mindenre tud megoldást adni, ezért modelre nem alkalmas. A repository rétegben használhatunk ORM -től független SQL utasításokat is. Sokszor belefutunk olyan tervezési problémába, hogy 3 réteg nem elég. Ugyanazt a lekérdezést több fájlban is szeretnénk használni, viszont a kód duplikálás elkerülése végett ezeket a lekérdezéseket külön fájlba rakjuk, ezek a fájlok alkotják a repository réteget.
 - **Presenter**  
-    Weben nem igazán valósítható meg a Controller, itt nincs nagyon interakció. A Presenter feladata, hogy kérésből valami statikus adathalmazt visszaadjon, interakció nélkül.  
-    Ez az a réteg ami a kérést validálja majd visszaad egy nézetet
+    A _presenter_ feladata, hogy egy kérésből visszaadjon egy statikus információt, a _presenter_ általában nézetet vagy JSON kódot ad vissza.  
+    Ez az a réteg az, ami a kérést validálja, és interkacióban ál a _repository_ réteggel.
 - **View**  
-    Ez felelős az adatok formázott megjelenítésért.  
-    Biztosítani kell egy minimális megjelenésű nézetet annak érdekében hogy könnyebben lehessen hozzá fejleszteni egyedi igények szerint, és kell egy normális megjelenés is, ha nem kellenek nagyon egyedi igények akkor azért alapból minél többet tudjon.  
-    Ide tartoznak a stílusért felelős CSS fájlok, és a View dinamikus megjelenését biztosított javascript fájlok is.
+    A _view_ réteg felelős az adatok formázott megjelenítésért. Ide tartoznak a stílusért felelős CSS fájlok és a _view_ dinamikus megjelenését biztosító javascript fájlok is.
 
-### Kapcsolatok leképzése
+### 3.2 Kapcsolatok leképzése
 
-Az entity relationship modellből az `Adatbáziskezelő rendeszerek I.` tárgyból tanultak alapján leképezhető logikai diagrammá, ami már az adatbázis sémát írja le. Az elsődleges kulcsokat a programból lehet majd kijelölni, de automatikusan az ID nevűt annak fogja nevezni. A külső kulcsok szintén kivehetőek a kapcsolatokból.
-A típusokat a tulajdonságok nevei mellé lehet majd írni.
-Az egyedek neveit egy mesterséges intelligencia alakítja át egyesszámról többesszámra, amiből lesznek a táblanevek.
+Az entity relationship modellből leképezhető az adatbázis séma. Az elsődleges kulcsokat a programból lehet majd kijelölni, de automatikusan az ID nevűt annak fogja venni. A külső kulcsok kivehetőek a kapcsolatokból. A típusokat a tulajdonságok nevei mellé lehet majd írni. Az egyedek neveit egy mesterséges intelligencia alakítja át egyesszámról többesszámra, amiből lesznek a táblanevek.
 
-#### template fájlok
+### 3.3 sablon fájlok
 
-A fájlok legenerálásához szükséges template-eket definiálni. Egy generálási lehetőség több templateből áll. A fájlok elhelyezéséhez is szintén template kell, ami megmondja hogy hova hozza létre a fájlokat, vagy hol keressen meglévőket.
+A fájlok legenerálásához, szükséges sablonokat definiálni. Egy generálási lehetőség több sablonból áll. A generálandó fájlok elhelyezésére is sablon szükséges.
 
 Ha a fájlon nem történik változtatás akkor lehetőség nyílik felülírni is a meglévő fájlokat.
-Későbbi fejlesztési lehetőség, hogy ha van módosítás, akkor ezt a módosítást megtartva lehessen frissíteni a fájlokat.
+Későbbi fejlesztési lehetőség, hogy módosítás megléte esetén is a módosítás megtartásával lehessen frissíteni a fájlokat.
 
-Egy template fájl megkap 1 db entitást, és ebből fog lekérdezni kapcsolatokon keresztül további entitásokat, meghívhatja a template önmagát ,így rekurzív kapcsolatokra is ad lehetőséget.
+Egy sablon fájl megkap egy entitást, minden kapcsolatával, így elérhet más entitásokat is. A sablon meghívhatja önmagát, így rekurzív kapcsolatokra is ad lehetőséget.
 
-## Designer
+A sablonfájlok a sablonok szabadsága miatt _javascript_ programozási nyelvel készülnek el.
 
-A multiplatform érdekében webes felületen készül. Az új javascript verzió régebbi böngészőkhöz a kompatibilitás megőrzését a Babel.js könyvtárral érem el. A Babel egy javascript precompiler, ami lehetővé teszi, hogy EcmaScript7 -ben (a javascript új verziója) legyen a kód, amíg a kimeneten EcmaScript5 lesz. A designer canvas -el készül, egy saját framework -el, ami használja a Konva.js könyvtárat. A Konva nem nyújt elég funkcionalitást ahhoz, hogy egy nagy projekt elkészülhessen benne, viszont jelenleg ez a legjobb könyvtár a canvas kezeléséhez. A saját keretrendszerrel elérem azt, hogy a kód átlátható, és később is módosítható maradjon.
+### 3.4 ER Tervező
 
-### Saját keretrendszer
+#### 3.4.1 Technológia
 
-A keretrendszer a VMMV (View Model ModelView) tervezési mintán alapul, hasonlóan mint az Angular.js.  Egy VMMV hármasnak lehetnek gyerekei, a leveleken lévő elemek már csak a Konva.js beépített formái, így a többi elem ezekből épül fel. Mivel a formázás nagyon sűrűn előfordul a kódban, ezért egy CSS -hez hasonló implementációval leegyszerűsítettem a kód ezen részét, és minden elem esetében külön fájlban helyeztem el a stílust. Egy példa egy stílusfájlra:
+A tervező webes felületen készül annak érdekében, hogy minden platformon ugyanúgy futhasson.
+A javascript ugyanúgy fejlődik mint bármelyik nyelv. Az új verziójú javascriptet nem támogatják a régebbi böngészők. Annak érdekében hogy használni lehessen az új verziót anélkül hogy gondot okozna a régebbi böngészőknek, a `babel.js` könyvtár fordítja le a régebbi verzióra.
+A javascript nem ad lehetőséget arra, hogy más javascript fájlokat be lehessen importálni a kódba. A fájlok beimportálásáért a `webpack` könyvtár felelős. Ez a projekt _javascript_ fájlaiból létrehoz egy nagy fájlt, a fájlokban megadott import utasítások segítségével.
+A tervező nagyrésze a `canvas` nevű HTML elemben lett megvalósítva, ez azt jelenti hogy a grafikai elemeket a javascript rajzoltatja ki. A `canvas` egy nagyon primitív elem, nem képes rajzok csoportosítására és nem képes a canvas-en lévő rajzok elkülönítésére, épp ezért nem is lehet közvetlenül lekérdezni hogy melyik elemre kattintott a felhasználó. Mivel a kattintás pozícióját le lehet kérni, ezen problémák kiküszöbölhetőek. Erre már vannak kész könyvtárak, az egyik ilyen a `Konva.js`. A `Konva` nem biztosít elég eszközt arra hogy kényelmesen lehessen fejleszetni vele, ezért létre kellett hoznom egy saját keretrendszert, a `canvas` alkalmazások fejlesztésére.
+
+### 3.4.2 Saját keretrendszer
+
+#### 3.4.2.1 felépítés
+
+A canvas csak rajzolásra való, viszont a rajzolás részletei miatt nem átlátható az üzleti logika.
+Ennek megoldására el kell különíteni az egyes részeket feladatkör szerint. Az elkülönítésre nagyon jó példa a HTML és a CSS. A HTML alapján van egy struktúrális felépítésért felelős fájl, ami megmondja, hogy egy elem milyen más elemekből épül fel, milyen kapcsolatban vannak egymással, és hogy milyen eseményekre kell figyelnie. Van stílus, ami az elemek formázásáért felelős. Van egy model ami az információk tárolásának ad egy struktúrát és van egy fájl ami ezt a hármat összefogja és egy új elemként definiálja azt.
+
+#### 3.4.2.2 Stílus
+
+A stílusfájl a CSS -hez hasonlóan csak tulajdonságokat sorol fel.
 
 ```javascript
-// src/Elements/Property/PropertyStyle.js
-
-import Style from '../../Utils/Style'
-export default new Style.Class({
     children: {
         text: new Style.Class({
             fontSize:14,
@@ -109,71 +207,66 @@ export default new Style.Class({
             })
         }
     }
-})
 ```
 
-A Konva.js rendelkezik egy kezdetleges de használható csoportkezeléssel, de arra sem biztosít objektum orientált megoldásokat. A saját keretrendszerben erre is van egy Forma nevű fájl minden olyan elemnél ahol bonyolult lenne leírni Konva -val a formát. Egy példa forma (shape) fájl:
+#### 3.4.2.3 Struktúra
+
+A struktúra fájl egy függvényt tartalmaz ami elkészíti a struktúrát, a paraméterek alapján.  
+
+Belehet állítani hogy az elem egérrel húzható legyen.
 
 ```javascript
+props.draggable = true
+```
 
-// src/Elements/Property/PropertyShape.js
+Meglehet adni hogy az elem milyen elemekből épüljön fel.
 
-// imports...
-
-function PropertyShape() {
-    const props = {}
-
-
-    props.draggable = true
-
-    props.children = {
-        bg: new EllipseShape,
-        text: new EditableText,
-        deleteButton: new DeleteButton
-    }
-
-
-    props._arranger_enabled = true
-    props._arrangerBoundingType = function(element, to) {
-        return BoundingBox(props.children.bg,to)
-    }
-
-    props.events = {
-        onDelete: new EventRegister(props.children.deleteButton,'click'),
-        onChangeText: new EventRegister(props.children.bg, 'dblclick'),
-        onChangeText2: new EventRegister(props.children.text, 'dblclick','onChangeText')
-    }
-
-    props.anchors = {
-        bgWidth: new CustomAnchor(props.children.bg, props.children.text, ['updated:width'], ()=>{
-            props.children.bg.shape.radius({
-                x: props.children.text.shape.width()/2 + 20,
-                y: 20
-            })
-            props.children.bg.shape.dispatchEvent(new Event('updated:width'))
-        }),
-        centerText: new CenterAnchor(props.children.text),
-        positionAnchor: new PositionAnchor(props.children.bg, props.children.deleteButton, {
-            right:0
-        },true)
-    }
-
-    return new Shape(props)
+```javascript
+props.children = {
+    bg: new EllipseShape,
+    text: new EditableText,
+    deleteButton: new DeleteButton
 }
-
-export default PropertyShape
-
 ```
 
-`props.children` -ben Látható hogy milyen elemekből épül fel egy újabb elem
-`props.events` -ben regisztrálom azt, hogy az elemek mely eseményeire figyeljen a program.
-`props.anchors` -ban olyan objektumokat hozok létre ami valamilyen tulajdonság megváltozásakor frissít egy adott elemet. (Pl: szélesebb lett a szöveg, akkor a hátteret is szélesebbre kell állítani.)
-
-A ViewModel fájl az ami a formát, és a stílust összefogja.
+Meg lehet mondani az automatikus rendezőnek, hogy vegye figyelembe az aktuális elemet.
 
 ```javascript
+props._arranger_enabled = true
+props._arrangerBoundingType = function(element, to) {
+    return BoundingBox(props.children.bg,to)
+}
+```
 
-// src/Elements/Property/Property.js
+Be lehet állítani hogy mely eseményekre figyeljen.
+
+```javascript
+props.events = {
+    onDelete: new EventRegister(props.children.deleteButton,'click'),
+    onChangeText: new EventRegister(props.children.text, 'dblclick'),
+}
+```
+
+Meg lehet mondani hogy egyes elemek változására hogy változzanak más elemek. (Pl: ha a szöveg hossza változik akkor a háttérnek a szélessége is változzon)
+
+```javascript
+props.anchors = {
+    bgSize: new WidthAnchor(props.children.text, props.children.bg, {
+        padding: 20,
+    })
+}
+```
+
+#### 3.4.2.4 Model
+
+A model csak struktúrát biztosít a fájlhoz. De opcionálisan implementálhat egy `toArray` nevű függvényt, ami az információkat JSON formátumba konvertálhatóan visszaadja.
+
+#### 3.4.2.5 Elem fájl
+
+Ez a fájl foglalja össze a 3 fájl szerepét.
+Ebben a fájlban található meg az üzleti logika. Azok az események amiket a struktúra fájlban definiáltunk, ezekre a függvényekre hivatkoznak, és meghívódnak ha az esemény bekövetkezik.
+
+```javascript
 import Element from '../../Utils/Element'
 import PropertyShape from './PropertyShape'
 import PropertyStyle from './PropertyStyle'
@@ -207,13 +300,16 @@ class Property extends Element {
         this.shape.dispatchEvent(new Event('delete'))
     }
 }
-
-export default Property
 ```
 
-Minden esemény amit a formában regisztráltam, azok itt vannak lekezelve.
-A model az egy egyszerű osztály, rendszerint csak tárol, de az adatokat itt töltöm bele.
+#### 3.4.2.6 Amiért jó
 
-#### Amiért jó
+A kód sokkal átláthatóbb. Elkerülhető vele a kód duplikálás. A komponensek nem függenek szorosan össze, így bármikor cserélhetőek, viszont az általános célra egy nagyon kényelmes, átlátható, és gyors megoldást lehet vele biztosítani.
 
-A kód sokkal általánosabb, átláthatóbb. Elkerülöm vele a kód duplikálást. A komponensek nem függenek szorosan össze, így bármikor cserélhetőek, viszont az általános célra egy nagyon kényelmes, átlátható, és gyors megoldást lehet vele biztosítani.
+## 4. Végszó
+
+A weboldalfejlesztés iránti igények egyre csak nőnek. A fejlesztőkből hiány van. A gyors fejlesztés ugyanolyan fontos mint a minőségi kód, de hogy a fejlesztők kedve ne menjen el, a hasonló kódok újboli megírása miatt ezeket inkább generáljuk.  
+
+[^ERModel]: Az ER (Entity Relationship) modell, nevéből adódóan egyedeket, és azok kapcsolatait képes, hétköznapi emberek számára is érthető formában megjeleníteni.
+[^MergeConflict]: A git verziókezelő rendszer két eltérő módosítás egyesítésekor az adott fájlba beleírja mind a 2 módosítást, és információt az adott módosításról.
+[^ORM]: Az ORM (Object-Relational Mapping) egy olyan rendszer, ami az adatbázis táblákat objektumokra képezi le, ezzel elérve azt, hogy objektum orientált módon lehessen kezelni az adatbázist, az alkalmazáson belül.
