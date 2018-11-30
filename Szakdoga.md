@@ -19,7 +19,7 @@ A fejlesztést számos módszerrel fel lehet gyorsítani. Ha a programkódban is
 
 ### 1.3 Fejlesztés felgyorsítása, a kód minőség megmaradásával
 
-Relációs adatbázison alapuló weboldalak elkészítését fel lehet gyorsítani egy olyan kód generátorral ami bizonyos kapcsolatoknak a megszokott Model, Controller, View -t és egyben adatbázis sémát is generál. Például a `Egy bejegyzésnek van sok shozzászólása` alapján létre tudunk hozni egy bekonfigurált kész oldalt, ahol a következő nézetek vannak:
+Relációs adatbázison alapuló weboldalak elkészítését fel lehet gyorsítani egy olyan kód generátorral ami bizonyos kapcsolatoknak a megszokott Model, Controller, View -t és egyben adatbázis sémát is generál. Például a `Egy bejegyzésnek van sok hozzászólása` alapján létre tudunk hozni egy bekonfigurált kész oldalt, ahol a következő nézetek vannak:
 
 1. Bejegyzések és a hozzá tartozó hozzászólások
 2. Csak bejegyzések
