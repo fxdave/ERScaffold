@@ -10,6 +10,8 @@ import ManyToManyConnection from '../../Elements/ManyToManyConnection/ManyToMany
 import Exporter from '../../Utils/Exporter'
 import Importer from '../../Utils/Importer'
 import Base64 from '../../Utils/Base64'
+import EvenetHelper from '../../Utils/EventHelper'
+
 class Viewport extends Stage {
     constructor() {
         super()
@@ -204,6 +206,10 @@ class Viewport extends Stage {
         connection.shape.x(0)
         connection.shape.y(0)
         this.storage.connections.push(connection.model)
+
+        EvenetHelper.on('remove',[from,to],()=> {
+            connection.remove()
+        })
 
         connection.addEventListener('remove', ()=>{
             this.storage.connections = this.storage.connections.filter(v => {

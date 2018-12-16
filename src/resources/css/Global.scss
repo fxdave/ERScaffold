@@ -1,6 +1,41 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", sans-serif;
+}
 
-html, body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Open Sans', sans-serif;
+#konva{
+  transition: filter 1s;
+}
+
+#ask {
+  display: flex;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  align-items: center;
+  align-content: space-around;
+  justify-content: space-around;
+  justify-items: center;
+  background: #0000005c;
+
+  form {
+    flex: 0;
+    padding: 9px;
+    text-align: center;
+    border-radius: 9px;
+    width: 50%;
+    background: rgb(48, 48, 48);
+
+    input {
+      padding: 9px;
+      border: 0;
+      border-radius: 4px;
+    }
+  }
 }

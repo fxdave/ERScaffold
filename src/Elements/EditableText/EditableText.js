@@ -3,19 +3,28 @@ import Konva from '../../Vendor/Konva'
 class EditableText extends Element {
     constructor() {
         super()
-        this.shape = new Konva.Text
+        this.shape = new Konva.Text({
+            text: ''
+        })
     }
 
     edit() {
-        let val = prompt('Type the name')
-        if (val != '')
-            this.shape.text(val)
-        else
-            this.shape.text('empty')
-
-        this.shape.dispatchEvent(new Event('updated:width'))
-        this.shape.dispatchEvent(new Event('updated:text'))
-        this.redraw()
+        let val = ''
+        this._setInputField()
+        document.querySelector('#ask').addEventListener('submit', (e) => {
+            e.preventDefault()
+            val = this._getInputField().value
+            this._deleteInputField()
+    
+            if (val != '')
+                this.shape.text(val)
+            else
+                this.shape.text('empty')
+            
+            this.shape.dispatchEvent(new Event('updated:width'))
+            this.shape.dispatchEvent(new Event('updated:text'))
+            this.redraw()
+        })
     }
 
     setText(text) {
@@ -26,6 +35,29 @@ class EditableText extends Element {
 
     getText() {
         return this.shape.text()
+    }
+
+    _setInputField() {
+        document.querySelector('.panel').innerHTML += `
+            <div id="ask">
+                <form>
+                    <input type="text" placeholder="typeTheName">
+                </form>
+            </div>
+        `
+        document.querySelector('#konva').style.filter = 'blur(2px)'
+        this._getInputField().focus()
+    }
+
+    _getInputField() {
+        return document.querySelector('#ask input')
+    }
+
+    _deleteInputField() {
+        document.querySelector('#konva').style.filter = 'blur(0)'
+        var e = document.querySelector('#ask')
+        if(e)
+            e.remove()
     }
 }
 export default EditableText

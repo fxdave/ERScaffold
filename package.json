@@ -1,4 +1,8 @@
 {
+    "name": "er-scaffold",
+    "version": "0.0.0",
+    "license": "GPLv2",
+    "main": "main.js",
     "devDependencies": {
         "babel-core": "^6.26.3",
         "babel-loader": "^8.0.2",
@@ -11,6 +15,8 @@
     "scripts": {
         "build": "webpack",
         "start": "webpack-dev-server --host 0.0.0.0 --port 3000",
+        "watch": "webpack --watch --info-verbosity verbose",
+        "electron": "electron .",
         "test": "mocha --compilers js:@babel/register ./src/**/*.test.js",
         "test:single": "mocha --compilers js:@babel/register"
     },
@@ -22,6 +28,7 @@
         "@babel/register": "^7.0.0",
         "chai": "^4.2.0",
         "css-loader": "^1.0.0",
+        "electron": "^3.0.12",
         "file-loader": "^2.0.0",
         "file-saver": "^2.0.0-rc.3",
         "mocha": "^5.2.0",
