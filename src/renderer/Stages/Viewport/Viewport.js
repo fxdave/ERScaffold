@@ -12,6 +12,8 @@ import Importer from '../../Utils/Importer'
 import Base64 from '../../Utils/Base64'
 import EvenetHelper from '../../Utils/EventHelper'
 
+import {ipcRenderer} from 'electron'
+
 class Viewport extends Stage {
     constructor() {
         super()
@@ -28,8 +30,7 @@ class Viewport extends Stage {
 
     handleExport() {
         document.querySelector('#export').addEventListener('click', () => {
-            console.log(this.storage.toArray())
-            Exporter.export(this.storage,'ermodel','json')
+            ipcRenderer.send('export',this.storage.toArray())
         })
         
     }
@@ -39,9 +40,7 @@ class Viewport extends Stage {
         document.querySelector('#import').addEventListener('click', () => {
 
             Importer.import((result) => {
-                let data = result.split(',')
-                let decoded = JSON.parse(Base64.decode(data[1]))
-                this.reconstruct(decoded)                
+                this.reconstruct(JSON.parse(result))                
             })
 
         })

@@ -15,7 +15,12 @@ class Property extends Element {
 
     changeText() {
         this.getShape('text').edit()
-        this.model.name = this.getShape('text').shape.text()
+    }
+    
+    onTextChange() {
+        let text = this.getShape('text').shape.text()
+        console.log('text has changed to: '+text+'!')
+        this.model.name = text
     }
 
     onChangeText(e) {

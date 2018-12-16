@@ -38,7 +38,7 @@ class EditableText extends Element {
     }
 
     _setInputField() {
-        document.querySelector('.panel').innerHTML += `
+        document.querySelector('#temp').innerHTML += `
             <div id="ask">
                 <form>
                     <input type="text" placeholder="typeTheName">

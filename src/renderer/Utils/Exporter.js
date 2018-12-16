@@ -1,4 +1,4 @@
-import saveAs from 'file-saver'
+//import saveAs from 'file-saver'
 
 class Exporter {
 
@@ -29,7 +29,7 @@ class Exporter {
      * @param {Blob} file 
      */
     static _download(file, filename) {
-        saveAs(file, filename)
+        //saveAs(file, filename)
     }
 }
 
