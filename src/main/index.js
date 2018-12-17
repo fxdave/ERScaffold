@@ -1,9 +1,8 @@
-const electron = require('electron')
-const url = require('url')
-const path = require('path')
-const fs = require('fs')
-const {app, BrowserWindow, Menu, ipcMain, dialog} = electron
-
+import fs from 'fs'
+import {app, BrowserWindow, /*Menu,*/ ipcMain, dialog} from 'electron'
+import Model from './model/Model'
+import Generator from './Generator'
+//const ejs = require('ejs')
 let mainWindow
 
 app.on('ready', function(){
@@ -13,7 +12,7 @@ app.on('ready', function(){
 
     mainWindow.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)
 
-    const MainMenu = Menu.buildFromTemplate(MainMenuTemplate)
+    //const MainMenu = Menu.buildFromTemplate(MainMenuTemplate)
     //Menu.setApplicationMenu(MainMenu)
 
     ipcMain.on('export', function(e, data) {
@@ -40,9 +39,31 @@ app.on('ready', function(){
             
             e.sender.send('import', data.toString('utf8'))
         })
+
+
         
     })
-})
 
+    ipcMain.on('generate', function(e, data) {
+        let model = new Model(data)
+        let generator = new Generator(model)
+        generator.generate()
+        
+        /*
+        let people = ['geddy', 'neil', 'alex']
+        let html = ejs.render('<%= people.join(", "); %>', {people: people})
+      
+        fs.writeFile(selectedFile, JSON.stringify(data), function(err) {
+            if(err) {
+                return console.log(err)
+            }
+        
+            console.log('The file was saved!')
+        })   
+        */
+    })
+})
+/*
 const MainMenuTemplate = [
 ]
+*/

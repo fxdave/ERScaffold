@@ -1,0 +1,27 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class <%=entity.name %> extends Model
+{
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'comment',
+    ];
+
+    public $timestamps = true;
+
+    /** connections */
+
+    public function post()
+    {
+        return $this->belongsTo(App\Post::class);
+    }
+}

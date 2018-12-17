@@ -7,9 +7,7 @@ import ConnectionLayer from '../../Layers/ConnectionLayer'
 import OneToManyConnection from '../../Elements/OneToManyConnection/OneToManyConnection'
 import OneToOneConnection from '../../Elements/OneToOneConnection/OneToOneConnection'
 import ManyToManyConnection from '../../Elements/ManyToManyConnection/ManyToManyConnection'
-import Exporter from '../../Utils/Exporter'
 import Importer from '../../Utils/Importer'
-import Base64 from '../../Utils/Base64'
 import EvenetHelper from '../../Utils/EventHelper'
 
 import {ipcRenderer} from 'electron'
@@ -25,6 +23,7 @@ class Viewport extends Stage {
         this.handleAddEntity()
         this.handleExport()
         this.handleImport()
+        this.handleGenerate()
     }
 
 
@@ -33,6 +32,12 @@ class Viewport extends Stage {
             ipcRenderer.send('export',this.storage.toArray())
         })
         
+    }
+
+    handleGenerate() {
+        document.querySelector('#generate').addEventListener('click', () => {
+            ipcRenderer.send('generate',this.storage.toArray())
+        })  
     }
 
     handleImport() {
@@ -46,6 +51,7 @@ class Viewport extends Stage {
         })
         
     }
+
 
     reconstruct(data) {
         let entities = {}

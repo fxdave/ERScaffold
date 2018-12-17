@@ -22,25 +22,29 @@
         border:none;
         background: rgba(255,255,255,0.2);
         color:#fff;
-        border-radius: 9px;
+        border-radius: 0;
         padding:10px 20px;
         margin:0;
         display: block;
         cursor: pointer;
 
         &:first-child {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
+            border-top-left-radius: 9px;
+            border-bottom-left-radius: 9px;
         }
 
         &:last-child {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
+            border-top-right-radius: 9px;
+            border-bottom-right-radius: 9px;
         }
 
         &:hover {
             background: rgb(255, 0, 110);
         }
+    }
+
+    #generate {
+        font-weight: 600;
     }
 }
 
