@@ -4,19 +4,12 @@ export default new Style.Class({
     duration: 0.2,
     children: {
         propertyAddButton: new Style.Class({
-            y: -40,
-            zIndex:0,
+            zIndex:9,
             duration:0.2,
             opacity: 0.5,
             hover: {
                 opacity: 1
             }
-        }),
-        propertyAddLine: new Style.Class({
-            points:[0,0,0,-40],
-            zIndex:0,
-            stroke: '#00cc00',
-            strokeWidth:1,
         }),
         bg : new Style.Class({
             width: 50,
@@ -32,7 +25,11 @@ export default new Style.Class({
             fontFamily: 'Open Sans'
         }),
         deleteButton: new Style.Class({
-            zIndex:2
+            zIndex:2,
+            opacity: 0.5,
+            hover: {
+                opacity: 1
+            }
         }),
         hasManyConnectorHandle: new Style.Class({
             zIndex:0,

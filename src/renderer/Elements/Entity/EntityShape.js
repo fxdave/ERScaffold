@@ -8,7 +8,7 @@ import HasOneConnectorHandle from '../HasOneConnectorHandle/HasOneConnectorHandl
 import EventRegister from '../../Utils/EventRegister'
 import WidthAnchor from '../../Utils/Anchors/WidthAnchor'
 import PositionAnchor from '../../Utils/Anchors/PositionAnchor'
-import LineShape from '../LineShape/LineShape'
+//import LineShape from '../LineShape/LineShape'
 import CenterAnchor from '../../Utils/Anchors/CenterAnchor'
 import BoundingBox from '../../Utils/Arranger/BoundingBox'
 function EntityShape() {
@@ -23,7 +23,7 @@ function EntityShape() {
         text: new EditableText,
         deleteButton: new DeleteButton,
         propertyAddButton: new AddButton,
-        propertyAddLine: new LineShape,
+        //propertyAddLine: new LineShape,
     }
 
     props._arranger_enabled = true
@@ -55,6 +55,10 @@ function EntityShape() {
         deleteButtonPos: new PositionAnchor(props.children.bg, props.children.deleteButton, {
             top: -5,
             right: -5,
+        }),
+        propertyAddButtonPos: new PositionAnchor(props.children.bg, props.children.propertyAddButton, {
+            top: -11,
+            right: 16,
         }),
         hasManyPos: new PositionAnchor(props.children.bg, props.children.hasManyConnectorHandle, {
             right: 4,

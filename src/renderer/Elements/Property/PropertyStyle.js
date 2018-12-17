@@ -8,9 +8,7 @@ export default new Style.Class({
             fontFamily: 'Open Sans'
         }),
         bg: new Style.Class({
-            fill:'#fff',
-            stroke: '#000',
-            strokeWidth: 1,
+            fill:'#ebebeb',
         }),
         deleteButton: new Style.Class({
             opacity:0

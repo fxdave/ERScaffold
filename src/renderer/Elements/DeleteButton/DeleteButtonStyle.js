@@ -15,9 +15,9 @@ export default new Style.Class({
             text : '\u2715',
             fill: '#fff'
         })
-    },
+    },/*
     opacity: 0.3,
     hover: {
         opacity: 0.8
-    }
+    }*/
 })
