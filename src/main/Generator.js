@@ -1,5 +1,6 @@
 
 import EntityTemplate from './templates/entities/entities.template'
+import fs from 'fs';
 
 class Generator {
 
@@ -13,10 +14,7 @@ class Generator {
 
     generate() {
         let template = new EntityTemplate(this.model)
-        template.getFiles().map( file => {
-            console.log(file.render())
-        })
-        
+        template.save()
     }
 
 

@@ -17,7 +17,7 @@ class EntityTemplate extends Template {
             
             this.addFile(new TemplateFile( __dirname + '/entity.ejs',{
                 entity : entity
-            }))
+            }, 'App/'+ entity.name + '.php'))
         })
     }
 

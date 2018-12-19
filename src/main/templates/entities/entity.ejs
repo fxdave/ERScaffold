@@ -12,16 +12,40 @@ class <%=entity.name %> extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'comment',
-    ];
+    protected $fillable = [<% entity.getProps().forEach( (prop) => { %>
+            '<%= prop.name %>',
+    <% }); %>];
 
     public $timestamps = true;
 
     /** connections */
 
-    public function post()
+    <% entity.getBelongsToRelations().forEach( (relation) => { %>
+    public function <%= relation.getTo().name.toLowerCase() %>()
     {
-        return $this->belongsTo(App\Post::class);
+        return $this->belongsTo(App\<%= relation.getTo().name %>::class);
     }
+    <% }); %>
+
+
+    <% entity.getHasManyRelations().forEach( (relation) => { %>
+    public function <%= relation.getTo().name.toLowerCase() %>()
+    {
+        return $this->hasMany(App\<%= relation.getTo().name %>::class);
+    }
+    <% }); %>
+
+    <% entity.getHasOneRelations().forEach( (relation) => { %>
+    public function <%= relation.getTo().name.toLowerCase() %>()
+    {
+        return $this->hasOne(App\<%= relation.getTo().name %>::class);
+    }
+    <% }); %>
+
+    <% entity.getBelongsToManyRelations().forEach( (relation) => { %>
+    public function <%= relation.getTo().name.toLowerCase() %>()
+    {
+        return $this->belongsToMany(App\<%= relation.getTo().name %>::class);
+    }
+    <% }); %>
 }

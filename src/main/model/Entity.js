@@ -1,4 +1,4 @@
-
+import {Relation, HasManyRelation, HasOneRelation, BelongsToRelation, BelongsToManyRelation} from './Relation'
 class Entity {
     /**
      * 
@@ -11,10 +11,12 @@ class Entity {
         this.name = name
         this.props = props
 
-        this.hasManyRelations = []
-        this.hasOneRelations = []
-        this.belongsToRelations = []
-        this.belongsToManyRelations = []
+        this.relations = {
+            hasMany : [],
+            belongsTo : [],
+            hasOne : [],
+            belongsToMany : []
+        }
     }
 
     /**
@@ -40,62 +42,48 @@ class Entity {
 
     /**
      * 
-     * @param {Connection} relation 
+     * @param {Relation} relation 
      */
-    addHasManyRelation(relation) {
-        this.hasManyRelations.push(relation)
+    addRelation(relation) {
+        if(relation instanceof HasManyRelation)
+            this.relations['hasMany'].push(relation)
+        else if(relation instanceof BelongsToRelation)
+            this.relations['belongsTo'].push(relation)
+        else if(relation instanceof HasOneRelation) 
+            this.relations['hasOne'].push(relation)
+        else if(relation instanceof BelongsToManyRelation) 
+            this.relations['belongsToMany'].push(relation)
+        else
+            console.error("Entity: Unsupported relation type.")
+                   
     }
 
     /**
-     * 
-     * @param {Connection} relation 
-     */
-    addHasOneRelation(relation) {
-        this.hasOneRelations.push(relation)
-    }
-
-    /**
-     * 
-     * @param {Connection} relation 
-     */
-    addBelongsToRelation(relation) {
-        this.belongsToRelations.push(relation)
-    }
-
-    /**
-     * 
-     * @param {Connection} relation 
-     */
-    addBelongsToManyRelation(relation) {
-        this.belongsToManyRelations.push(relation)
-    }
-
-    /**
-     * @returns {Array<Connection>}
+     * @returns {Array<Relation>}
      */
     getHasManyRelations() {
-        return this.getHasManyRelations
+        return this.relations['hasMany']
     }
 
     /**
-     * @returns {Array<Connection>}
+     * @returns {Array<Relation>}
      */
     getHasOneRelations() {
-        return this.hasOneRelations
+        return this.relations['hasOne']
     }
 
     /**
-     * @returns {Array<Connection>}
+     * @returns {Array<Relation>}
      */
     getBelongsToRelations() {
-        return this.belongsToRelations
+        return this.relations['belongsTo']
     }
 
     /**
-     * @returns {Array<Connection>}
+     * @returns {Array<Relation>}
      */
     getBelongsToManyRelations() {
-        return this.belongsToManyRelations
+        return this.relations['belongsToMany']
     }
 }
 
