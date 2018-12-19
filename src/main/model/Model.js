@@ -12,21 +12,33 @@ class Model {
         this.connections = []
 
         data.entities.forEach(entity => {
+
             this.entities[entity.id] = new Entity(entity.id,entity.name, entity.properties.map( v => {
                 return new Property(v.id,v.name)
             }))
         })
 
         data.connections.forEach(connection => {
-            this.connections.push(
-                new Connection(
-                    this.entities[connection.from], 
-                    this.entities[connection.to], 
-                    connection.type, 
-                    connection.name, 
-                    connection.id
-                )
+            let c = new Connection(
+                this.entities[connection.from], 
+                this.entities[connection.to], 
+                connection.type, 
+                connection.name, 
+                connection.id
             )
+
+            this.connections.push(c)
+
+            if(connection.type == 'OneToOne') {
+                
+            } else if (connection.type == 'OneToMany') {
+
+            } else if (connection.type == 'ManyToMany') {
+
+            } else {
+                console.error('Model: Not valid connection type')
+            }
+
         })
 
     }
