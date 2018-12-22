@@ -1,24 +1,4 @@
-<?php
 
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
-
-class <%=entity.name %> extends Model
-{
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [<% entity.getProps().forEach( (prop) => { %>
-            '<%= prop.name %>',
-    <% }); %>];
-
-    public $timestamps = true;
-
-    /** connections */
 
     <% entity.getBelongsToRelations().forEach( (relation) => { %>
     public function <%= relation.getTo().name.toLowerCase() %>()
@@ -26,7 +6,6 @@ class <%=entity.name %> extends Model
         return $this->belongsTo(App\<%= relation.getTo().name %>::class);
     }
     <% }); %>
-
 
     <% entity.getHasManyRelations().forEach( (relation) => { %>
     public function <%= relation.getTo().name.toLowerCase() %>()
@@ -48,4 +27,3 @@ class <%=entity.name %> extends Model
         return $this->belongsToMany(App\<%= relation.getTo().name %>::class);
     }
     <% }); %>
-}

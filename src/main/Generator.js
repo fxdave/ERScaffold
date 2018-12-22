@@ -10,11 +10,43 @@ class Generator {
      */
     constructor(model) {
         this.model = model
+        this.files = []
+        this.renderedFiles = {}
+
     }
 
     generate() {
         let template = new EntityTemplate(this.model)
-        template.save()
+        this.files = [...template.getFiles(), ...this.files]
+
+        this.files.sort((f1, f2) => {
+            return f2.isBase() - f1.isBase()
+        }).map(file => {
+            console.log(file);
+            this.renderedFiles[file.getDestination()] = {
+                url: file.getDestination(),
+                rendered: file.render(this.renderedFiles[file.getDestination()])
+            }
+        })
+
+        Object.values(this.renderedFiles).map(v => {
+            let destinationDir = v.url.split('/')
+            destinationDir.pop()
+            let dir = process.cwd() + '/' + destinationDir.join('/')
+            if (!fs.existsSync(dir)) {
+                fs.mkdir(dir, { recursive: true }, (err) => {
+                    if (err) throw err;
+                });
+            }
+
+            fs.writeFile(process.cwd() + '/' + v.url, v.rendered, function (err) {
+                if (err) {
+                    return console.log(err)
+                }
+                console.log('The file was saved!')
+            })
+
+        })
     }
 
 

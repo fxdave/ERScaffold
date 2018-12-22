@@ -6,7 +6,7 @@ class Template {
 
     /**
      * 
-     * @param {File} file 
+     * @param {TemplateFile} file 
      */
     addFile(file) {
         this.files.push(file)
@@ -17,12 +17,6 @@ class Template {
      */
     getFiles(){
         return this.files
-    }
-
-    save() {
-        this.getFiles().map( file => {
-            fs.writeFileSync(process.cwd() + '/' + file.getDestination(),file.render())
-        })
     }
 }
 
