@@ -1,0 +1,28 @@
+<%
+
+let meta = {
+	extends: {
+		fileName: "lib/" 
+		+ Formatter.snakeCase(APPNAME) 
+		+ "_web/templates/" 
+		+ Formatter.snakeCase(entity.getName()) 
+		+ "/new.html.eex"
+	},
+	depends_on: [
+		{ tempalte: "../controller/action_new.template.ejs", data: {entity: entity} },
+		{ tempalte: "../controller/action_create.template.ejs", data: {entity: entity} },
+		{ tempalte: "../view/view.template.ejs", data: {entity: entity} },
+		{ tempalte: "../template/form.template.ejs", data: {entity: entity} }
+	]
+} 
+
+%>
+
+<h1>New <%= Formatter.upperCamelCase(entity.getName()) %></h1>
+
+<!-- begin new resource -->
+
+<%% render "form.html", Map.put(assigns, :action, Routes.<%= Formatter.snakeCase(entity.getName()) %>_path(@conn, :create)) %%>
+
+<!-- end new resource -->
+

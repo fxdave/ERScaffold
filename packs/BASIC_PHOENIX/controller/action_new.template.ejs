@@ -1,0 +1,26 @@
+<%
+
+let contextcamel = Formatter.upperCamelCase(Formatter.plural(entity.context))
+let appcamel = Formatter.upperCamelCase(APPNAME)
+let appsnake = Formatter.snakeCase(APPNAME)
+let entitycamel = Formatter.upperCamelCase(entity.name)
+let entitypluralsnake = Formatter.snakeCase(Formatter.plural(entity.name))
+let entitysnake = Formatter.snakeCase(entity.name)
+
+let meta = {
+	extends: {
+		fileName: "lib/" + appsnake + "_web/controllers/" + entitysnake + "_controller.ex",
+		section: "# methods",
+		place: "after"
+	},
+	depends_on: [
+		{ tempalte: "./controller.template.js", data: {entity: entity} }
+	]
+} 
+
+%>
+
+def new(conn, _params) do
+  changeset = <%= contextcamel %>.change_<%= entitysnake %>(%<%= entitycamel %>{})
+  render(conn, "new.html", changeset: changeset)
+end

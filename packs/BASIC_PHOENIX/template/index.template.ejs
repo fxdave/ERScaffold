@@ -1,0 +1,51 @@
+<%
+
+let entitysnake = Formatter.snakeCase(entity.name)
+let entitypluralsnake = Formatter.snakeCase(Formatter.plural(entity.name))
+let entitypluralnormal = Formatter.normal(Formatter.plural(entity.name))
+
+let meta = {
+	creates: {
+		fileName: "lib/" 
+		+ Formatter.snakeCase(APPNAME) 
+		+ "_web/templates/" 
+		+ Formatter.snakeCase(entity.getName()) 
+		+ "/index.html.eex"
+	},
+	depends_on: [
+		{ tempalte: "../controller/action_index.template.ejs", data: {entity: entity} },
+		{ tempalte: "../view/view.template.ejs", data: {entity: entity} }
+	]
+} 
+
+%>
+
+<h1>Listing <%=entitypluralnormal %></h1>
+
+<table>
+  <thead>
+	<tr>
+		<% entity.getProps().forEach(function(p) { %>
+			<th><%= Formatter.capitalizeFirst(p.getName()) %></th>
+		<% } %>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+	<%%= for <%=entitysnake %> <- @<%=entitypluralsnake %> do %%>
+		<tr>
+		<% entity.getProps().forEach(function(p) { %>
+			<td><%%= <%=entitysnake %>.<%= p.getName() %> %%></td>
+		<% } %>
+		
+
+		<td>
+			<!-- start actions -->
+			<!-- end actions -->
+		</td>
+		</tr>
+	<%% end %%>
+  </tbody>
+</table>
+
+<span><%%= link "New Pine apple", to: Routes.<%=entitysnake %>_path(@conn, :new) %%></span>

@@ -1,0 +1,32 @@
+<%
+
+let meta = {
+	creates: {
+		fileName: "lib/" 
+		+ Formatter.snakeCase(APPNAME) 
+		+ "/" 
+		+ Formatter.snakeCase(Formatter.plural(contextName)) 
+		+ "/" 
+		+ Formatter.snakeCase(Formatter.plural(contextName)) 
+		+ ".ex"
+	}
+} 
+
+let contextcamel = Formatter.upperCamelCase(Formatter.plural(contextName))
+let appcamel = Formatter.upperCamelCase(APPNAME)
+
+
+%>
+
+defmodule <%=appcamel %>.<%=contextcamel %> do
+  @moduledoc """
+  The <%=contextcamel %> context.
+  """
+
+  import Ecto.Query, warn: false
+  alias <%= appcamel %>.Repo
+
+  # actions with entities
+
+
+end

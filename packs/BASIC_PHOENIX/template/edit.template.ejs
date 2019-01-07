@@ -1,0 +1,29 @@
+<%
+
+let entitysnake = Formatter.snakeCase(entity.name)
+
+let meta = {
+	creates: {
+		fileName: "lib/" 
+		+ Formatter.snakeCase(APPNAME) 
+		+ "_web/templates/" 
+		+ Formatter.snakeCase(entity.getName()) 
+		+ "/form.html.eex"
+	},
+	depends_on: [
+		{ tempalte: "../controller/action_edit.template.ejs", data: {entity: entity} },
+		{ tempalte: "../controller/action_update.template.ejs", data: {entity: entity} },
+		{ tempalte: "../view/view.template.ejs", data: {entity: entity} },
+		{ tempalte: "../template/form.template.ejs", data: {entity: entity} }
+	]
+} 
+
+%>
+
+<h1>Edit Pine apple</h1>
+
+<!-- start edit resource -->
+
+<%%= render "form.html", Map.put(assigns, :action, Routes.<%=entitysnake %>_path(@conn, :update, @<%=entitysnake %>)) %%>
+
+<!-- end edit resource -->

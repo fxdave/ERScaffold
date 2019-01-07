@@ -1,0 +1,18 @@
+<%
+
+let entitysnake = Formatter.snakeCase(entity.name)
+
+let meta = {
+	extends: {
+		fileName: "lib/" + Formatter.snakeCase(APPNAME) + "_web/templates/" + entitysnake + "/index.html.eex",
+		section: "<!-- start actions -->",
+		place: "after"
+	},
+	depends_on: [
+		{template: "./index.template.ejs", data: {entity: entity} },
+		{template: "../controller/action_delete.template.ejs", data: {entity: entity} }
+	]
+} 
+
+%>
+<%%= link "Delete", to: Routes.<%=entitysnake %>_path(@conn, :delete, <%=entitysnake %>), method: :delete, data: [confirm: "Are you sure?"] %%>

@@ -1,0 +1,33 @@
+<%
+
+let contextcamel = Formatter.upperCamelCase(Formatter.plural(entity.context))
+let appcamel = Formatter.upperCamelCase(APPNAME)
+let appsnake = Formatter.snakeCase(APPNAME)
+let entitycamel = Formatter.upperCamelCase(entity.name)
+let entitypluralsnake = Formatter.snakeCase(Formatter.plural(entity.name))
+let entitysnake = Formatter.snakeCase(entity.name)
+
+let meta = {
+	extends: {
+		fileName: "lib/" + appsnake + "_web/controllers/" + entitysnake + "_controller.ex",
+		section: "# methods",
+		place: "after"
+	},
+	depends_on: [
+		{ tempalte: "./controller.template.js", data: {entity: entity} }
+	]
+} 
+
+%>
+
+def create(conn, %{"<%=entitysnake %>" => <%=entitysnake %>_params}) do
+  case <%=contextcamel %>.create_<%=entitysnake %>(<%=entitysnake %>_params) do
+	{:ok, <%=entitysnake %>} ->
+	  conn
+	  |> put_flash(:info, "Pine apple created successfully.")
+	  |> redirect(to: Routes.<%=entitysnake %>_path(conn, :show, <%=entitysnake %>))
+
+	{:error, %Ecto.Changeset{} = changeset} ->
+	  render(conn, "new.html", changeset: changeset)
+  end
+end

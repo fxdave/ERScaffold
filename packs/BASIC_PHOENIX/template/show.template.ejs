@@ -1,0 +1,35 @@
+<%
+
+let entitysnake = Formatter.snakeCase(entity.name)
+let entitypluralsnake = Formatter.snakeCase(Formatter.plural(entity.name))
+let entitypluralnormal = Formatter.normal(Formatter.plural(entity.name))
+
+let meta = {
+	creates: {
+		fileName: "lib/" 
+		+ Formatter.snakeCase(APPNAME) 
+		+ "_web/templates/" 
+		+ Formatter.snakeCase(entity.getName()) 
+		+ "/show.html.eex"
+	},
+	depends_on: [
+		{ tempalte: "../controller/action_show.template.ejs", data: {entity: entity} },
+		{ tempalte: "../view/view.template.ejs", data: {entity: entity} }
+	]
+} 
+
+%>
+<h1>Show <%=Formatter.capitalizeFirst(Formatter.normal(entity.name)) %></h1>
+
+<!-- start showing resource -->
+<ul>
+
+	<% entity.getProps().forEach(function(p) { %>
+	<li>
+		<strong><%=p.getName() %>:</strong>
+		<%%= @<%=entitysnake %>.<%=p.getName() %> %%>
+	</li>
+	<% } %>
+
+</ul>
+<!-- end showing resource -->

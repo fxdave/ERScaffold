@@ -1,0 +1,40 @@
+<%
+
+let meta = {
+	creates: {
+		fileName: "lib/" + Formatter.snakeCase(APPNAME) + "/"+ Formatter.snakeCase(Formatter.plural(entity.context)) +"/"+ Formatter.snakeCase(entity.name) +".ex"
+  },
+  depends_on: [
+    {template: "../migration/migration.template.js", data: {entity: entity}}
+  ]
+}
+
+let appcamel = Formatter.upperCamelCase(APPNAME)
+let contextcamel = Formatter.upperCamelCase(Formatter.plural(entity.context))
+let entitycamel = Formatter.upperCamelCase(entity.name)
+let entitypluralsnake = Formatter.snakeCase(Formatter.plural(entity.name))
+
+%>
+
+defmodule <%=appcamel %>.<%=contextcamel %>.<%=entitycamel %> do
+  use Ecto.Schema
+  import Ecto.Changeset
+
+
+  schema "<%=entitypluralsnake %>" do
+    <% entity.getProps().forEach(function(p) { %>
+    field :<%= p.getName() %>, :<%= p.getType() %>
+    <% } %>
+
+    timestamps()
+  end
+
+  @doc false
+  def changeset(${ Formatter.snakeCase(entity.name) }, attrs) do
+    ${ Formatter.snakeCase(entity.name) }
+    |> cast(attrs, [<%= entity.getProps().map(p => `:${p.getName()}`).join(", ") %>])
+    <% entity.getProps().forEach(function(p) { %>
+    |> validate_required([:<%=p.getName() %>])
+    <% } %>
+  end
+end

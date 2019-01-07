@@ -1,0 +1,55 @@
+<%
+
+let contextcamel = Formatter.upperCamelCase(Formatter.plural(entity.context))
+let appcamel = Formatter.upperCamelCase(APPNAME)
+let entitycamel = Formatter.upperCamelCase(entity.name)
+let entitypluralsnake = Formatter.snakeCase(Formatter.plural(entity.name))
+let entitysnake = Formatter.snakeCase(entity.name)
+
+let meta = {
+	extends: {
+		fileName: "lib/" 
+		+ Formatter.snakeCase(APPNAME) 
+		+ "/" 
+		+ Formatter.snakeCase(Formatter.plural(entity.context)) 
+		+ "/" 
+		+ Formatter.snakeCase(Formatter.plural(entity.context)) 
+        + ".ex",
+        section:  "# actions with entities",
+        place: "after"
+    },
+    depends_on: [
+      {tempalte: "./context.template.ejs", data: {contextName: entity.context }},
+      {tempalte: "./schema.template.ejs", data: {entity: entity }}
+    ]
+} 
+
+%>
+
+  alias <%= appcamel %>.<%=contextcamel %>.<%=entitycamel %>
+
+  def list_<%=entitypluralsnake %> do
+    Repo.all(<%=entitycamel %>)
+  end
+
+  def get_<%=entitysnake %>!(id), do: Repo.get!(<%=entitycamel %>, id)
+
+  def create_<%=entitysnake %>(attrs \\ %{}) do
+    %<%=entitycamel %>{}
+    |> <%=entitycamel %>.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def update_<%=entitysnake %>(%<%=entitycamel %>{} = <%=entitysnake %>, attrs) do
+    <%=entitysnake %>
+    |> <%=entitycamel %>.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def delete_<%=entitysnake %>(%<%=entitycamel %>{} = <%=entitysnake %>) do
+    Repo.delete(<%=entitysnake %>)
+  end
+
+  def change_<%=entitysnake %>(%<%=entitycamel %>{} = <%=entitysnake %>) do
+    <%=entitycamel %>.changeset(<%=entitysnake %>, %{})
+  end

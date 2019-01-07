@@ -1,0 +1,15 @@
+<%
+
+let entitysnake = Formatter.snakeCase(entity.name)
+let meta = {
+	extends: {
+		fileName: "lib/" + Formatter.snakeCase(APPNAME) + "_web/templates/" + Formatter.snakeCase(entity.getName()) + "/show.html.eex",
+		section: "<!-- end showing resource -->,
+		place: "after"
+    },
+    sort: 2
+} 
+
+%>
+
+<span><%= link "Back", to: Routes.<%=entitysnake %>_path(@conn, :index) %></span>

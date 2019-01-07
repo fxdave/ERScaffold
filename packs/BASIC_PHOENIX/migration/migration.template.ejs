@@ -1,0 +1,37 @@
+<%
+
+let d = new Date()
+
+
+let appcamel = Formatter.upperCamelCase(APPNAME)
+let entitycamel = Formatter.upperCamelCase(entity.name)
+let entitypluralsnake = Formatter.snakeCase(Formatter.plural(entity.name))
+let entitypluralcamel = Formatter.upperCamelCase(Formatter.plural(entity.name))
+
+
+let time = `${ d.getFullYear() }${ d.getMonth() + 1 }${ d.getDate() }${ d.getHours() }${ d.getMinutes() }${ d.getSeconds() }`
+
+let meta = {
+	creates: {
+		fileName: "priv/repo/migrations/" + time + "create_" + entitypluralsnake + ".exs"
+	}
+}
+
+
+
+%>
+
+defmodule <%=appcamel %>.Repo.Migrations.<%=entitypluralcamel %> do
+  use Ecto.Migration
+
+  def change do
+    create table(:<%=entitypluralsnake %>) do
+	  <% entity.getProps().forEach(function(p) { %>
+	  add :<%= p.getName() %>, :<%= p.getType() %>
+	  <% } %>
+
+      timestamps()
+    end
+
+  end
+end

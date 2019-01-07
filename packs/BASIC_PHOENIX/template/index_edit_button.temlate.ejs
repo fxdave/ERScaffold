@@ -1,0 +1,18 @@
+<%
+
+let entitysnake = Formatter.snakeCase(entity.name)
+
+let meta = {
+	extends: {
+		fileName: "lib/" + Formatter.snakeCase(APPNAME) + "_web/templates/" + entitysnake + "/index.html.eex",
+		section: "<!-- start actions -->",
+		place: "after"
+	},
+	depends_on: [
+		{template: "./index.template.ejs", data: {entity: entity} },
+		{template: "./edit.template.ejs", data: {entity: entity} },
+	]
+} 
+
+%>
+<%%= link "Edit", to: Routes.<%=entitysnake %>_path(@conn, :edit, <%=entitysnake %>) %%>
