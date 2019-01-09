@@ -8,15 +8,13 @@ class Generator {
      * 
      * @param {Model} model 
      */
-    constructor(model) {
-        this.model = model
+    constructor() {
         this.files = []
         this.renderedFiles = {}
-
     }
 
-    generate() {
-        let template = new EntityTemplate(this.model)
+    generate(model) {
+        let template = new EntityTemplate(model)
         this.files = [...template.getFiles(), ...this.files]
 
         this.files.sort((f1, f2) => {

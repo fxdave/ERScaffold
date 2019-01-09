@@ -15,6 +15,10 @@ app.on('ready', function(){
     //const MainMenu = Menu.buildFromTemplate(MainMenuTemplate)
     //Menu.setApplicationMenu(MainMenu)
 
+
+    /**
+     * exporter
+     */
     ipcMain.on('export', function(e, data) {
         
         let selectedFile = dialog.showSaveDialog({
@@ -31,6 +35,9 @@ app.on('ready', function(){
         }) 
     })
 
+    /**
+     * importer
+     */
     ipcMain.on('importStart', function(e) {
         
         let selectedFiles = dialog.showOpenDialog()
@@ -44,23 +51,13 @@ app.on('ready', function(){
         
     })
 
+    /**
+     * generator
+     */
     ipcMain.on('generate', function(e, data) {
         let model = new Model(data)
-        let generator = new Generator(model)
-        generator.generate()
-        
-        /*
-        let people = ['geddy', 'neil', 'alex']
-        let html = ejs.render('<%= people.join(", "); %>', {people: people})
-      
-        fs.writeFile(selectedFile, JSON.stringify(data), function(err) {
-            if(err) {
-                return console.log(err)
-            }
-        
-            console.log('The file was saved!')
-        })   
-        */
+        let generator = new Generator()
+        generator.generate(model)
     })
 })
 /*

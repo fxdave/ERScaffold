@@ -1,4 +1,5 @@
 let pack = {
+    name : "Basic Phoenix",
     requirements: [
         {
             file: 'resource_new.requirement.js',
