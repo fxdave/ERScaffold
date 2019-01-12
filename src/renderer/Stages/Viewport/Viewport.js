@@ -7,9 +7,8 @@ import ConnectionLayer from '../../Layers/ConnectionLayer'
 import OneToManyConnection from '../../Elements/OneToManyConnection/OneToManyConnection'
 import OneToOneConnection from '../../Elements/OneToOneConnection/OneToOneConnection'
 import ManyToManyConnection from '../../Elements/ManyToManyConnection/ManyToManyConnection'
-import Importer from '../../Utils/Importer'
 import EvenetHelper from '../../Utils/EventHelper'
-
+import TemplateSelector from './TemplateSelector'
 import {ipcRenderer} from 'electron'
 
 class Viewport extends Stage {
@@ -36,18 +35,30 @@ class Viewport extends Stage {
 
     handleGenerate() {
         document.querySelector('#generate').addEventListener('click', () => {
-            ipcRenderer.send('generate',this.storage.toArray())
+            ipcRenderer.send('generateStart',this.storage.toArray())
         })  
+
+        ipcRenderer.on('generateSelect', (e,data) => {
+            TemplateSelector
+                .select(data)
+                .then(selected => {
+                    console.log(selected);
+                    ipcRenderer.send('generateSelected',selected)
+                }).catch(err => {
+                    console.error(err);
+                    
+                })
+        })
     }
 
     handleImport() {
 
         document.querySelector('#import').addEventListener('click', () => {
+            ipcRenderer.send('importStart')
+        })
 
-            Importer.import((result) => {
-                this.reconstruct(JSON.parse(result))                
-            })
-
+        ipcRenderer.on('import', (e,data) => {
+            this.reconstruct(JSON.parse(data))    
         })
         
     }

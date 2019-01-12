@@ -1,18 +1,23 @@
-const fsp = require('fs').promises
-const packs_folder = require('os').homedir() + '/.config/erscaffold/packs'
+import os from 'os'
+import FileUtil from './FileUtil';
+const packs_folder = os.homedir() + '/.config/erscaffold/packs'
 
 
-export default class {
+
+class PackUtil {
 
     static getPack(packName) {
         let packIndexURL = packs_folder + '/' + packName + '/index.pack.js'
 
-        return PackUtil.getScript(packIndexURL, "pack")
+        return FileUtil.getScript(packIndexURL, "pack")
             .then(pack => {
                 return new Promise((resolve, reject) => {
                     if (pack == null) {
                         resolve(null)
+                        return
                     }
+
+                    pack.dir = packName
 
                     PackUtil.getRequirements(pack.requirements, packName)
                         .then(reqs => {
@@ -29,7 +34,7 @@ export default class {
 
     static getRequirement(requirement, packName) {
 
-        return PackUtil.getScript(packs_folder + '/' + packName + '/' + requirement.file, 'requirement')
+        return FileUtil.getScript(packs_folder + '/' + packName + '/' + requirement.file, 'requirement')
             .then(req => {
 
                 return new Promise((resolve, reject) => {
@@ -44,38 +49,6 @@ export default class {
                     }
                 })
             })
-    }
-
-    static getScript(url, output) {
-
-        return new Promise((resolve, reject) => {
-            fsp.realpath(url)
-                .then((realurl) => new Promise((resolve, reject) => {
-                    fsp.access(realurl)
-                        .then(function () {
-                            resolve(realurl)
-                        })
-                        .catch(function (err) {
-
-                            reject(err)
-                        })
-                }))
-                .then((realurl) => fsp.readFile(realurl, { encoding: 'utf8' }))
-                .then(file => {
-                    let a
-                    try {
-                        a = eval(file + '\n ' + output)
-                    } catch{
-                        console.error("Wrong script at: " + url)
-                    }
-                    resolve(a)
-                })
-                .catch(error => {
-                    console.error(error);
-                    resolve(null)
-                })
-
-        })
     }
 
 
@@ -106,23 +79,24 @@ export default class {
 
     static getPacks() {
 
-        return fsp.realpath(packs_folder)
-            .then(realurl => {
-                return fsp.readdir(realurl)
-            })
+        return FileUtil.ls(packs_folder)
             .then(packs => {
                 return Promise.all(packs.map(pack => PackUtil.getPack(pack)))
             })
             .then(packIndices => {
                 return new Promise((resolve, reject) => {
+                    console.log(packIndices);
+
                     resolve(
                         packIndices
                             .filter(pack => pack != null)
-                            .map(pack => {
-
+                        /*
+                        .map(pack => {
+                            if (pack.requirements)
                                 pack.requirements = PackUtil.getPlainArray(pack.requirements)
-                                return pack
-                            })
+                            return pack
+                        })
+                        */
                     )
                 })
             })
@@ -130,11 +104,39 @@ export default class {
     }
 
     static filterPacksForEntity(packs, entiy) {
+
         return packs.map(pack => {
-            pack.requirements = pack.requirements.filter(req => {
-                return req.data(entiy) != null
+            pack.requirements = pack.requirements.map(req => {
+                if (req) {
+                    req.disabled = false
+                    if (req.data(entiy) === null)
+                        req.disabled = true
+                }
+                return req
             })
             return pack
         })
     }
+
+    static getFilteredPacksForEntities(entities) {
+        let options = {}
+
+        return PackUtil.getPacks()
+            .then(packs => {
+                return new Promise((resolve, reject) => {
+                    entities.forEach((entity, index) => {
+                        options[entity.getID()] = {
+                            entity: entity,
+                            packs: PackUtil.filterPacksForEntity(packs, entity)
+                        }
+                    })
+
+                    resolve(Object.values(options))
+                })
+            })
+    }
 }
+
+PackUtil.packsFolder = packs_folder
+
+export default PackUtil

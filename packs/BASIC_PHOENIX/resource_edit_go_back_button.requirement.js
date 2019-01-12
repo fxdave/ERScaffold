@@ -1,4 +1,3 @@
-/*
 let requirement = {
 	name: "Go back button",
 	template: "./template/edit_go_back.template.ejs",
@@ -6,4 +5,3 @@ let requirement = {
 		return entity
 	}
 }
-*/

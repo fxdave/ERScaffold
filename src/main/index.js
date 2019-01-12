@@ -2,9 +2,10 @@ import fs from 'fs'
 import {app, BrowserWindow, /*Menu,*/ ipcMain, dialog} from 'electron'
 import Model from './model/Model'
 import Generator from './Generator'
-//const ejs = require('ejs')
-let mainWindow
+import PackUtil from './PackUtil'
 
+let mainWindow
+app.commandLine.appendSwitch('remote-debugging-port', '9223')
 app.on('ready', function(){
     //create new window
 
@@ -46,18 +47,34 @@ app.on('ready', function(){
             
             e.sender.send('import', data.toString('utf8'))
         })
-
-
         
     })
 
     /**
      * generator
      */
-    ipcMain.on('generate', function(e, data) {
+    ipcMain.on('generateStart', function(e, data) {
         let model = new Model(data)
-        let generator = new Generator()
-        generator.generate(model)
+        PackUtil.getFilteredPacksForEntities(model.getEntities())
+        .then(options => {
+            let out = options.map(option => {
+                return {
+                    entity: {
+                        id: option.entity.id,
+                        name: option.entity.name
+                    },
+                    packs: option.packs
+                }
+            })
+            e.sender.send('generateSelect', out)
+        }).catch(error => {
+            console.error(error);
+            
+        })
+    })
+
+    ipcMain.on('generateSelected', function(e, data) {
+        console.log(data);
     })
 })
 /*

@@ -3,11 +3,7 @@ import EntityTemplate from './templates/entities/entities.template'
 import fs from 'fs';
 
 class Generator {
-
-    /**
-     * 
-     * @param {Model} model 
-     */
+/*
     constructor() {
         this.files = []
         this.renderedFiles = {}
@@ -47,7 +43,7 @@ class Generator {
         })
     }
 
-
+*/
 }
 
 export default Generator
