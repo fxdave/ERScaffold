@@ -13,8 +13,8 @@ let meta = {
 		+ "/index.html.eex"
 	},
 	depends_on: [
-		{ tempalte: "../controller/action_index.template.ejs", data: {entity: entity} },
-		{ tempalte: "../view/view.template.ejs", data: {entity: entity} }
+		{ template: "../controller/action_index.template.ejs", data: {entity: entity} },
+		{ template: "../view/view.template.ejs", data: {entity: entity} }
 	]
 } 
 
@@ -26,8 +26,8 @@ let meta = {
   <thead>
 	<tr>
 		<% entity.getProps().forEach(function(p) { %>
-			<th><%= Formatter.capitalizeFirst(p.getName()) %></th>
-		<% } %>
+			<th><%= p.getName() %></th>
+		<% }) %>
       <th></th>
     </tr>
   </thead>
@@ -36,7 +36,7 @@ let meta = {
 		<tr>
 		<% entity.getProps().forEach(function(p) { %>
 			<td><%%= <%=entitysnake %>.<%= p.getName() %> %%></td>
-		<% } %>
+		<% }) %>
 		
 
 		<td>

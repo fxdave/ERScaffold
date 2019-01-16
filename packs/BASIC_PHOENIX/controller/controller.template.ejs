@@ -10,7 +10,7 @@ let entitysnake = Formatter.snakeCase(entity.name)
 let meta = {
 	creates: {
 		fileName: "lib/" + appsnake + "_web/controllers/" + entitysnake + "_controller.ex"
-  }
+  },
   depends_on: [
     {template: "../model/schema_context.template.ejs", data: {entity : entity}}
   ]

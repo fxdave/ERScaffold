@@ -90,7 +90,6 @@ class Model {
         return Object.values(this.entities)
     }
 
-
     /**
      * @returns {Array<Connection>}
      */

@@ -1,4 +1,4 @@
-import ejs from 'ejs'
+import FastEJS from 'fastejs'
 import fs from 'fs'
 class TemplateFile {
     
@@ -16,7 +16,7 @@ class TemplateFile {
 
     render(base = undefined) {
         let template = fs.readFileSync(this.url, 'utf-8')
-        let render = ejs.render(template, this.data)
+        let render = FastEJS.parse(template, this.data)
         if(base) {
             let pattern = `(^.*?section:${this.section}.*?$)`
             let re = new RegExp(pattern, "gm");

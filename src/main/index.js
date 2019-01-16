@@ -3,6 +3,7 @@ import {app, BrowserWindow, /*Menu,*/ ipcMain, dialog} from 'electron'
 import Model from './model/Model'
 import Generator from './Generator'
 import PackUtil from './PackUtil'
+import TemplateUtil from './TemplateUtil'
 
 let mainWindow
 app.commandLine.appendSwitch('remote-debugging-port', '9223')
@@ -47,6 +48,7 @@ app.on('ready', function(){
             
             e.sender.send('import', data.toString('utf8'))
         })
+
         
     })
 
@@ -55,6 +57,8 @@ app.on('ready', function(){
      */
     ipcMain.on('generateStart', function(e, data) {
         let model = new Model(data)
+        app.generateModel = model
+
         PackUtil.getFilteredPacksForEntities(model.getEntities())
         .then(options => {
             let out = options.map(option => {
@@ -74,7 +78,17 @@ app.on('ready', function(){
     })
 
     ipcMain.on('generateSelected', function(e, data) {
-        console.log(data);
+        app.generateModel.getEntities().forEach(entity => {
+            Promise.all(data.map(template => {
+                return TemplateUtil.getTemplate(template.pack, template.template, {entity}, "MusicTeam")
+            })).then(res => {
+                console.log(res);
+                
+            }).catch(err => {
+                console.error(err);
+                
+            })
+        })
     })
 })
 /*

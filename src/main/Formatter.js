@@ -14,7 +14,7 @@ class Formatter {
             
             // The result can be accessed through the `m`-variable.
             m.forEach((match, groupIndex) => {
-                console.log(`Found match, group ${groupIndex}: ${match}`)
+                //console.log(`Found match, group ${groupIndex}: ${match}`)
                 tags.push(match)
             })
         }
@@ -66,6 +66,14 @@ class Formatter {
     static singular(what) {
         let tags = this.getTags(what)
         return what.replace(tags[tags.length-1], pluralize.singular(tags[tags.length-1]), what)
+    }
+
+    static normal(what) {
+        let tags = this.getTags(what).map(tag => tag.toLowerCase())
+        let tagsFirstSplit = tags[0].split()
+        tagsFirstSplit[0] = tagsFirstSplit[0].toUpperCase()
+        tags[0] = tagsFirstSplit.join('')
+        return tags.join(' ')
     }
 
 

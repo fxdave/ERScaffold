@@ -9,7 +9,7 @@ let meta = {
 		+ "/form.html.eex"
 	},
 	depends_on: [
-		{ tempalte: "../view/view.template.ejs", data: {entity: entity} }
+		{ template: "../view/view.template.ejs", data: {entity: entity} }
 	]
 } 
 
@@ -26,7 +26,7 @@ let meta = {
 	<%%= label f, :<%=p.getName() %> %%>
   	<%%= text_input f, :<%=p.getName() %> %%>
   	<%%= error_tag f, :<%=p.getName() %> %%>
-  <% } %>
+  <% }) %>
 
   <div>
     <%%= submit "Save" %%>

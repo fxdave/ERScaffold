@@ -1,5 +1,4 @@
 import {promises as fsp} from 'fs'
-
 class FileUtil {
 
     static getFileContent(url) {
@@ -20,10 +19,7 @@ class FileUtil {
     static getOutputFromSource(source, output, vars = {}) {
 
         for(let i in vars)
-            this[i] = vars[i]
-
-        console.log(this);
-        
+            global[i] = vars[i]
 
         try {
             let a = eval(source + '\n ' + output)

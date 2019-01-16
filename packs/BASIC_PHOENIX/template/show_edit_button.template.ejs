@@ -4,7 +4,7 @@ let entitysnake = Formatter.snakeCase(entity.name)
 let meta = {
 	extends: {
 		fileName: "lib/" + Formatter.snakeCase(APPNAME) + "_web/templates/" + Formatter.snakeCase(entity.getName()) + "/show.html.eex",
-		section: "<!-- end showing resource -->,
+		section: "<!-- end showing resource -->",
 		place: "after"
 	},
 	sort: 1
@@ -12,4 +12,4 @@ let meta = {
 
 %>
 
-<span><%= link "Edit", to: Routes.<%=entitysnake %>_path(@conn, :edit, @<%=entitysnake %>) %></span>
+<span><%%= link "Edit", to: Routes.<%=entitysnake %>_path(@conn, :edit, @<%=entitysnake %>) %%></span>

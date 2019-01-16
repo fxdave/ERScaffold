@@ -9,7 +9,16 @@ class Property {
     constructor(id,name) {
         this.id = id,
         this.name = name
+        this.type = "string"
     }
+
+    /**
+     * @returns {string}
+     */
+    getType() {
+        return this.type
+    }
+
 
     /**
      * @returns {number}

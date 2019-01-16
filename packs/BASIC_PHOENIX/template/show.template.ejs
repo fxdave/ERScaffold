@@ -13,13 +13,13 @@ let meta = {
 		+ "/show.html.eex"
 	},
 	depends_on: [
-		{ tempalte: "../controller/action_show.template.ejs", data: {entity: entity} },
-		{ tempalte: "../view/view.template.ejs", data: {entity: entity} }
+		{ template: "../controller/action_show.template.ejs", data: {entity: entity} },
+		{ template: "../view/view.template.ejs", data: {entity: entity} }
 	]
 } 
 
 %>
-<h1>Show <%=Formatter.capitalizeFirst(Formatter.normal(entity.name)) %></h1>
+<h1>Show <%=Formatter.normal(entity.name) %></h1>
 
 <!-- start showing resource -->
 <ul>
@@ -29,7 +29,7 @@ let meta = {
 		<strong><%=p.getName() %>:</strong>
 		<%%= @<%=entitysnake %>.<%=p.getName() %> %%>
 	</li>
-	<% } %>
+	<% }) %>
 
 </ul>
 <!-- end showing resource -->

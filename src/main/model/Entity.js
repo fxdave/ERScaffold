@@ -10,6 +10,7 @@ class Entity {
         this.id = id
         this.name = name
         this.props = props
+        this.context = name
 
         this.relations = {
             hasMany : [],
