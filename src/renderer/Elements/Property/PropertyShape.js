@@ -30,6 +30,7 @@ function PropertyShape() {
     props.events = {
         onDelete: new EventRegister(props.children.deleteButton,'click'),
         onChangeText: new EventRegister(props.children.bg, 'dblclick'),
+        onChangeText2: new EventRegister(props.children.text, 'dblclick', 'onChangeText'),
         onTextChange: new EventRegister(props.children.text, 'updated:text'),
     }
 

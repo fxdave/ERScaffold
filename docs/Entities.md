@@ -1,0 +1,5 @@
+# Entities
+
+## Format
+
+EntityName : ContextName

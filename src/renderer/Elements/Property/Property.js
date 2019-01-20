@@ -17,12 +17,19 @@ class Property extends Element {
         this.getShape('text').edit()
     }
     
+    /**
+     * when the text has changed 
+     */
     onTextChange() {
         let text = this.getShape('text').shape.text()
         console.log('text has changed to: '+text+'!')
         this.model.name = text
     }
 
+    /**
+     * when we want to change the text
+     * @param {Event} e 
+     */
     onChangeText(e) {
         e.cancelBubble = true
         this.changeText()
