@@ -10,7 +10,9 @@ class Connection {
      * @param {string} name 
      * @param {number} id 
      */
-    constructor(from, to, type, name, id) {
+    constructor(from, to, type, name, id, x = 0,y = 0) {
+        this.x = x
+        this.y = y
         this.from = from
         this.to = to
         this.type =type

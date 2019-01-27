@@ -1,4 +1,4 @@
-import Konva from '../Vendor/Konva'
+
 
 class Style {
     constructor(props) {
@@ -27,7 +27,7 @@ class Style {
 
     apply(el) {
 
-        let element = el.shape
+        let element = el
         if (!element) {
             console.error('Style: shape is required for applying style')
             return

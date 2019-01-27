@@ -91,12 +91,12 @@ class PackUtil {
                         packIndices
                             .filter(pack => pack != null)
                         /*
-                        .map(pack => {
-                            if (pack.requirements)
-                                pack.requirements = PackUtil.getPlainArray(pack.requirements)
-                            return pack
-                        })
-                        */
+                           .map(pack => {
+                           if (pack.requirements)
+                           pack.requirements = PackUtil.getPlainArray(pack.requirements)
+                           return pack
+                           })
+                           */
                     )
                 })
             })

@@ -1,0 +1,55 @@
+<template>
+  <connector-handle :lineStyle="style" :points="points" ref="connectorHandle" @connect="e => $emit('connect',e)"></connector-handle>
+</template>
+
+<script>
+import ConnectorHandle from "./ConnectorHandle.vue";
+import MathHelper from "../Utils/Math/MathHelper.js";
+
+export default {
+  components: {
+    ConnectorHandle
+  },
+  data() {
+    return {
+      points(from, to) {
+        let proj = MathHelper.triangularProjection(from, to, 5);
+        let proj2 = MathHelper.triangularProjection(to, from, 5);
+        let avg= {
+            x: (from.x + to.x) / 2,
+            y: (from.y + to.y) / 2
+        }
+        let proj3 = MathHelper.triangularProjection(to,avg, 2);
+        return [
+          proj2[0],
+          proj2[1],
+
+          proj2[4],
+          proj2[5],
+
+          proj3[4],
+          proj3[5],
+
+          proj[0],
+          proj[1],
+
+          proj[4],
+          proj[5],
+
+          proj3[0],
+          proj3[1]
+        ];
+      },
+      style: {
+        fill: "#ff006f",
+        closed: true,
+      }
+    };
+  },
+  methods: {
+    getStage() {
+      return this.$refs.connectorHandle.getStage();
+    }
+  }
+};
+</script>

@@ -1,4 +1,5 @@
-import {Relation, HasManyRelation, HasOneRelation, BelongsToRelation, BelongsToManyRelation} from './Relation'
+import { Relation, HasManyRelation, HasOneRelation, BelongsToRelation, BelongsToManyRelation } from './Relation'
+
 class Entity {
     /**
      * 
@@ -6,17 +7,19 @@ class Entity {
      * @param {string} name 
      * @param {Array<Property>} props 
      */
-    constructor(id, name, props){
+    constructor(id, name, props, x, y) {
+        this.x = x
+        this.y = y
         this.id = id
         this.name = name
         this.props = props
         this.context = name
 
         this.relations = {
-            hasMany : [],
-            belongsTo : [],
-            hasOne : [],
-            belongsToMany : []
+            hasMany: [],
+            belongsTo: [],
+            hasOne: [],
+            belongsToMany: []
         }
     }
 
@@ -46,17 +49,17 @@ class Entity {
      * @param {Relation} relation 
      */
     addRelation(relation) {
-        if(relation instanceof HasManyRelation)
+        if (relation instanceof HasManyRelation)
             this.relations['hasMany'].push(relation)
-        else if(relation instanceof BelongsToRelation)
+        else if (relation instanceof BelongsToRelation)
             this.relations['belongsTo'].push(relation)
-        else if(relation instanceof HasOneRelation) 
+        else if (relation instanceof HasOneRelation)
             this.relations['hasOne'].push(relation)
-        else if(relation instanceof BelongsToManyRelation) 
+        else if (relation instanceof BelongsToManyRelation)
             this.relations['belongsToMany'].push(relation)
         else
             console.error("Entity: Unsupported relation type.")
-                   
+
     }
 
     /**
