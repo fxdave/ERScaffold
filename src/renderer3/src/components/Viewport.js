@@ -1,7 +1,7 @@
 import React from 'react'
 import Stage from './Stage'
 import Entity from './Entity'
-import {Layer} from 'react-konva'
+import { Layer } from 'react-konva'
 import EntityModel from '../../../main/model/Entity';
 
 class Viewport extends React.Component {
@@ -22,13 +22,25 @@ class Viewport extends React.Component {
 
         this.setState((state) => ({
             entities: [
-                ...state.entities, 
+                ...state.entities,
                 new EntityModel(
-                    this.getNextID(this.entities), "Hello", [], x, y)
+                    this.getNextID(this.state.entities), "Hello", [], x, y
+                )
             ]
         }))
 
         //new EntityModel(this.getNextID(this.entities), "Music", [], x, y)
+    }
+
+    handleEntityChange = (index) => (entityModifications) => {
+        let entities = [...this.state.entities]
+        entities[index] = {
+            ...entities[index],
+            ...entityModifications
+        }
+        this.setState({
+            entities: entities
+        })
     }
 
     handleDeleteEntity = (e) => {
@@ -77,7 +89,7 @@ class Viewport extends React.Component {
     render() {
         return <Stage ref={this.stage} onDblClick={this.handleAddEntity}>
             <Layer>
-                {this.state.entities.map(entity => <Entity {...entity}  key={entity.id} />)}
+                {this.state.entities.map((entity,index) => <Entity {...entity} change={this.handleEntityChange(index)} key={entity.id} />)}
             </Layer>
         </Stage>
     }
