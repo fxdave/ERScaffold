@@ -18,7 +18,7 @@ class Entity extends React.Component {
         bgWidth: 50,
         bgPos: { x: 0, y: 0 },
         textPos: { x: 0, y: 0 },
-        deleteButtonPos: {x: 0, y: 0}
+        deleteButtonPos: { x: 0, y: 0 }
     }
 
     handleMove = () => {
@@ -50,11 +50,12 @@ class Entity extends React.Component {
                 fill="#fff"
                 fontFamily="Open Sans" />
 
-            <DeleteButton 
-                x={this.state.deleteButtonPos.x}
-                y={this.state.deleteButtonPos.y}
-                childRef={this.deleteButton}
+            <Group ref={this.deleteButton}>
+                <DeleteButton
+                    x={this.state.deleteButtonPos.x}
+                    y={this.state.deleteButtonPos.y}
                 />
+            </Group>
 
             <CenterAnchor
                 element={() => this.bg.current}
