@@ -39,6 +39,7 @@
         "node-sass": "^4.9.3",
         "pluralize": "^7.0.0",
         "react-konva": "^16.7.1",
+        "react-konva-anchors": "^0.2.1",
         "sass-loader": "^7.1.0",
         "style-loader": "^0.23.0",
         "vue-konva": "^2.0.0"

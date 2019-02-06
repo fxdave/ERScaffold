@@ -1,9 +1,10 @@
 import React from 'react'
 import { Group, Rect, Text } from 'react-konva';
-import PositionAnchor from './anchors/PositionAnchor';
-import WidthAnchor from './anchors/WidthAnchor';
-import CenterAnchor from './anchors/CenterAnchor';
 import DeleteButton from './DeleteButton'
+import {WidthAnchor, CenterAnchor, PositionAnchor} from 'react-konva-anchors'
+import AddButton from './AddButton';
+import HasManyConnectorHandle from './connections/HasManyConnectorHandle'
+
 class Entity extends React.Component {
 
     constructor(props) {
@@ -12,13 +13,15 @@ class Entity extends React.Component {
         this.entity = React.createRef()
         this.bg = React.createRef()
         this.deleteButton = React.createRef()
+        this.addButton = React.createRef()
     }
 
     state = {
         bgWidth: 50,
         bgPos: { x: 0, y: 0 },
         textPos: { x: 0, y: 0 },
-        deleteButtonPos: { x: 0, y: 0 }
+        deleteButtonPos: { x: 0, y: 0 },
+        addButtonPos: { x: 0, y: 0 }
     }
 
     handleMove = () => {
@@ -28,9 +31,17 @@ class Entity extends React.Component {
         })
     }
 
+
+    handleConnect = (props) => {
+        this.props.onConnect({
+            from: this,
+            ...props
+        })
+    }
+
     render() {
 
-        return <Group ref={this.entity} draggable="true" x={this.props.x} y={this.props.y} onDragMove={this.handleMove} >
+        return <Group name="entity" entityInstance={this} ref={this.entity} draggable="true" x={this.props.x} y={this.props.y} onDragMove={this.handleMove} >
 
             <Rect
                 ref={this.bg}
@@ -50,11 +61,20 @@ class Entity extends React.Component {
                 fill="#fff"
                 fontFamily="Open Sans" />
 
-            <Group ref={this.deleteButton}>
-                <DeleteButton
-                    x={this.state.deleteButtonPos.x}
-                    y={this.state.deleteButtonPos.y}
-                />
+            <HasManyConnectorHandle onConnect={this.handleConnect}/>
+
+            <Group
+                ref={this.deleteButton}
+                x={this.state.deleteButtonPos.x}
+                y={this.state.deleteButtonPos.y}>
+                <DeleteButton />
+            </Group>
+
+            <Group
+                ref={this.addButton}
+                x={this.state.addButtonPos.x}
+                y={this.state.addButtonPos.y}>
+                <AddButton />
             </Group>
 
             <CenterAnchor
@@ -62,23 +82,44 @@ class Entity extends React.Component {
                 change={(x, y) => this.setState({ bgPos: { x, y } })} />
 
             <PositionAnchor
-                top={0}
-                left={0}
-                right={0}
-                bottom={0}
-                centered={false}
+                
                 element={() => this.text.current}
+                elementOrigin={{x:0,y:0}}
+                elementDesiredOrigin={{x:0.5, y:0.5}}
+
                 reference={() => this.bg.current}
+                referenceOrigin={{x:0,y:0}}
+                referenceDesiredOrigin={{x:0.5, y:0.5}}
+
                 change={(x, y) => this.setState({ textPos: { x, y } })} />
 
-            <PositionAnchor
-                top={0}
-                right={0}
-                centered={true}
-                element={() => this.deleteButton.current}
-                reference={() => this.bg.current}
-                change={(x, y) => this.setState({ deleteButtonPos: { x, y } })} />
 
+            <PositionAnchor
+                
+                element={() => this.deleteButton.current}
+                elementOrigin={{x:0.5,y:0.5}}
+                elementDesiredOrigin={{x:0.5, y:0.5}}
+
+                reference={() => this.bg.current}
+                referenceOrigin={{x:0,y:0}}
+                referenceDesiredOrigin={{x:1, y:0}}
+
+                change={(x, y) => this.setState({ deleteButtonPos: { x, y } })} />
+            
+            <PositionAnchor
+                
+                element={() => this.addButton.current}
+                elementOrigin={{x:0.5,y:0.5}}
+                elementDesiredOrigin={{x:0.5, y:0.5}}
+
+                reference={() => this.bg.current}
+                referenceOrigin={{x:0,y:0}}
+                referenceDesiredOrigin={{x:1, y:0}}
+
+                shift={{x:-25, y:0}}
+
+                change={(x, y) => this.setState({ addButtonPos: { x, y } })} />
+            
             <WidthAnchor
                 reference={() => this.text.current}
                 element={() => this.bg.current}
@@ -87,7 +128,6 @@ class Entity extends React.Component {
 
         </Group>
     }
-
 }
 
 export default Entity

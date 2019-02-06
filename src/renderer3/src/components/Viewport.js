@@ -3,7 +3,11 @@ import Stage from './Stage'
 import Entity from './Entity'
 import { Layer } from 'react-konva'
 import EntityModel from '../../../main/model/Entity';
-
+import ConnectionModel from '../../../main/model/Connection';
+import Connection from '../../../main/model/Connection';
+import OneToOneConnection from './connections/OneToOneConnection'
+import OneToManyConnection from './connections/OneToManyConnection'
+import ManyToManyConnection from './connections/ManyToManyConnection'
 class Viewport extends React.Component {
     constructor(props) {
         super(props)
@@ -50,24 +54,18 @@ class Viewport extends React.Component {
         })
     }
 
-    handleConnectEntity = (e) => {/*
+    handleConnectEntity = (e) => {
         let conn = new ConnectionModel(
             e.from,
             e.to,
             e.type,
             "",
-            this.getNextID(
-                this.conns["hasOne"].concat(
-                    this.conns["hasMany"],
-                    this.conns["belongsToMany"]
-                )
-            )
-        );*/
-        let conn = { name: "Hellp" }
-
+            this.getNextID(this.state.conns)
+        );
         this.setState(state => ({
             conns: [...state.conns, conn]
         }))
+        
     }
 
     handleDeleteConnection = (e) => {
@@ -88,9 +86,22 @@ class Viewport extends React.Component {
 
     render() {
         return <Stage ref={this.stage} onDblClick={this.handleAddEntity}>
-            <Layer>
-                {this.state.entities.map((entity,index) => <Entity {...entity} change={this.handleEntityChange(index)} key={entity.id} />)}
+            <Layer name="entityLayer">
+                {this.state.entities.map((entity,index) => <Entity {...entity} change={this.handleEntityChange(index)} key={entity.id} onConnect={this.handleConnectEntity} />)}
             </Layer>
+            <Layer name="connectionLayer">
+                {this.state.conns.map((conn,index) => {
+                    switch(conn.type) {
+                        case "hasOne":
+                            return <OneToOneConnection {...conn} />
+                        case "hasMany":
+                            return <OneToManyConnection {...conn} />
+                        case "belongsToMany":
+                            return <ManyToManyConnection {...conn} />
+                    }
+                })}
+            </Layer>
+            <Layer name="tempLayer"></Layer>
         </Stage>
     }
 }
