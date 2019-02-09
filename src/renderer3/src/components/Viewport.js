@@ -85,21 +85,21 @@ class Viewport extends React.Component {
     }
 
     render() {
-        return <Stage ref={this.stage} onDblClick={this.handleAddEntity}>
-            <Layer name="entityLayer">
-                {this.state.entities.map((entity,index) => <Entity {...entity} change={this.handleEntityChange(index)} key={entity.id} onConnect={this.handleConnectEntity} />)}
-            </Layer>
+        return <Stage ref={this.stage} onDblClick={this.handleAddEntity}>        
             <Layer name="connectionLayer">
                 {this.state.conns.map((conn,index) => {
                     switch(conn.type) {
                         case "hasOne":
-                            return <OneToOneConnection {...conn} />
+                            return <OneToOneConnection {...conn} key={conn.id} />
                         case "hasMany":
-                            return <OneToManyConnection {...conn} />
+                            return <OneToManyConnection {...conn} key={conn.id} />
                         case "belongsToMany":
-                            return <ManyToManyConnection {...conn} />
+                            return <ManyToManyConnection {...conn} key={conn.id} />
                     }
                 })}
+            </Layer>
+            <Layer name="entityLayer">
+                {this.state.entities.map((entity,index) => <Entity {...entity} change={this.handleEntityChange(index)} key={entity.id} onConnect={this.handleConnectEntity} />)}
             </Layer>
             <Layer name="tempLayer"></Layer>
         </Stage>

@@ -14,6 +14,7 @@ class ConnectorHandle extends React.Component {
 
     render() {
         return <Line
+            {...this.props}
             draggable={true}
             ref={this.handle}
             points={this.points(this.state.from, this.state.to)} {...this.styles()}
@@ -101,6 +102,8 @@ class ConnectorHandle extends React.Component {
         let shape = this.handle.current.getLayer().getIntersection(pos)
 
         if (shape) {
+            console.log(shape);
+            
             while(!shape.attrs.name && shape.attrs.name != "entity")
             shape = shape.parent
             this.props.onConnect({

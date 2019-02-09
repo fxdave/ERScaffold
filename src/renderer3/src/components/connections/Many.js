@@ -1,7 +1,7 @@
 import React from 'react'
 import One from './One'
 import {Group} from 'react-konva'
-
+import MathHelper from '../../math/MathHelper'
 class Many extends React.Component {
     render() {
         let from = this.props.from
@@ -17,7 +17,7 @@ class Many extends React.Component {
         ];
 
         return <Group>
-            { lines.map(line => <One from={line.from} trough={line.trough} to={line.to} normal={normal} />)}
+            { lines.map((line,index) => <One key={index} from={line.from} trough={line.trough} to={line.to} normal={normal} />)}
         </Group>
     }
 }

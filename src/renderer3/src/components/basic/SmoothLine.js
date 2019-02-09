@@ -4,7 +4,6 @@ class SmoothLine extends React.Component {
 
     render() {
         return <Shape
-            ref={(this.props.innerRef) ? this.props.innerRef : undefined}
             {...this.props}
             sceneFunc={(ctx, shape) => {
                 ctx.beginPath();
@@ -21,4 +20,4 @@ class SmoothLine extends React.Component {
     }
 }
 
-return React.forwardRef((props, ref) => <SmoothLine {...props} innerRef={ref} />)
+export default SmoothLine

@@ -4,6 +4,8 @@ import DeleteButton from './DeleteButton'
 import {WidthAnchor, CenterAnchor, PositionAnchor} from 'react-konva-anchors'
 import AddButton from './AddButton';
 import HasManyConnectorHandle from './connections/HasManyConnectorHandle'
+import HasOneConnectorHandle from './connections/HasOneConnectorHandle'
+import BelongsToManyConnectorHandle from './connections/BelongsToManyConnectorHandle'
 
 class Entity extends React.Component {
 
@@ -14,6 +16,7 @@ class Entity extends React.Component {
         this.bg = React.createRef()
         this.deleteButton = React.createRef()
         this.addButton = React.createRef()
+        this.connHandle = React.createRef()
     }
 
     state = {
@@ -21,7 +24,9 @@ class Entity extends React.Component {
         bgPos: { x: 0, y: 0 },
         textPos: { x: 0, y: 0 },
         deleteButtonPos: { x: 0, y: 0 },
-        addButtonPos: { x: 0, y: 0 }
+        addButtonPos: { x: 0, y: 0 },
+        connHandlePos: { x: 0, y: 0 },
+
     }
 
     handleMove = () => {
@@ -61,7 +66,14 @@ class Entity extends React.Component {
                 fill="#fff"
                 fontFamily="Open Sans" />
 
-            <HasManyConnectorHandle onConnect={this.handleConnect}/>
+            <Group
+                ref={this.connHandle}
+                x={this.state.connHandlePos.x}
+                y={this.state.connHandlePos.y}>
+                <HasManyConnectorHandle onConnect={this.handleConnect} rotation={22.5}/>
+                <HasOneConnectorHandle onConnect={this.handleConnect} rotation={67.5}/>
+                <BelongsToManyConnectorHandle onConnect={this.handleConnect} rotation={112.5}/>
+            </Group>
 
             <Group
                 ref={this.deleteButton}
@@ -81,6 +93,18 @@ class Entity extends React.Component {
                 element={() => this.bg.current}
                 change={(x, y) => this.setState({ bgPos: { x, y } })} />
 
+
+            <PositionAnchor 
+                element={() => this.connHandle.current}
+                elementOrigin={{x:0,y:0.5}}
+                elementDesiredOrigin={{x:0, y:0.5}}
+
+                reference={() => this.bg.current}
+                referenceOrigin={{x:0,y:0}}
+                referenceDesiredOrigin={{x:1, y:1}}
+                change={(x, y) => this.setState({ connHandlePos: { x, y } })}
+            />
+            
             <PositionAnchor
                 
                 element={() => this.text.current}
