@@ -79,7 +79,7 @@ MathHelper.getNearestPointToCircle = function (centerOfCircle, to, radius) {
  * @param {number} to.y
  * @param {number} w 
  * @param {number} h 
- *//*
+ */
 MathHelper.getNearestPointToRectangle = function (from, to, w, h, preCentered) {
     let x = from.x,
         y = from.y
@@ -117,21 +117,16 @@ MathHelper.getNearestPointToRectangle = function (from, to, w, h, preCentered) {
         y_out = RBC.y
     }
 
-
     if (x_out == to.x && y_out == to.y) {
-        from = Vector.fromObject(from)
-        to = Vector.fromObject(to)
-        let fromToVec = Vector.sub(to, from)
-        try {
-            let dist = fromToVec.getLength()
-            fromToVec.normalize()
-            fromToVec.mulEachBy(dist * 0.9)
-            fromToVec.add(from)
-            x_out = fromToVec.x
-            y_out = fromToVec.y
-        } catch (e) {
-            //leave
-        }
+        to = new Vec2(to)
+
+        let out = to 
+            .sub (from) 
+            .map(x => x*0.9) 
+            .add(from)
+
+        x_out = out.x
+        y_out = out.y
     }
 
     return {
@@ -139,7 +134,7 @@ MathHelper.getNearestPointToRectangle = function (from, to, w, h, preCentered) {
         y: y_out
     }
 }
-*/
+
 
 /**
  * 

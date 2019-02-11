@@ -3,7 +3,7 @@ import ConnectorHandle from './ConnectorHandle'
 import MathHelper from '../../math/MathHelper'
 
 class HasManyConnectorHandle extends ConnectorHandle {
-    connectionType = "hasMany"
+    connectionType = "hasOne"
 
     points = (from, to) => {
         return [from.x, from.y, to.x, to.y];

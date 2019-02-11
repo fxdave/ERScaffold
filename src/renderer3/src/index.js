@@ -3,6 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import Konva from 'konva'
+import Arranger from './arranger/Arranger'
+let anim = new Konva.Animation(() => {
+    Arranger.tick()
+  })
+  
+  anim.start()
+  
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

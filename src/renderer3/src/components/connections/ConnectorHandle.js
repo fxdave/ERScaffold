@@ -96,7 +96,7 @@ class ConnectorHandle extends React.Component {
             }
         })
 
-
+        this.handle.current.getLayer().draw()
         let stage = this.handle.current.getStage()
         let pos = stage.getPointerPosition()
         let shape = this.handle.current.getLayer().getIntersection(pos)

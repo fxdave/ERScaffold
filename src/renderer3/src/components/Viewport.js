@@ -8,6 +8,7 @@ import Connection from '../../../main/model/Connection';
 import OneToOneConnection from './connections/OneToOneConnection'
 import OneToManyConnection from './connections/OneToManyConnection'
 import ManyToManyConnection from './connections/ManyToManyConnection'
+
 class Viewport extends React.Component {
     constructor(props) {
         super(props)
@@ -36,6 +37,17 @@ class Viewport extends React.Component {
         //new EntityModel(this.getNextID(this.entities), "Music", [], x, y)
     }
 
+    handleConnectionChange = index => (connectionModifications) => {
+        let conns = [...this.state.conns]
+        conns[index] = {
+            ...conns[index],
+            ...connectionModifications
+        }
+        this.setState({
+            conns
+        })
+    }
+
     handleEntityChange = (index) => (entityModifications) => {
         let entities = [...this.state.entities]
         entities[index] = {
@@ -47,31 +59,36 @@ class Viewport extends React.Component {
         })
     }
 
-    handleDeleteEntity = (e) => {
+    handleDeleteEntity = (id) => () => {
         console.log("Entity has been deleted");
-        this.setState((state) => {
-            entities: state.entities.filter(entity => entity.id != e.id)
+        this.setState({
+            entities: this.state.entities.filter(e => e.id != id)
         })
     }
 
     handleConnectEntity = (e) => {
+        let x = (e.from.props.x + e.to.props.x) / 2
+        let y = (e.from.props.y + e.to.props.y) / 2
+
         let conn = new ConnectionModel(
             e.from,
             e.to,
             e.type,
             "",
-            this.getNextID(this.state.conns)
+            this.getNextID(this.state.conns),
+            x,
+            y
         );
         this.setState(state => ({
             conns: [...state.conns, conn]
         }))
-        
+
     }
 
-    handleDeleteConnection = (e) => {
+    handleDeleteConnection = (id) => () => {
         console.log("Connection has been deleted");
-        this.setState((state) => {
-            conns: state.conns.filter(conn => conn.id != e.id)
+        this.setState({
+            conns: this.state.conns.filter(conn => conn.id != id)
         })
     }
 
@@ -85,21 +102,37 @@ class Viewport extends React.Component {
     }
 
     render() {
-        return <Stage ref={this.stage} onDblClick={this.handleAddEntity}>        
+        return <Stage ref={this.stage} onDblClick={this.handleAddEntity}>
             <Layer name="connectionLayer">
-                {this.state.conns.map((conn,index) => {
-                    switch(conn.type) {
+                {this.state.conns.map((conn, index) => {
+                    let ConnectionType = OneToOneConnection
+                    switch (conn.type) {
                         case "hasOne":
-                            return <OneToOneConnection {...conn} key={conn.id} />
+                            ConnectionType = OneToOneConnection
+                            break;
                         case "hasMany":
-                            return <OneToManyConnection {...conn} key={conn.id} />
+                            ConnectionType = OneToManyConnection
+                            break;
                         case "belongsToMany":
-                            return <ManyToManyConnection {...conn} key={conn.id} />
+                            ConnectionType = ManyToManyConnection
+                            break;
                     }
+                    return <ConnectionType 
+                    {...conn} 
+                    key={conn.id} 
+                    fromProps={this.state.entities.filter( e => e.id == conn.from.props.id)[0]}
+                    toProps={this.state.entities.filter( e => e.id == conn.to.props.id)[0]}
+                    onChange={this.handleConnectionChange(index)} 
+                    onDelete={this.handleDeleteConnection(conn.id)} />
                 })}
             </Layer>
             <Layer name="entityLayer">
-                {this.state.entities.map((entity,index) => <Entity {...entity} change={this.handleEntityChange(index)} key={entity.id} onConnect={this.handleConnectEntity} />)}
+                {this.state.entities.map((entity, index) => <Entity 
+                {...entity} 
+                key={entity.id} 
+                onChange={this.handleEntityChange(index)} 
+                onConnect={this.handleConnectEntity} 
+                onDelete={this.handleDeleteEntity(entity.id)} />)}
             </Layer>
             <Layer name="tempLayer"></Layer>
         </Stage>

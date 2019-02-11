@@ -3,7 +3,7 @@ import ConnectorHandle from './ConnectorHandle'
 import MathHelper from '../../math/MathHelper'
 
 class HasManyConnectorHandle extends ConnectorHandle {
-    connectionType = "hasMany"
+    connectionType = "belongsToMany"
 
     points = (from, to) => {
         let proj = MathHelper.triangularProjection(from, to, 5);
