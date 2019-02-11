@@ -19,6 +19,7 @@ class Entity extends React.Component {
         this.deleteButton = React.createRef()
         this.addButton = React.createRef()
         this.connHandle = React.createRef()
+        this.contextText = React.createRef()
     }
 
     state = {
@@ -28,6 +29,7 @@ class Entity extends React.Component {
         deleteButtonPos: { x: 0, y: 0 },
         addButtonPos: { x: 0, y: 0 },
         connHandlePos: { x: 0, y: 0 },
+        contextTextPos: { x: 0, y: 0 },
     }
 
     componentDidMount() {
@@ -38,8 +40,8 @@ class Entity extends React.Component {
         E.current._arrangerUpdate = () => {
             this.handleMove()
         }
-        E.current._arrangerBoundingType= (element,to) => {
-            return BoundingBox(this.bg.current,to)
+        E.current._arrangerBoundingType = (element, to) => {
+            return BoundingBox(this.bg.current, to)
         }
         Arranger.add(E)
     }
@@ -49,17 +51,17 @@ class Entity extends React.Component {
         Arranger.remove(E)
     }
 
-    shouldComponentUpdate(nextProps,nextState) {
+    shouldComponentUpdate(nextProps, nextState) {
         let should = false
 
-        for(let i in this.state){
-            if(nextState[i] != this.state[i]) {
+        for (let i in this.state) {
+            if (nextState[i] != this.state[i]) {
                 should = true
                 break
             }
         }
 
-        if(this.props.name != nextProps.name)
+        if (this.props.name != nextProps.name)
             should = true
 
         return should
@@ -111,6 +113,15 @@ class Entity extends React.Component {
                 fill="#fff"
                 fontFamily="Open Sans" />
 
+            <Text
+                ref={this.contextText}
+                x={this.state.contextTextPos.x}
+                y={this.state.contextTextPos.y}
+                text={this.props.context}
+                fontSize={10}
+                fill="#fff"
+                fontFamily="Open Sans" />
+
             <Group
                 ref={this.deleteButton}
                 x={this.state.deleteButtonPos.x}
@@ -130,6 +141,19 @@ class Entity extends React.Component {
                 element={() => this.bg.current}
                 change={(x, y) => this.setState({ bgPos: { x, y } })} />
 
+            <PositionAnchor
+                element={() => this.contextText.current}
+                elementOrigin={{ x: 0, y: 0 }}
+                elementDesiredOrigin={{ x: 1, y: 1 }}
+
+                reference={() => this.bg.current}
+                referenceOrigin={{ x: 0, y: 0 }}
+                referenceDesiredOrigin={{ x: 1, y: 1 }}
+
+                shift={{ x: -5, y: -5 }}
+
+                change={(x, y) => this.setState({ contextTextPos: { x, y } })}
+            />
 
             <PositionAnchor
                 element={() => this.connHandle.current}
@@ -194,8 +218,8 @@ class Entity extends React.Component {
     }
 
     componentDidUpdate() {
-        console.log("The #" , this.props.id , " entity updated");
-        
+        console.log("The #", this.props.id, " entity updated");
+
     }
 }
 
