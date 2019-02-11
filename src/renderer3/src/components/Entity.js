@@ -7,6 +7,8 @@ import HasManyConnectorHandle from './connections/HasManyConnectorHandle'
 import HasOneConnectorHandle from './connections/HasOneConnectorHandle'
 import BelongsToManyConnectorHandle from './connections/BelongsToManyConnectorHandle'
 import Arranger from '../arranger/Arranger'
+import BoundingBox from '../arranger/BoundingBox'
+
 class Entity extends React.Component {
 
     constructor(props) {
@@ -30,10 +32,21 @@ class Entity extends React.Component {
 
     componentDidMount() {
         //arranger properties
-        let E = this.entity.current
-        E._arrangerManuallyCentered = true
-
+        let E = this.entity
+        E.current._arrangerElementCentered = false
+        E.current._arrangerMinimalRawSpace = 15000
+        E.current._arrangerUpdate = () => {
+            this.handleMove()
+        }
+        E.current._arrangerBoundingType= (element,to) => {
+            return BoundingBox(this.bg.current,to)
+        }
         Arranger.add(E)
+    }
+
+    componentWillUnmount() {
+        let E = this.entity
+        Arranger.remove(E)
     }
 
     shouldComponentUpdate(nextProps,nextState) {

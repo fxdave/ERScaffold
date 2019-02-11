@@ -2,7 +2,8 @@ import React from 'react'
 import { RegularPolygon, Group } from 'react-konva';
 import DeleteButton from '../DeleteButton';
 import { PositionAnchor } from 'react-konva-anchors';
-
+import Arranger from '../../arranger/Arranger'
+import BoundingBox from '../../arranger/BoundingBox'
 class Relation extends React.Component {
     constructor(props) {
         super(props)
@@ -13,6 +14,23 @@ class Relation extends React.Component {
 
     state = {
         deleteButtonPos: {x:0,y:0}
+    }
+
+    componentDidMount() {
+        let E = this.relation
+        E.current._arrangerUpdate = () => {
+            this.handleMove()
+        }
+        E.current._arrangerElementCentered = true
+        E.current._arrangerBoundingType= (element,to) => {
+            return BoundingBox(this.bg.current,to)
+        }
+        Arranger.add(E)
+    }
+
+    componentWillUnmount() {
+        let E = this.relation
+        Arranger.remove(E)
     }
 
     render() {

@@ -29,7 +29,7 @@ class Viewport extends React.Component {
             entities: [
                 ...state.entities,
                 new EntityModel(
-                    this.getNextID(this.state.entities), "Hello", [], x, y
+                    this.getNextID(this.state.entities), "empty", [], x, y
                 )
             ]
         }))
@@ -62,10 +62,18 @@ class Viewport extends React.Component {
     handleDeleteEntity = (id) => () => {
         console.log("Entity has been deleted");
         this.setState({
-            entities: this.state.entities.filter(e => e.id != id)
+            entities: this.state.entities.filter(e => e.id != id),
+            conns: this.state.conns.filter(c => c.from.props.id != id && c.to.props.id != id)
         })
     }
 
+    /**
+     * 
+     * @param {Object} e
+     * @param {Entity} e.from
+     * @param {Entity} e.to
+     * @param {string} e.type
+     */
     handleConnectEntity = (e) => {
         let x = (e.from.props.x + e.to.props.x) / 2
         let y = (e.from.props.y + e.to.props.y) / 2

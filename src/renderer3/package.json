@@ -46,7 +46,7 @@
     "react-dev-utils": "^7.0.1",
     "react-dom": "^16.7.0",
     "react-konva": "^16.7.1",
-    "react-konva-anchors": "^0.2.6",
+    "react-konva-anchors": "^0.2.7",
     "resolve": "1.8.1",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.0",
