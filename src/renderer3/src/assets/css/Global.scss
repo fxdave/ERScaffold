@@ -6,11 +6,58 @@ body {
   overflow: hidden;
 }
 
-#konva{
+#canvas{
   transition: filter 1s;
 }
 
-#ask {
+.help {
+  background: rgb(36, 29, 32);
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  
+  align-items: center;
+  flex-flow: column;
+  justify-content: center;
+  align-content: center;
+
+  display: flex;
+  color:#fff;
+  z-index: 3;
+
+  opacity: 0.9;
+  transition:opacity 0.5s linear;
+
+  .control {
+    font-size: 1.2rem;
+    font-weight: 200;
+    padding: 0.10rem;
+
+    b {
+      color: rgb(255, 0, 85)
+    }
+  }
+}
+
+.help-out {
+  animation: fadeOut 0.5s;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 0.9;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.ask {
   display: flex;
   position: fixed;
   height: 100%;
@@ -20,23 +67,38 @@ body {
   right: 0;
   bottom: 0;
   align-items: center;
+  flex-flow: column;
   align-content: space-around;
   justify-content: space-around;
   justify-items: center;
   background: #0000005c;
 
+
   form {
     flex: 0;
     padding: 9px;
     text-align: center;
-    border-radius: 9px;
     width: 50%;
-    background: rgb(48, 48, 48);
 
     input {
+      width: 100%;
+      border: 9px solid rgb(48, 48, 48);
+      border-radius: 9px;
       padding: 9px;
-      border: 0;
-      border-radius: 4px;
+    }
+
+    .hint {
+      color: #fff;
+      font-weight: 600;
+      text-shadow: 1px 1px 2px #00000044;
+      .attributes {
+        margin-left: 0.5em;
+        color:#ccc;
+        .attribute {
+          font-weight: 600;
+          color: #ffffff;
+        }
+      }
     }
   }
 }
@@ -85,5 +147,7 @@ body {
     &:hover {
         background: rgb(255, 0, 110);
     }
+
+    
 }
 }

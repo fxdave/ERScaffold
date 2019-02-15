@@ -41,10 +41,31 @@
         &:hover {
             background: rgb(255, 0, 110);
         }
-    }
+
+        &[disabled] {
+          color:#fff;
+          opacity: 0.5;
+          cursor: initial;
+        }
+
+        &[disabled]:hover {
+          background: rgba(255,255,255,0.2);
+        }
+      }
 
     #generate {
         font-weight: 600;
+    }
+
+    .app-name {
+        padding:10px 10px;
+        input {
+            font-size: 1em;
+            padding:10px 20px;
+            border-radius: 9px;
+            border:0;
+            width: 100%;
+        }
     }
 }
 

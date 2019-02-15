@@ -1,5 +1,5 @@
 import React from 'react'
-import { Group, Rect, Text } from 'react-konva';
+import { Group, Rect, Text, Line } from 'react-konva';
 import DeleteButton from './DeleteButton'
 import { WidthAnchor, CenterAnchor, PositionAnchor } from 'react-konva-anchors'
 import AddButton from './AddButton';
@@ -8,6 +8,9 @@ import HasOneConnectorHandle from './connections/HasOneConnectorHandle'
 import BelongsToManyConnectorHandle from './connections/BelongsToManyConnectorHandle'
 import Arranger from '../arranger/Arranger'
 import BoundingBox from '../arranger/BoundingBox'
+import Dialog from './utils/Dialog'
+import Property from './Property';
+import PropertyModel from '../../../main/model/Property'
 
 class Entity extends React.Component {
 
@@ -20,6 +23,7 @@ class Entity extends React.Component {
         this.addButton = React.createRef()
         this.connHandle = React.createRef()
         this.contextText = React.createRef()
+        this.input = React.createRef()
     }
 
     state = {
@@ -30,13 +34,30 @@ class Entity extends React.Component {
         addButtonPos: { x: 0, y: 0 },
         connHandlePos: { x: 0, y: 0 },
         contextTextPos: { x: 0, y: 0 },
+        showDialog: true,
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        let should = false
+
+        for (let i in this.state) {
+            if (nextState[i] != this.state[i]) {
+                should = true
+                break
+            }
+        }
+        return should
+            || this.props.name != nextProps.name
+            || this.props.context != nextProps.context
+            || this.props.props.length != nextProps.props.length
+
     }
 
     componentDidMount() {
         //arranger properties
         let E = this.entity
         E.current._arrangerElementCentered = false
-        E.current._arrangerMinimalRawSpace = 15000
+        E.current._arrangerMinimalRawSpace = 20000
         E.current._arrangerUpdate = () => {
             this.handleMove()
         }
@@ -49,22 +70,6 @@ class Entity extends React.Component {
     componentWillUnmount() {
         let E = this.entity
         Arranger.remove(E)
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        let should = false
-
-        for (let i in this.state) {
-            if (nextState[i] != this.state[i]) {
-                should = true
-                break
-            }
-        }
-
-        if (this.props.name != nextProps.name)
-            should = true
-
-        return should
     }
 
     handleMove = () => {
@@ -82,9 +87,62 @@ class Entity extends React.Component {
         })
     }
 
-    render() {
+    handleSubmit = (e) => {
+        e.preventDefault();
 
-        return <Group name="entity" entityInstance={this} ref={this.entity} draggable="true" x={this.props.x} y={this.props.y} onDragMove={this.handleMove} >
+        this.setState({
+            showDialog: false
+        })
+    }
+
+    handleKeyUp = (e) => {
+        let val = e.target.value.replace(/ /g, '').split(':')
+        this.props.onChange({
+            context: val[1] ? val[1] : val[0],
+            name: val[0]
+        })
+    }
+
+    handleChangeProperty = key => props => {
+
+
+        let newProps = this.props.props
+        newProps[key] = {
+            ...newProps[key],
+            ...props
+        }
+        this.props.onChange({
+            props: newProps
+        })
+    }
+
+    handleDeleteProperty = prop => () => {
+        this.props.onChange({
+            props: this.props.props.filter(p => p.name != prop.name)
+        })
+    }
+
+    handleAddProperty = () => {
+        this.props.onChange({
+            props: [...this.props.props, new PropertyModel(1, "")]
+        })
+    }
+
+    handleRename = e => {
+        e.cancelBubble = true
+        this.setState({ showDialog: true })
+    }
+
+    render() {
+        return <Group name="entity" onDblClick={this.handleRename} entityInstance={this} ref={this.entity} draggable="true" x={this.props.x} y={this.props.y} onDragMove={this.handleMove} >
+
+            <Group>
+                {this.props.props.map((prop, key) => <Property
+                    {...prop}
+                    onChange={this.handleChangeProperty(key)}
+                    onDelete={this.handleDeleteProperty(prop)}
+                />)}
+            </Group>
 
             <Group
                 ref={this.connHandle}
@@ -103,6 +161,15 @@ class Entity extends React.Component {
                 x={this.state.bgPos.x}
                 y={this.state.bgPos.y}
                 fill="#2f2f2f" />
+
+            <Dialog show={this.state.showDialog}>
+                <form onSubmit={this.handleSubmit}>
+                    <input ref={this.input} onKeyUp={this.handleKeyUp} type="text" placeholder="EntityName : ContextName" />
+                    <div className="hint">
+                        BUILTINS: <ol><li>User : Accounts</li></ol>
+                    </div>
+                </form>
+            </Dialog>
 
             <Text
                 ref={this.text}
@@ -133,7 +200,8 @@ class Entity extends React.Component {
             <Group
                 ref={this.addButton}
                 x={this.state.addButtonPos.x}
-                y={this.state.addButtonPos.y}>
+                y={this.state.addButtonPos.y}
+                onClick={this.handleAddProperty}>
                 <AddButton />
             </Group>
 
@@ -218,6 +286,8 @@ class Entity extends React.Component {
     }
 
     componentDidUpdate() {
+        if (this.state.showDialog)
+            this.input.current.focus()
         console.log("The #", this.props.id, " entity updated");
 
     }

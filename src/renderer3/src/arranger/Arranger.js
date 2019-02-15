@@ -16,9 +16,9 @@ class Arranger {
      */
     add(element) {
         this.setDefaultsFor(element.current)
-        console.log(element);
         
         this.arrangables.push(element)
+        console.log(this.arrangables.map(a => a.current._arrangerBoundingType(a.current,{x:0,y:0})));
         this.onStart()
     }
 
@@ -124,8 +124,10 @@ class Arranger {
         let near1 = fromKonvaObject._arrangerBoundingType(fromKonvaObject, abs)
         let near2 = toKonvaObject._arrangerBoundingType(toKonvaObject, near1)
 
-        return Math.pow(near1.x - near2.x, 2)
+        let d = Math.pow(near1.x - near2.x, 2)
             + Math.pow(near1.y - near2.y, 2)
+
+        return d
     }
 
     /**

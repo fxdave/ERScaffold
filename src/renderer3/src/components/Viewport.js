@@ -4,7 +4,7 @@ import Entity from './Entity'
 import { Layer } from 'react-konva'
 import EntityModel from '../../../main/model/Entity';
 import ConnectionModel from '../../../main/model/Connection';
-import Connection from '../../../main/model/Connection';
+import ProperyModel from '../../../main/model/Property'
 import OneToOneConnection from './connections/OneToOneConnection'
 import OneToManyConnection from './connections/OneToManyConnection'
 import ManyToManyConnection from './connections/ManyToManyConnection'
@@ -29,7 +29,7 @@ class Viewport extends React.Component {
             entities: [
                 ...state.entities,
                 new EntityModel(
-                    this.getNextID(this.state.entities), "empty", [], x, y
+                    this.getNextID(this.state.entities), "empty", [new ProperyModel(1,"ID",0,0,"integer")], x, y
                 )
             ]
         }))
@@ -139,7 +139,7 @@ class Viewport extends React.Component {
                 {...entity} 
                 key={entity.id} 
                 onChange={this.handleEntityChange(index)} 
-                onConnect={this.handleConnectEntity} 
+                onConnect={this.handleConnectEntity}
                 onDelete={this.handleDeleteEntity(entity.id)} />)}
             </Layer>
             <Layer name="tempLayer"></Layer>
