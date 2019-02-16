@@ -1,0 +1,74 @@
+.panel {
+    position: fixed;
+    left:0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.8);
+    color:#fff;
+    display: flex;
+
+    section {
+        flex: 1;
+        display:flex;
+        align-items: center; /* Vertical center alignment */
+        justify-content: center; 
+        padding:10px 10px;
+        font-size: 1em;
+    }
+
+    button {
+        flex:1;
+        font-size: 1em;
+        border:none;
+        background: rgba(255,255,255,0.2);
+        color:#fff;
+        border-radius: 0;
+        padding:10px 20px;
+        margin:0;
+        display: block;
+        cursor: pointer;
+
+        &:first-child {
+            border-top-left-radius: 9px;
+            border-bottom-left-radius: 9px;
+        }
+
+        &:last-child {
+            border-top-right-radius: 9px;
+            border-bottom-right-radius: 9px;
+        }
+
+        &:hover {
+            background: rgb(255, 0, 110);
+        }
+
+        &[disabled] {
+          color:#fff;
+          opacity: 0.5;
+          cursor: initial;
+        }
+
+        &[disabled]:hover {
+          background: rgba(255,255,255,0.2);
+        }
+      }
+
+    #generate {
+        font-weight: 600;
+    }
+
+    .app-name {
+        padding:10px 10px;
+        input {
+            font-size: 1em;
+            padding:10px 20px;
+            border-radius: 9px;
+            border:0;
+            width: 100%;
+        }
+    }
+}
+
+.panel .controls {
+    flex:0;
+}

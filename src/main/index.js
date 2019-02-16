@@ -4,15 +4,14 @@ import Model from './model/Model'
 import Generator from './Generator'
 import PackUtil from './PackUtil'
 import TemplateUtil from './TemplateUtil'
-
+import path from 'path'
 let mainWindow
 app.commandLine.appendSwitch('remote-debugging-port', '9223')
 app.on('ready', function(){
     //create new window
 
     mainWindow = new BrowserWindow({})
-
-    mainWindow.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)
+    mainWindow.loadURL('file://' + path.join(__dirname,"..","../public/index.html"))
 
     //const MainMenu = Menu.buildFromTemplate(MainMenuTemplate)
     //Menu.setApplicationMenu(MainMenu)
