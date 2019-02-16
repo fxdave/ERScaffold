@@ -1,5 +1,5 @@
 {
-  "name": "ERScaffold",
+  "name": "er-scaffold",
   "version": "1.0.0",
   "description": "Scaffolding generator using ER model ",
   "main": "src/main/index.js",
