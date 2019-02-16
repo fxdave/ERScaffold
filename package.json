@@ -8,7 +8,7 @@
   "license": "GPLv2",
   "private": false,
   "scripts": {
-    "start": "electron -r @babel/register .",
+    "start": "yarn run watch-renderer & electron -r @babel/register .",
     "dev-renderer": "MODE=development webpack-dev-server",
     "watch-renderer": "MODE=development webpack --watch",
     "build-renderer": "MODE=production webpack"
