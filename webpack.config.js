@@ -3,6 +3,7 @@ module.exports = {
     devtool: 'eval-source-map',
     mode: process.env.MODE ? process.env.MODE : "production",
     entry: __dirname + "/src/renderer/index.js",
+    target: "electron-renderer",
     output: {
         path: __dirname + "/public",
         filename: "bundle.js"

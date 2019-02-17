@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Viewport from './components/Viewport'
+import {ipcRenderer} from 'electron'
 import './assets/css/Global.scss'
 import './assets/css/OpenSans.scss'
 import './assets/css/Panel.scss'
@@ -8,6 +9,11 @@ class App extends Component {
 
   constructor(props) {
     super(props)
+
+    //register the import action that will be fired when the main sends the imported json
+    ipcRenderer.on('import', this.handleImportResponse)
+    //register the generate action that will be fired when the main sends the templates to choose
+    ipcRenderer.on('generateSelect', this.handleGenerateResponse)
   }
 
   state = {
@@ -15,16 +21,76 @@ class App extends Component {
     appName: ""
   }
 
+  /**
+   * When the user rename the application
+   */
   handleAppRename = e => {
     this.setState({
       appName: e.target.value
     })
   }
 
+  /**
+   * When the user clicks on the export button
+   */
+  handleExport = () => {
+    ipcRenderer.send('export', this.getExportData())
+  }
+
+  /**
+   * When the user clicks on the import button
+   */
+  handleImport = () => {
+    ipcRenderer.send('importStart')
+  }
+
+  handleImportResponse = (e, data) => {
+    data = JSON.parse(data)
+    this.setState({
+      appName: data.appName
+    })
+    this.setModelData(data)
+  }
+
+  /**
+   * When the user clicks on the generate button 
+   * this function sends the model to the main process
+   * @see handleGenerateResponse
+   */
+  handleGenerate = () => {
+    ipcRenderer.send('generateStart', this.getExportData())
+  }
+
+  /**
+   * @see handleGenerate
+   * when the user has clicked the generate button the main process receives the model
+   * then the main process sends data and calls this function because 
+   * the constructor of this class has registered this
+   */
+  handleGenerateResponse = (e, data) => {
+    // TODO: implement tempalte selector
+    /*
+    TemplateSelector
+      .select(data)
+      .then(selected => {
+        console.log(selected);
+        ipcRenderer.send('generateSelected', selected)
+      }).catch(err => {
+        console.error(err);
+
+      })
+      */
+  }
+
+  getExportData= () => ({
+    ...this.getModelData(),
+    "appName" : this.state.appName
+  })
+
   render() {
     return (
       <div id="app">
-        <div className="help"  onMouseOver={() => this.setState({showControls:false})} style={{ visibility: this.state.showControls ? 'visible' : 'hidden' }}>
+        <div className="help" onMouseOver={() => this.setState({ showControls: false })} style={{ visibility: this.state.showControls ? 'visible' : 'hidden' }}>
           <h1>Controls:</h1>
           <div className="control"><b>Double click</b> to the background in order to create an Entity.</div>
           <div className="control"><b>Double click</b> to any element to change their properties.</div>
@@ -32,16 +98,16 @@ class App extends Component {
           <div className="control">You can <b>Drag</b> the elements and the viewport.</div>
         </div>
         <div id="canvas">
-          <Viewport />
+          <Viewport setModelData={(setDataFunction) => this.setModelData = setDataFunction} getModelData={(getDataFunction) => this.getModelData = getDataFunction}/>
         </div>
         <div className="panel">
           <section className="app-name">
-            <input onKeyUp={this.handleAppRename} type="text" placeholder="ApplicationName in uppercamelcase" />
+            <input onKeyUp={this.handleAppRename} type="text" placeholder="ApplicationName in uppercamelcase" value={this.state.appName}/>
           </section>
           <section className="controls">
-            <button id="export" disabled={this.state.appName == ""}>Export</button>
-            <button id="import">Import</button>
-            <button id="generate" disabled={this.state.appName == ""}>Generate</button>
+            <button onClick={this.handleExport} id="export" disabled={this.state.appName == ""}>Export</button>
+            <button onClick={this.handleImport} id="import">Import</button>
+            <button onClick={this.handleGenerate} id="generate" disabled={this.state.appName == ""}>Generate</button>
           </section>
         </div>
         <div id="temp"></div>

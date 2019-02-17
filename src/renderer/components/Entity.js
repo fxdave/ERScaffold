@@ -34,7 +34,7 @@ class Entity extends React.Component {
         addButtonPos: { x: 0, y: 0 },
         connHandlePos: { x: 0, y: 0 },
         contextTextPos: { x: 0, y: 0 },
-        showDialog: true,
+        showDialog: this.props.name == "",
     }
 
     shouldComponentUpdate(nextProps, nextState) {
