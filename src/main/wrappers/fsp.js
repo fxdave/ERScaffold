@@ -32,7 +32,10 @@ function (url) {
 function getOutputFromSource(source, output, vars = {}) {
 
     try {
-        return (new Function(source + '\n' + output))(...vars)
+        let out = (new Function(...Object.keys(vars), source + '\n return ' + output))(...Object.values(vars))
+        console.log(out);
+        
+        return out
     } catch (err) {
         console.error(err);
         return null

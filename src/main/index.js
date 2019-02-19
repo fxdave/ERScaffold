@@ -1,7 +1,6 @@
 import fs from 'fs'
 import { app, BrowserWindow, /*Menu,*/ ipcMain, dialog } from 'electron'
 import Model from './model/Model'
-import Generator from './Generator'
 import PackUtil from './PackUtil'
 import TemplateUtil from './TemplateUtil'
 import path from 'path'
@@ -55,7 +54,7 @@ app.on('ready', function () {
     })
 
     /**
-     * generator
+     * Gets the available packs and the 
      */
     ipcMain.on('generateStart', function (e, data) {
         let model = new Model(data)
@@ -79,6 +78,9 @@ app.on('ready', function () {
             })
     })
 
+    /**
+     * 
+     */
     ipcMain.on('generateSelected', function (e, data) {
         app.generateModel.getEntities().forEach(entity => {
             Promise.all(data.map(template => {
