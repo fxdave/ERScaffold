@@ -1,13 +1,13 @@
-import FileUtil from './FileUtil';
-import packs_folder from './utils/packsFolderURL'
+import fsp from './wrappers/fsp';
+import PACKS_FOLDER_URL from './meta/PACKS_FOLDER_URL'
 
 
 class PackUtil {
 
     static getPack(packName) {
-        let packIndexURL = packs_folder + '/' + packName + '/index.pack.js'
+        let packIndexURL = PACKS_FOLDER_URL + '/' + packName + '/index.pack.js'
 
-        return FileUtil.getScript(packIndexURL, "pack")
+        return fsp.getScript(packIndexURL, "pack")
             .then(pack => {
                 return new Promise((resolve, reject) => {
                     if (pack == null) {
@@ -32,7 +32,7 @@ class PackUtil {
 
     static getRequirement(requirement, packName) {
 
-        return FileUtil.getScript(packs_folder + '/' + packName + '/' + requirement.file, 'requirement')
+        return fsp.getScript(PACKS_FOLDER_URL + '/' + packName + '/' + requirement.file, 'requirement')
             .then(req => {
 
                 return new Promise((resolve, reject) => {
@@ -77,7 +77,7 @@ class PackUtil {
 
     static getPacks() {
 
-        return FileUtil.ls(packs_folder)
+        return fsp.ls(PACKS_FOLDER_URL)
             .then(packs => {
                 return Promise.all(packs.map(pack => PackUtil.getPack(pack)))
             })
@@ -134,7 +134,5 @@ class PackUtil {
             })
     }
 }
-
-PackUtil.packsFolder = packs_folder
 
 export default PackUtil

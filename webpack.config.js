@@ -19,12 +19,16 @@ module.exports = {
             },
             {
                 test: /\.s?css$/,
-                exclude: /node_modules/,
-                use: [
-                    "style-loader", // creates style nodes from JS strings
-                    "css-loader", // translates CSS into CommonJS
-                    "sass-loader" // compiles Sass to CSS, using Node Sass by default
-                ]
+                use: [{
+                    loader: "style-loader"
+                }, {
+                    loader: "css-loader"
+                }, {
+                    loader: "sass-loader",
+                    options: {
+                        includePaths: ["./node_modules","./node_modules/@syncfusion"]
+                    }
+                }]
             }
         ]
     },

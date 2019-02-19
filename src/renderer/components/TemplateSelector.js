@@ -1,84 +1,62 @@
 import React from 'react'
-import {enableRipple} from '@syncfusion/ej2-base';
+import { enableRipple } from '@syncfusion/ej2-base';
 enableRipple(true);
-import {TreeViewComponent} from '@syncfusion/ej2-react-navigations';
+import { TreeViewComponent } from '@syncfusion/ej2-react-navigations';
 
 class TemplateSelector extends React.Component {
 
-    state = {
-        selectedTemplates: [] // Array of { template: el.dataset.template,  pack: el.dataset.pack }
+    constructor(props) {
+        super(props)
+        this.tree = React.createRef()
     }
 
-    handleCheck = (checked, req) => {
-        if (checked) {
-            this.setState({
-                selectedTemplates: [...this.state.selectedTemplates, req]
-            })
-        } else {
-            this.setState({
-                selectedTemplates: this.state.selectedTemplates.filter(x => x.template != req.template && x.pack != req.pack)
-            })
-        }
+    preFormatRequirementData(requirements, pack) {
+        if (requirements)
+            return requirements.map(req => ({
+                id: pack.dir + "\uffff" + req.template,
+                isChecked: true,
+                name: req.name,
+                child: this.preFormatRequirementData(req.children, pack)
+            }))
+        return undefined
     }
 
-    handleCancel = () => {
-        this.props.onCancel()
+    preFormatData(data) {
+        return data.map(option => ({
+            id: "0-entitiy-" + option.entity.name, // 0- means that it is not a template
+            name: option.entity.name,
+            expanded: true,
+            child: option.packs.map(pack => ({
+                isChecked: true,
+                id: "0-pack-" + pack.dir, // 0- means that it is not a template
+                name: pack.name,
+                child: this.preFormatRequirementData(pack.requirements, pack)
+            }))
+
+        }))
     }
+
+    fields = { dataSource: this.preFormatData(this.props.data), id: 'id', text: 'name', child: 'child' }
 
     handleSelect = () => {
-        this.props.onSelect(this.state.selectedTemplates)
-    }
 
-    _getRequirementsView(requirements, packdir) {
+        let selected = this.tree.current
+            .getAllCheckedNodes()
+            .filter(node => node[0] != '0' && node[1] != '-')
+            .map(node => {
+                let expl = node.split(/\uffff/)
+                return { pack: expl[0], template: expl[1] }
+            })
 
-        if (requirements && requirements.length != 0)
-            return <table>
-                <tbody>
-                    {requirements.map(req => {
-                        let templateName = req ? req.name : "ERROR: Wrong template!"
-                        let templateChildren = req ? this._getRequirementsView(req.children, packdir) : ''
-                        let templateObj = { template: req && req.template ? req.template : '', pack: packdir }
-                        return <tr>
-                            <td>
-                                <div style={{ paddingLeft: '1rem' }} className="level">
-                                    <label>
-                                        <input onChange={(e) => this.handleCheck(e.target.checked, templateObj)} type="checkbox" />
-                                        {templateName}
-                                    </label>
-                                    {templateChildren}
-                                </div>
-                            </td>
-                        </tr>
-                    })}
-                </tbody>
-            </table>
-        return ""
+        this.props.onSelect(selected);
+
     }
 
     render() {
         return <div className="selectOptions">
-            <table><tbody>
-                {this.props.data.map(option => <tr>
-                    <td>{option.entity.name}</td>
-                    <td>
-                        <table>
-                            <tbody>
-                                {option.packs.map(pack => <tr>
-                                    <td>
-                                        <div style={{ paddingLeft: '1rem' }} className="level">
-                                            <label><input type="checkbox" checked={true} onChange={() => { }} /> {pack.name} </label>
-                                            {this._getRequirementsView(pack.requirements, pack.dir)}
-                                        </div>
-                                    </td>
-                                </tr>)}
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                )}
-            </tbody></table>
+            <TreeViewComponent ref={this.tree} fields={this.fields} showCheckBox={true} />
             <div className="footer">
-                <button className="cancelSelection" onClick={this.handleCancel}>Cancel</button>
+                <button className="cancelSelection" onClick={this.props.onCancel}>Cancel</button>
                 <button className="acceptSelection" onClick={this.handleSelect}>Select</button>
             </div>
         </div>

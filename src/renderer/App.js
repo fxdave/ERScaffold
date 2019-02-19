@@ -121,7 +121,13 @@ class App extends Component {
           </section>
         </div>
         <div id="temp"></div>
-        { this.state.templatesToSelect.length != 0 ? <TemplateSelector data={this.state.templatesToSelect} onSelect={this.handleTemplateSelect} onCancel={() => this.setState({ templatesToSelect: [] })}/> : "" }
+        {this.state.templatesToSelect.length != 0 ?
+          <TemplateSelector
+            data={this.state.templatesToSelect}
+            onSelect={this.handleTemplateSelect}
+            onCancel={() => this.setState({ templatesToSelect: [] })} />
+          :
+          ""}
       </div>
     );
   }

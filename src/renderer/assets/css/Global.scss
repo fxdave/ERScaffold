@@ -1,3 +1,11 @@
+
+$accent: rgb(255, 0, 110);
+@import '~@syncfusion/ej2-base/styles/material-dark.scss';
+@import "~@syncfusion/ej2-react-navigations/styles/material-dark.scss";
+@import "~@syncfusion/ej2-inputs/styles/material-dark.scss";
+@import "~@syncfusion/ej2-buttons/styles/material-dark.scss";
+
+
 html,
 body {
   margin: 0;
@@ -36,7 +44,7 @@ body {
     padding: 0.10rem;
 
     b {
-      color: rgb(255, 0, 85)
+      color: rgb(255, 0, 110)
     }
   }
 }

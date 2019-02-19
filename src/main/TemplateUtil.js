@@ -1,6 +1,5 @@
-
-import FileUtil from './FileUtil'
-import PackUtil from './PackUtil'
+import fsp from './wrappers/fsp';
+import PACKS_FOLDER_URL from './meta/PACKS_FOLDER_URL'
 import Formatter from './Formatter'
 import FastEJS from 'fastejs'
 import path from 'path'
@@ -12,9 +11,18 @@ class TemplateUtil {
         this.rendered = []
     }
 
+    /**
+     * renders the template and its children
+     * 
+     * @param {string} pack the directory name of the pack
+     * @param {string} template the template file url relative to the pack root
+     * @param {Object} data the required params for render the template
+     * @param {string} APPNAME the name of the new application
+     * @returns {Promise}
+     */
     static getTemplate(pack, template, data, APPNAME) {
-        return FileUtil
-        .getFileContent(path.join(PackUtil.packsFolder,pack,template))
+        return fsp
+        .getFileContent(path.join(PACKS_FOLDER_URL,pack,template))
         .then(cont => {
             return new Promise((resolve,reject) => {
         
