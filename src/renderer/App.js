@@ -13,8 +13,10 @@ class App extends Component {
 
     //register the import action that will be fired when the main sends the imported json
     ipcRenderer.on('import', this.handleImportResponse)
-    //register the generate action that will be fired when the main sends the templates to choose
+    //register the generateSelect action that will be fired when the main sends the templates to choose
     ipcRenderer.on('generateSelect', this.handleGenerateResponse)
+    //register the generateSelectFinidhed that will be fired when the main has finished the generation
+    ipcRenderer.on('generateSelectFinished', this.handleGenerateSelectFinished)
   }
 
   state = {
@@ -70,24 +72,27 @@ class App extends Component {
    * the constructor of this class has registered this
    */
   handleGenerateResponse = (e, data) => {
-    // TODO: implement tempalte selector
-    /*
-    TemplateSelector
-      .select(data)
-      .then(selected => {
-        console.log(selected);
-        ipcRenderer.send('generateSelected', selected)
-      }).catch(err => {
-        console.error(err);
-
-      })
-      */
-
     this.setState({
       templatesToSelect: data
     })
   }
 
+  handleGenerateSelectFinished = (e, data) => {
+    if (data.success) {
+      alert("All fine!")
+      // so close the selector
+      this.setState({
+        templatesToSelect: []
+      })
+
+    } else {
+      alert("Sorry there is an error: " + data.error)
+    }
+  }
+
+  /**
+   * when the user selects the template we sends the selected templates by this function
+   */
   handleTemplateSelect = e => {
     ipcRenderer.send('generateSelected', e)
   }

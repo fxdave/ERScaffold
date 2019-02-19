@@ -36,6 +36,7 @@
     "react-konva": "^16.8.0",
     "react-konva-anchors": "^0.2.7",
     "sass-loader": "^7.1.0",
+    "simple-git": "^1.107.0",
     "style-loader": "^0.23.1",
     "vecjs": "^1.1.1",
     "webpack": "^4.29.4"
