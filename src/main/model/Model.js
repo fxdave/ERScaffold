@@ -14,12 +14,12 @@ class Model {
 
         data.entities.forEach(entity => {
 
-            this.entities[entity.id] = new Entity(entity.id, entity.name, entity.properties.map(v => {
+            this.entities[entity.id] = new Entity(entity.id, entity.name, entity.props.map(v => {
                 return new Property(v.id, v.name)
             }))
         })
 
-        data.connections.forEach(connection => {
+        data.conns.forEach(connection => {
             let c = new Connection(
                 this.entities[connection.from],
                 this.entities[connection.to],

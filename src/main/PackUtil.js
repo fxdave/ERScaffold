@@ -1,7 +1,5 @@
-import os from 'os'
 import FileUtil from './FileUtil';
-const packs_folder = os.homedir() + '/.config/erscaffold/packs'
-
+import packs_folder from './utils/packsFolderURL'
 
 
 class PackUtil {

@@ -707,6 +707,88 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
+"@syncfusion/ej2-base@^16.4.52", "@syncfusion/ej2-base@~16.4.52":
+  version "16.4.52"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-base/-/ej2-base-16.4.52.tgz#d81992c2cefa2f29e06c6b10908c053ac11e1137"
+  integrity sha512-Gd1IrXkuqGccKckpFgURam8tzDeo2ruMCz/iQcBx5aMnLmrnZo6UmwCH5xHFsiGrqb6BTNuVSG1MLj2If0w1/g==
+
+"@syncfusion/ej2-buttons@~16.4.52", "@syncfusion/ej2-buttons@~16.4.53":
+  version "16.4.53"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-buttons/-/ej2-buttons-16.4.53.tgz#5bc29fcb68849a7c8643bcf49ade3cd801ee815d"
+  integrity sha512-jMmkvKDH6TU+VsAD6bvkzX4vKYbpQSqRDKEoj5zDgwQp0OyuKd6hpi+tjHljU8kG0g1hjAROuuj7PyTOvekbLg==
+  dependencies:
+    "@syncfusion/ej2-base" "~16.4.52"
+
+"@syncfusion/ej2-data@~16.4.52":
+  version "16.4.52"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-data/-/ej2-data-16.4.52.tgz#6d3c0de3c78f24fa44a35e1a2e504ffdc49004dc"
+  integrity sha512-HfDuE6ThEIO+4E0d+lkue9/lN+5shGuH+kpA+3k6mu+6v2xCXnNbR0KDrldCF6kYP8C3ndjrBhWrk4X+WVuIoA==
+  dependencies:
+    "@syncfusion/ej2-base" "~16.4.52"
+
+"@syncfusion/ej2-inputs@~16.4.54":
+  version "16.4.54"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-inputs/-/ej2-inputs-16.4.54.tgz#b4a3f9736eae3df9b74ce0c0c7d5c2c6576afa39"
+  integrity sha512-Xm34mx2S2Lmi1DomDX2WB7emJNPfy6QZ8HBPkM0BZGH28QleDkvntPTClY4X9TYa8ql9Sm7dU7Uaczffix8XQA==
+  dependencies:
+    "@syncfusion/ej2-base" "~16.4.52"
+    "@syncfusion/ej2-buttons" "~16.4.53"
+    "@syncfusion/ej2-popups" "~16.4.54"
+    "@syncfusion/ej2-splitbuttons" "~16.4.53"
+
+"@syncfusion/ej2-lists@~16.4.52":
+  version "16.4.52"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-lists/-/ej2-lists-16.4.52.tgz#f826087c968ff1fb0b6ce3e50a3303cca2e2d9ec"
+  integrity sha512-YE9btgfX5CU/MFDmfOVGwTd6qViqxxCLDUkpHXSDaUZZmWQgQbUg64GXHVXKtJutqrgLfcvqgcU+lJTt3asW1Q==
+  dependencies:
+    "@syncfusion/ej2-base" "~16.4.52"
+    "@syncfusion/ej2-buttons" "~16.4.52"
+    "@syncfusion/ej2-data" "~16.4.52"
+
+"@syncfusion/ej2-navigations@16.4.54":
+  version "16.4.54"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-navigations/-/ej2-navigations-16.4.54.tgz#968d42897e9233f54779b72e53f8dcdd9928b332"
+  integrity sha512-XtSv/9juiSgF/uVtw2rpW57ZdR+fKvP78Ob7OqEeaAhT6oijg1S8ikKMpz/mwZJWP3OupCLKfD4JFLiZJqNSww==
+  dependencies:
+    "@syncfusion/ej2-base" "~16.4.52"
+    "@syncfusion/ej2-buttons" "~16.4.53"
+    "@syncfusion/ej2-data" "~16.4.52"
+    "@syncfusion/ej2-inputs" "~16.4.54"
+    "@syncfusion/ej2-lists" "~16.4.52"
+    "@syncfusion/ej2-popups" "~16.4.54"
+
+"@syncfusion/ej2-popups@~16.4.53", "@syncfusion/ej2-popups@~16.4.54":
+  version "16.4.54"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-popups/-/ej2-popups-16.4.54.tgz#ee523bf8f7856104bb745bfc462e0f717809b3d2"
+  integrity sha512-k/gAq+UyLCmQP/96OUnW99dvVSShnplwaaIs2M3Y/sn6jQqV6/0sPy45TWEmME0a5E8DhFnDwUYwck7uiPXBvA==
+  dependencies:
+    "@syncfusion/ej2-base" "~16.4.52"
+    "@syncfusion/ej2-buttons" "~16.4.53"
+
+"@syncfusion/ej2-react-base@~16.4.52":
+  version "16.4.52"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-react-base/-/ej2-react-base-16.4.52.tgz#ba33f77deb3ed0be6a489486e6f0e8f84a51c307"
+  integrity sha512-ICboq3FdPXzzQtHzoQHoe+TYyz2tEWDUnUpia/x8NMSs1keLdRNMFLoegT8iKGBkuYeLqqxC+qSGOzSjT69big==
+  dependencies:
+    "@syncfusion/ej2-base" "~16.4.52"
+
+"@syncfusion/ej2-react-navigations@^16.4.54":
+  version "16.4.54"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-react-navigations/-/ej2-react-navigations-16.4.54.tgz#7d5d18e9398a36e45faeafdfa96d815c469d5ea6"
+  integrity sha512-/UWMDOLiNbl6oxb/Lwxwgn1WLOB+jTWrnxMg102pD993zK4pU+IHgvdtB8sZMUDMGpo9/p2yCbBB8/pncg034Q==
+  dependencies:
+    "@syncfusion/ej2-base" "~16.4.52"
+    "@syncfusion/ej2-navigations" "16.4.54"
+    "@syncfusion/ej2-react-base" "~16.4.52"
+
+"@syncfusion/ej2-splitbuttons@~16.4.53":
+  version "16.4.53"
+  resolved "https://registry.yarnpkg.com/@syncfusion/ej2-splitbuttons/-/ej2-splitbuttons-16.4.53.tgz#3385bec1d6217e0e6adf5cb56610f17bf8973a0c"
+  integrity sha512-QG1p3Xc75sVv2A+EAOK1au0zVDss3X3V0MRsuBYjHxkQseERRy3LWUSB3l7ksCKHnMdhxGVxiaGQ3dsBqC61Lg==
+  dependencies:
+    "@syncfusion/ej2-base" "~16.4.52"
+    "@syncfusion/ej2-popups" "~16.4.53"
+
 "@types/node@^10.12.18":
   version "10.12.26"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.26.tgz#2dec19f1f7981c95cb54bab8f618ecb5dc983d0e"

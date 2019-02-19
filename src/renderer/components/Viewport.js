@@ -37,7 +37,7 @@ class Viewport extends React.Component {
             entities: [
                 ...state.entities,
                 new EntityModel(
-                    this.getNextID(this.state.entities), "empty", [new ProperyModel(1, "ID", 0, 0, "integer")], x, y
+                    this.getNextID(this.state.entities), "", [new ProperyModel(1, "ID", 0, 0, "integer")], x, y
                 )
             ]
         }))

@@ -1,1 +1,0 @@
-{"appName":"MusicTeam","conns":[],"entities":[{"context":"Music","id":1,"name":"Music","props":[{"default":"","id":1,"name":"ID","type":"integer","x":0,"y":0}],"relations":{"belongsTo":[],"belongsToMany":[],"hasMany":[],"hasOne":[]},"x":281,"y":262}]}

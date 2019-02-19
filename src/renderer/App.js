@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Viewport from './components/Viewport'
-import {ipcRenderer} from 'electron'
+import { ipcRenderer } from 'electron'
+import TemplateSelector from './components/TemplateSelector'
 import './assets/css/Global.scss'
 import './assets/css/OpenSans.scss'
 import './assets/css/Panel.scss'
@@ -17,6 +18,7 @@ class App extends Component {
   }
 
   state = {
+    templatesToSelect: [],
     showControls: true,
     appName: ""
   }
@@ -80,11 +82,19 @@ class App extends Component {
 
       })
       */
+
+    this.setState({
+      templatesToSelect: data
+    })
   }
 
-  getExportData= () => ({
+  handleTemplateSelect = e => {
+    ipcRenderer.send('generateSelected', e)
+  }
+
+  getExportData = () => ({
     ...this.getModelData(),
-    "appName" : this.state.appName
+    "appName": this.state.appName
   })
 
   render() {
@@ -98,11 +108,11 @@ class App extends Component {
           <div className="control">You can <b>Drag</b> the elements and the viewport.</div>
         </div>
         <div id="canvas">
-          <Viewport setModelData={(setDataFunction) => this.setModelData = setDataFunction} getModelData={(getDataFunction) => this.getModelData = getDataFunction}/>
+          <Viewport setModelData={(setDataFunction) => this.setModelData = setDataFunction} getModelData={(getDataFunction) => this.getModelData = getDataFunction} />
         </div>
         <div className="panel">
           <section className="app-name">
-            <input onKeyUp={this.handleAppRename} type="text" placeholder="ApplicationName in uppercamelcase" value={this.state.appName}/>
+            <input onChange={this.handleAppRename} type="text" placeholder="ApplicationName in uppercamelcase" value={this.state.appName} />
           </section>
           <section className="controls">
             <button onClick={this.handleExport} id="export" disabled={this.state.appName == ""}>Export</button>
@@ -111,6 +121,7 @@ class App extends Component {
           </section>
         </div>
         <div id="temp"></div>
+        { this.state.templatesToSelect.length != 0 ? <TemplateSelector data={this.state.templatesToSelect} onSelect={this.handleTemplateSelect} onCancel={() => this.setState({ templatesToSelect: [] })}/> : "" }
       </div>
     );
   }
