@@ -84,3 +84,5 @@ function() {
         return sgit.revert(lastHash)
     })
 }
+
+export default git
