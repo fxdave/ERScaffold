@@ -4,6 +4,8 @@ import Model from './model/Model'
 import PackUtil from './PackUtil'
 import TemplateUtil from './TemplateUtil'
 import path from 'path'
+import Generator from './Generator'
+
 let mainWindow
 app.commandLine.appendSwitch('remote-debugging-port', '9223')
 app.on('ready', function () {
@@ -87,8 +89,15 @@ app.on('ready', function () {
                 return TemplateUtil.getTemplate(template.pack, template.template, { entity }, data.appName)
             })).then(res => {
                 console.log(res)
-                e.sender.send('generateSelectFinished', {
-                    success: true
+                Generator.generate(res).then(() => {
+                    e.sender.send('generateSelectFinished', {
+                        success: true
+                    })
+                }).catch((err) => {
+                    e.sender.send('generateSelectFinished', {
+                        success: false,
+                        error: err
+                    })
                 })
             }).catch(err => {
                 console.error(err);
