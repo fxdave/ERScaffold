@@ -1,8 +1,8 @@
 const gitP = require('simple-git/promise');
-
+const process = require('process')
 const ERSCAFFOLD_BRANCH_NAME = 'ERBranch';
 const COMMIT_MESSAGE = 'ER model has generated';
-const WORKDIR = __dirname;
+const WORKDIR = process.cwd();
 const sgit = gitP(WORKDIR);
 
 sgit.checkIsRepo().then(isRepo => {});
