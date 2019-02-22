@@ -1,0 +1,153 @@
+$accent: rgb(255, 0, 110);
+@import '~@syncfusion/ej2-base/styles/material-dark.scss';
+@import '~@syncfusion/ej2-react-navigations/styles/material-dark.scss';
+@import '~@syncfusion/ej2-inputs/styles/material-dark.scss';
+@import '~@syncfusion/ej2-buttons/styles/material-dark.scss';
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  overflow: hidden;
+}
+
+#canvas {
+  transition: filter 1s;
+}
+
+.help {
+  background: rgb(36, 29, 32);
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  align-items: center;
+  flex-flow: column;
+  justify-content: center;
+  align-content: center;
+  display: flex;
+  color: #fff;
+  z-index: 3;
+  opacity: 0.9;
+  transition: opacity 0.5s linear;
+
+  .control {
+    font-size: 1.2rem;
+    font-weight: 200;
+    padding: 0.1rem;
+
+    b {
+      color: rgb(255, 0, 110);
+    }
+  }
+}
+
+.help-out {
+  animation: fadeOut 0.5s;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 0.9;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.ask {
+  display: flex;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  align-items: center;
+  flex-flow: column;
+  align-content: space-around;
+  justify-content: space-around;
+  justify-items: center;
+  background: #0000005c;
+
+  form {
+    flex: 0;
+    padding: 9px;
+    text-align: center;
+    width: 50%;
+
+    input {
+      width: 100%;
+      border: 9px solid rgb(48, 48, 48);
+      border-radius: 9px;
+      padding: 9px;
+    }
+
+    .hint {
+      color: #fff;
+      font-weight: 600;
+      text-shadow: 1px 1px 2px #0004;
+      .attributes {
+        margin-left: 0.5em;
+        color: #ccc;
+        .attribute {
+          font-weight: 600;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+.selectOptions {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: #383838cf;
+  color: #fff;
+  padding: 10%;
+  overflow: auto;
+
+  td {
+    vertical-align: top;
+  }
+
+  .footer {
+    display: flex;
+  }
+
+  button {
+    flex: 1;
+    font-size: 1em;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 0;
+    padding: 10px 20px;
+    margin: 0;
+    display: block;
+    cursor: pointer;
+
+    &:first-child {
+      border-top-left-radius: 9px;
+      border-bottom-left-radius: 9px;
+    }
+
+    &:last-child {
+      border-top-right-radius: 9px;
+      border-bottom-right-radius: 9px;
+    }
+
+    &:hover {
+      background: rgb(255, 0, 110);
+    }
+  }
+}
