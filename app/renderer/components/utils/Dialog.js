@@ -1,33 +1,36 @@
-import React from 'react'
-import Portal from './Portal'
-import { Group } from 'react-konva'
-
+import React from 'react';
+import { Group } from 'react-konva';
+import Portal from './Portal';
 
 class Dialog extends React.Component {
+  componentDidMount() {
+    this.handleBlur();
+  }
 
-    componentDidMount() {
-        this.handleBlur()
-    }
-    componentDidUpdate() {
-        this.handleBlur()
-    }
+  componentDidUpdate() {
+    this.handleBlur();
+  }
 
-    handleBlur = () => {
-        if (this.props.show)
-            document.querySelector("#canvas").style.filter = 'blur(2px)'
-        else
-            document.querySelector("#canvas").style.filter = "blur(0)"
-    }
+  handleBlur = () => {
+    if (this.props.show)
+      document.querySelector('#canvas').style.filter = 'blur(2px)';
+    else document.querySelector('#canvas').style.filter = 'blur(0)';
+  };
 
-    render() {
-        return <Group>
-            <Portal>
-                <div className="ask" style={{ visibility: this.props.show ? "visible" : "hidden" }}>
-                    {this.props.children}
-                </div>
-            </Portal>
-        </Group>
-    }
+  render() {
+    return (
+      <Group>
+        <Portal>
+          <div
+            className="ask"
+            style={{ visibility: this.props.show ? 'visible' : 'hidden' }}
+          >
+            {this.props.children}
+          </div>
+        </Portal>
+      </Group>
+    );
+  }
 }
 
-export default Dialog
+export default Dialog;

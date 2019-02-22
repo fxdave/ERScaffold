@@ -75,7 +75,7 @@ export default merge.smart(baseConfig, {
           {
             loader: 'css-loader',
             options: {
-              includePaths: ["./node_modules","./node_modules/@syncfusion"],
+              includePaths: ['./node_modules', './node_modules/@syncfusion'],
               sourceMap: true,
               importLoaders: 1
             }
@@ -83,7 +83,7 @@ export default merge.smart(baseConfig, {
           {
             loader: 'sass-loader',
             options: {
-              includePaths: ["./node_modules","./node_modules/@syncfusion"],
+              includePaths: ['./node_modules', './node_modules/@syncfusion'],
               sourceMap: true
             }
           }
@@ -108,7 +108,7 @@ export default merge.smart(baseConfig, {
           {
             loader: 'sass-loader',
             options: {
-              includePaths: ["./node_modules","./node_modules/@syncfusion"],
+              includePaths: ['./node_modules', './node_modules/@syncfusion'],
               sourceMap: true
             }
           }

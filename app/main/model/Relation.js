@@ -1,15 +1,15 @@
 export class Relation {
   constructor(from, to) {
-      this.from = from
-      this.to = to
+    this.from = from;
+    this.to = to;
   }
-  
+
   getFrom() {
-      return this.from
+    return this.from;
   }
 
   getTo() {
-      return this.to
+    return this.to;
   }
 }
 

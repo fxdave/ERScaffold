@@ -1,10 +1,11 @@
-import MathHelper from '../math/MathHelper'
+import MathHelper from '../math/MathHelper';
 
-export default function(element ,to) {
-    let W = element.shape.width(),
-        abs = element.shape.getAbsolutePosition()
+export default function(element, to) {
+  const W = element.shape.width();
 
-    let nearest = MathHelper.getNearestPointToCircle(abs,to,W/2)
+  const abs = element.shape.getAbsolutePosition();
 
-    return nearest
+  const nearest = MathHelper.getNearestPointToCircle(abs, to, W / 2);
+
+  return nearest;
 }

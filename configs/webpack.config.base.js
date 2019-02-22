@@ -20,19 +20,24 @@ export default {
             cacheDirectory: true
           }
         }
-      }, {
+      },
+      {
         test: /\.s?css$/,
-        use: [{
-            loader: "style-loader"
-        }, {
-            loader: "css-loader"
-        }, {
-            loader: "sass-loader",
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'sass-loader',
             options: {
               sourceMap: true,
-              includePaths: ["./node_modules","./node_modules/@syncfusion"]
+              includePaths: ['./node_modules', './node_modules/@syncfusion']
             }
-        }]
+          }
+        ]
       }
     ]
   },

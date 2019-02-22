@@ -1,49 +1,44 @@
-import React from 'react'
+import React from 'react';
 import { Stage } from 'react-konva';
 
 class StageComponent extends React.Component {
+  state = {
+    width: window.innerWidth,
+    height: window.innerHeight
+  };
 
-    state = {
-        width: window.innerWidth,
-        height: window.innerHeight
-    }
+  updateViewport = () => {
+    this.setState({
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+  };
 
-    updateViewport = () => {
-        this.setState({
-            width: window.innerWidth,
-            height: window.innerHeight
-        })
-    }
+  subtractDragX = v => v - this.stage.x();
 
-    subtractDragX = (v) => {
-        return v - this.stage.x();
-    }
+  subtractDragY = v => v - this.stage.y();
 
-    subtractDragY = (v) => {
-        return v - this.stage.y();
-    }
+  render() {
+    return (
+      <Stage
+        onDblClick={this.props.onDblClick}
+        draggable="true"
+        width={this.state.width}
+        height={this.state.height}
+        ref={ref => (this.stage = ref)}
+      >
+        {this.props.children}
+      </Stage>
+    );
+  }
 
-    render() {
-        return <Stage
-            onDblClick={this.props.onDblClick}
-            draggable="true"
-            width={this.state.width}
-            height={this.state.height}
-            ref={ref => this.stage = ref}>
-            {this.props.children}
-        </Stage>
-    }
+  componentDidMount = () => {
+    window.addEventListener('resize', this.updateViewport);
 
-    componentDidMount = () => {
-        window.addEventListener("resize", this.updateViewport);
-
-        document.querySelectorAll("canvas").forEach(v => {
-            v.onmousedown = () => {
-                return false;
-            };
-        })
-    }
-
+    document.querySelectorAll('canvas').forEach(v => {
+      v.onmousedown = () => false;
+    });
+  };
 }
 
-export default StageComponent
+export default StageComponent;

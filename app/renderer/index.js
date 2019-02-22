@@ -3,9 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import Arranger from './arranger/Arranger'
-
-  
+import Arranger from './arranger/Arranger';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
