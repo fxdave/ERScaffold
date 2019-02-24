@@ -1,11 +1,12 @@
-import git from './wrappers/git';
-import fsp from './wrappers/fsp';
+import gitWrapper from './wrappers/git';
+import fsPromisesWrapper from './wrappers/fsp';
 
 class Generator {
   /**
+   * @param {gitWrapper} git
    * @returns {Promise}
    */
-  static prepareGit() {
+  static _prepareGit(git) {
     return git
       .hasERBranch()
       .then(answer => {
@@ -18,9 +19,10 @@ class Generator {
   }
 
   /**
+   * @param {gitWrapper} git
    * @returns {Promise}
    */
-  static finalizeGit() {
+  static _finalizeGit(git) {
     return git.commit();
   }
 
@@ -36,9 +38,10 @@ class Generator {
    * @param {string} template.meta.extends.place can be "after", "before", "replace"
    * @param {integer} template.meta.order the execution order
    * @param {string} template.template_out the compiled template
+   * @param {fsPromisesWrapper} fsp
    * @returns {Promise}
    */
-  static processRequest(template) {
+  static _processRequest(template, fsp) {
     console.log(template);
     if (template.meta.creates) {
       // create a file
@@ -61,9 +64,9 @@ class Generator {
     }
   }
 
-  static createModifications(templates) {
+  static _createModifications(templates) {
     templates.forEach(template => {
-      this.processRequest(template);
+      this._processRequest(template);
     });
   }
 
@@ -72,10 +75,10 @@ class Generator {
    * @param {*} templates
    * @returns {Promise}
    */
-  static generate(templates) {
-    this.prepareGit();
-    this.createModifications(templates);
-    this.finalizeGit();
+  static generate(templates, gitWrapper, fsPromisesWrapper) {
+    this._prepareGit(gitWrapper);
+    this._createModifications(templates, fsPromisesWrapper);
+    this._finalizeGit(gitWrapper);
     return new Promise(res => res(true));
   }
 }
