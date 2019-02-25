@@ -4,7 +4,7 @@ module.exports = {
         "es6": true,
         "node": true
     },
-    "extends": "eslint:recommended",
+    "parser": "babel-eslint",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -16,6 +16,7 @@ module.exports = {
         "react"
     ],
     "rules": {
+        "react/display-name": 1,
         "indent": [
             "error",
             4

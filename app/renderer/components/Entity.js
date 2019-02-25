@@ -10,7 +10,7 @@ import Arranger from '../arranger/Arranger';
 import BoundingBox from '../arranger/BoundingBox';
 import Dialog from './utils/Dialog';
 import Property from './Property';
-import PropertyModel from '../../main/model/Property';
+import PropertyModel from '../../main/Model/Property';
 
 class Entity extends React.Component {
   constructor(props) {
