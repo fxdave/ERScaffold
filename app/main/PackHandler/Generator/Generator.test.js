@@ -5,14 +5,20 @@ import TemplateSettings from '../../Model/TemplateSettings'
 
 describe('Generator test', () => {
 
+    let fsWrapperCreateFile = false
 	let fsWrapperCreateFileCalled= {}
-	let fsWrapperModifyFile= false
+    let fsWrapperModifyFile= false
+    let fsWrapperModifyFileCalled = {}
+    let fsWrapperModifyFileReturned = null
 	let fsWrapper = {
 		async createFile (path, content) {
+            fsWrapperCreateFile = true
 			fsWrapperCreateFileCalled = { path, content }
 		},
 		async modifyFile (path, content, callback) {
-			fsWrapperModifyFile = true
+            fsWrapperModifyFile = true
+            fsWrapperModifyFileCalled = {path, content, callback}
+            fsWrapperModifyFileReturned = callback('old section_to_replace old')
 		}
 	}
 
@@ -53,9 +59,13 @@ describe('Generator test', () => {
 		gitWrapperCreateAndCheckoutERBranch =  false
 		gitWrapperRollbackToFirstCommit =  false
 		gitWrapperCommit =  false
-		gitWrapperHasERBranch =  false
-		fsWrapperCreateFileCalled= {}
-		fsWrapperModifyFile= false
+        gitWrapperHasERBranch =  false
+        
+        fsWrapperCreateFile = false
+	    fsWrapperCreateFileCalled= {}
+        fsWrapperModifyFile= false
+        fsWrapperModifyFileCalled = {}
+        fsWrapperModifyFileReturned = null
 	}
 
 	let templatePath = '/asd.txt'
@@ -113,6 +123,32 @@ describe('Generator test', () => {
 		assert.equal(fsWrapperCreateFileCalled.path, templatePath)
 		assert.equal(fsWrapperCreateFileCalled.content, templateContent)
 		assert.ok(!fsWrapperModifyFile, "ModifyFile shouldn't be called")
+
+		done()
+    })
+    
+	it("should extend a file", async done => {
+		reset()
+
+		let generator = new Generator(fsWrapper, gitWrapper)
+		let templateSettings = new TemplateSettings('extends', templatePath, 'section-to-replace', 'replace')
+		let template = new RenderedTemplate(templateSettings, templateContent)
+
+		await generator.generate([template])
+
+		// check if the git has handled well
+		assert.ok(gitWrapperHasERBranch, 'hasERBranch should be called')
+		assert.ok(gitWrapperCheckoutERBranch, 'checkoutERBranch should be called')
+		assert.ok(!gitWrapperCreateAndCheckoutERBranch, "createAndCheckoutERBranch shouldn't be called")
+		assert.ok(gitWrapperRollbackToFirstCommit, 'rollbackToFirstCommit should be called')
+		assert.ok(gitWrapperCommit, 'commit should be called')
+
+		// check if the file has created well
+		assert.ok(!fsWrapperCreateFile, "shouldn't be called")
+		assert.ok(fsWrapperModifyFile, "should be called")
+		assert.ok(fsWrapperModifyFileCalled.path, templatePath)
+		assert.ok(fsWrapperModifyFileCalled.content, templateContent)
+		assert.ok(fsWrapperModifyFileReturned, 'old '+templateContent+' old')
 
 		done()
 	})
