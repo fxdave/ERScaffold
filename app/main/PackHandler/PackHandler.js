@@ -2,16 +2,19 @@
 import EntityPacksPair from './EntityPacksPair'
 import PackReader from './PackReader/PackReader'
 import TemplateReader from './TemplateReader/TemplateReader'
+import Generator from './Generator/Generator'
 
 class PackHandler {
 
     /**
      * 
      * @param {FsWrapper} fsWrapper 
+     * @param {GitWrapper}
      */
-    constructor(fsWrapper) {
+    constructor(fsWrapper, gitWrapper) {
         this.packReader = new PackReader(fsWrapper)
         this.templateReader = new TemplateReader(fsWrapper)
+        this.generator = new Generator(fsWrapper, gitWrapper)
     }
 
     /**

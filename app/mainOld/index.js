@@ -116,4 +116,96 @@ app.on('ready', async () => {
   }
   console.log(process.cwd());
 
+  /**
+   * exporter
+   */
+  ipcMain.on('export', (e, data) => {
+    const selectedFile = dialog.showSaveDialog({
+      title: '',
+      defaultPath: '~/.erscaffold'
+    });
+
+    fs.writeFile(selectedFile, JSON.stringify(data), err => {
+      if (err) {
+        return console.log(err);
+      }
+
+      console.log('The file was saved!');
+    });
+  });
+
+  /**
+   * importer
+   */
+  ipcMain.on('importStart', e => {
+    const selectedFiles = dialog.showOpenDialog();
+    fs.readFile(selectedFiles[0], (err, data) => {
+      console.log(data);
+
+      e.sender.send('import', data.toString('utf8'));
+    });
+  });
+
+  /**
+   * Gets the available packs and the
+   */
+  ipcMain.on('generateStart', (e, data) => {
+    const model = new Model(data);
+    app.generateModel = model;
+
+    PackUtil.getFilteredPacksForEntities(model.getEntities())
+      .then(options => {
+        const out = options.map(option => ({
+          entity: {
+            id: option.entity.id,
+            name: option.entity.name
+          },
+          packs: option.packs
+        }));
+        e.sender.send('generateSelect', out);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  });
+
+  /**
+   *
+   */
+  ipcMain.on('generateSelected', (e, data) => {
+    app.generateModel.getEntities().forEach(entity => {
+      Promise.all(
+        data.map(template =>
+          TemplateUtil.getTemplate(
+            template.pack,
+            template.template,
+            { entity },
+            data.appName
+          )
+        )
+      )
+        .then(res => {
+          console.log(res);
+          Generator.generate(res)
+            .then(() => {
+              e.sender.send('generateSelectFinished', {
+                success: true
+              });
+            })
+            .catch(err => {
+              e.sender.send('generateSelectFinished', {
+                success: false,
+                error: err
+              });
+            });
+        })
+        .catch(err => {
+          console.error(err);
+          e.sender.send('generateSelectFinished', {
+            success: false,
+            error: err
+          });
+        });
+    });
+  });
 });
