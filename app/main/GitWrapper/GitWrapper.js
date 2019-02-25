@@ -1,17 +1,16 @@
-import SimpleGit from 'simple-git'
-import Config from '../Config/Config'
+import SimpleGit from 'simple-git';
+import Config from '../Config/Config';
 
-const ERSCAFFOLD_BRANCH_NAME = Config.ERSCAFFOLD_BRANCH_NAME
-const COMMIT_MESSAGE = Config.COMMIT_MESSAGE
+const ERSCAFFOLD_BRANCH_NAME = Config.ERSCAFFOLD_BRANCH_NAME;
+const COMMIT_MESSAGE = Config.COMMIT_MESSAGE;
 
 class GitWrapper {
-
   /**
-   * 
-   * @param {SimpleGit} simpleGit 
+   *
+   * @param {SimpleGit} simpleGit
    */
   constructor(simpleGit) {
-    this.simpleGit = simpleGit
+    this.simpleGit = simpleGit;
   }
 
   /**
@@ -25,13 +24,13 @@ class GitWrapper {
         .then(summary => {
           const interest = Object.keys(summary.branches).filter(
             name => name.indexOf(ERSCAFFOLD_BRANCH_NAME) != -1
-          )
-          resolve(interest.length == 1)
+          );
+          resolve(interest.length == 1);
         })
         .catch(err => {
-          resolve(false)
-        })
-    })
+          resolve(false);
+        });
+    });
   }
 
   /**
@@ -39,7 +38,7 @@ class GitWrapper {
    * @returns {Promise}
    */
   createAndCheckoutERBranch() {
-    return this.simpleGit.checkout(['-b', ERSCAFFOLD_BRANCH_NAME])
+    return this.simpleGit.checkout(['-b', ERSCAFFOLD_BRANCH_NAME]);
   }
 
   /**
@@ -47,7 +46,7 @@ class GitWrapper {
    * @returns {Promise}
    */
   checkoutERBranch() {
-    return this.simpleGit.checkout([ERSCAFFOLD_BRANCH_NAME])
+    return this.simpleGit.checkout([ERSCAFFOLD_BRANCH_NAME]);
   }
 
   /**
@@ -55,7 +54,7 @@ class GitWrapper {
    * @returns {Promise}
    */
   commit() {
-    return this.simpleGit.commit(COMMIT_MESSAGE, '.')
+    return this.simpleGit.commit(COMMIT_MESSAGE, '.');
   }
 
   /**
@@ -64,11 +63,10 @@ class GitWrapper {
    */
   rollbackToFirstCommit() {
     return this.simpleGit.log(['--first-parent']).then(summary => {
-      const lastHash = summary.all[summary.length - 1].hash
-      return this.simpleGit.revert(lastHash)
-    })
+      const lastHash = summary.all[summary.length - 1].hash;
+      return this.simpleGit.revert(lastHash);
+    });
   }
-
 }
 
-export default GitWrapper
+export default GitWrapper;

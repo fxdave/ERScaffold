@@ -5,11 +5,9 @@ import fs from 'fs';
 import path from 'path';
 import process from 'process';
 import url from 'url';
-import Model from './model/Model';
-import PackUtil from './PackUtil';
-import TemplateUtil from './TemplateUtil';
-import Generator from './Generator';
-import ARGV from './meta/ARGV';
+import Config from './Config/Config';
+
+const ARGV = Config.ARGV;
 
 export default class AppUpdater {
   constructor() {
@@ -115,5 +113,4 @@ app.on('ready', async () => {
     process.chdir(selectedDir[0]);
   }
   console.log(process.cwd());
-
 });
