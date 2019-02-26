@@ -7,9 +7,9 @@ class PackHandler {
     /**
      *
      * @param {FsWrapper} fsWrapper
-     * @param {GitWrapper}
+     * @param {GitWrapper} gitWrapper
      */
-    constructor(fsWrapper, gitWrapper) {
+    constructor(fsWrapper, gitWrapper, packsFoler) {
         this.packReader = new PackReader(fsWrapper)
         this.templateReader = new TemplateReader(fsWrapper)
         this.generator = new Generator(fsWrapper, gitWrapper)
@@ -54,6 +54,8 @@ class PackHandler {
     
         return Object.values(options)
     }
+
+
 }
 
 export default PackHandler

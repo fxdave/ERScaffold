@@ -1,13 +1,15 @@
+import RequirementCollection from './RequirementCollection'
+
 class Pack {
-  /**
-   *
-   * @param {string} name
-   * @param {Requirement[]} requirementList
-   */
-  constructor(name, requirementList) {
-    this.name = name;
-    this.requirementList = requirementList;
-  }
+    /**
+     *
+     * @param {string} name
+     * @param {RequirementCollection} requirementList
+     */
+    constructor(name, requirementCollection) {
+        this.name = name
+        this.requirementCollection = requirementCollection
+    }
 }
 
-export default Pack;
+export default Pack
