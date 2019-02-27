@@ -57,7 +57,7 @@ class Generator {
             const place = template.templateSettings.place
             const section = template.templateSettings.section
 
-            return await this.fsWrapper.modifyFile(path, content, old => {
+            return await this.fsWrapper.modifyFile(path, old => {
                 if (place == 'replace') return old.replace(section, content)
                 if (place == 'after') return old.replace(section, section + content)
                 if (place == 'before') return old.replace(section, content + section)

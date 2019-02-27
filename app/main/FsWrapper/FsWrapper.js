@@ -67,13 +67,35 @@ class FsWrapper {
      * @param {string} path
      * @returns {string[]} 
      */
-    glob(path) {
-        glob('**/*.js', options, function (er, files) {
-            // files is an array of filenames.
-            // If the `nonull` option is set, and nothing
-            // was found, then files is ["**/*.js"]
-            // er is an error object or null.
+    async glob(path) {
+        return await new Promise((resolve,reject) => {
+            glob('**/*.js', function (er, files) {
+                if(er) {
+                    reject(er)
+                } else {
+                    resolve(files)
+                }
+            })
         })
+    }
+
+    /**
+     * @async
+     * @param {string} path 
+     * @param {string} content 
+     */
+    async createFile (path, content) {
+        return await fsp.writeFile(path, content, 'utf8')
+    }
+
+    /**
+     * @async
+     * @param {string} path 
+     * @param {Function} callback 
+     */
+    async modifyFile (path, callback) {
+        let oldContent = await this.getFileContent(path)
+        return await fsp.writeFile(path, callback(oldContent), 'utf8')
     }
 }
 

@@ -15,7 +15,7 @@ describe('Generator test', () => {
             fsWrapperCreateFile = true
 			fsWrapperCreateFileCalled = { path, content }
 		},
-		async modifyFile (path, content, callback) {
+		async modifyFile (path, callback) {
             fsWrapperModifyFile = true
             fsWrapperModifyFileCalled = {path, content, callback}
             fsWrapperModifyFileReturned = callback('old section_to_replace old')
