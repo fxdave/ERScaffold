@@ -1,6 +1,7 @@
 import Pack from '../../Model/Pack'
 import Requirement from '../../Model/Requirement'
-
+import path from 'path'
+import RequirementCollection from '../../Model/RequirementCollection'
 /**
  * utilities for getting information from a single pack
  */
@@ -21,7 +22,7 @@ class PackReader {
     async getPack(packIndexPath) {
         let pack = await this.fsWrapper.getScript(packIndexPath, 'pack')
         let packDirectory = path.dirname(packIndexPath)
-        let requirements = await this.getRequirements(pack.requirements, packDirectory)
+        let requirements = await this._getRequirements(pack.requirements, packDirectory)
 
         return new Pack(pack.name, requirements)
     }
@@ -32,10 +33,10 @@ class PackReader {
      * @param {string} packDirectory
      * @returns {Object}
      */
-    async getRequirements(requirements, packDirectory) {
-        return await Promise.all(
-            requirements.map(req => this.getRequirement(req, packDirectory))
-        )
+    async _getRequirements(requirements, packDirectory) {
+        return new RequirementCollection(...(await Promise.all(
+            requirements.map(req => this._getRequirement(req, packDirectory))
+        )))
     }
 
     /**
@@ -49,12 +50,12 @@ class PackReader {
      *
      * @returns {Requirement}
      */
-    async getRequirement(requirement, packDirectory) {
+    async _getRequirement(requirement, packDirectory) {
         let fileName = path.join(packDirectory, requirement.file)
         let req = await this.fsWrapper.getScript(fileName, 'requirement')
 
         if (req.children)
-            req.children = await this.getRequirements(req.children, packDirectory)
+            req.children = await this._getRequirements(req.children, packDirectory)
 
         return new Requirement(req.name, req.children)
     }

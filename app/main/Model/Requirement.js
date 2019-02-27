@@ -1,8 +1,10 @@
+import RequirementCollection from './RequirementCollection'
+
 class Requirement {
     /**
      *
      * @param {string} name
-     * @param {Requirement[]|undefined} children
+     * @param {RequirementCollection|undefined} children
      * @param {Function|undefined} data
      */
     constructor(name, children, data) {
