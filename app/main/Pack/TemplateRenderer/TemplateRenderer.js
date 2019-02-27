@@ -7,7 +7,7 @@ import path from 'path'
 /**
  * Utilities for getting information from a single template, and its dependencies
  */
-class TemplateReader {
+class TemplateRenderer {
     /**
      *
      * @param {FsWrapper} fsWrapper
@@ -20,18 +20,13 @@ class TemplateReader {
      * renders the template and its children
      *
      * @async
-     * @param {string} packDirectory the path of the pack directory 
-     * @param {string} templateRelativeURL the template file url relative to the pack root
+     * @param {string} templateFilePath the path of the template
      * @param {Object} data the required params for render the template
      * @returns {RenderedTemplate}
      */
-    async getTemplate(packDirectory, templateRelativeURL, data) {
-        let templateFileURL = path.join(
-            packDirectory,
-            templateRelativeURL
-        )
+    async renderTemplate(templateFilePath, data) {
         let templateFileContent = await this.fsWrapper.getFileContent(
-            templateFileURL
+            templateFilePath
         )
 
         // extending the data with extra utilities
@@ -84,4 +79,4 @@ class TemplateReader {
     }
 }
 
-export default TemplateReader
+export default TemplateRenderer
