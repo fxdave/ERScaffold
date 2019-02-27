@@ -31,7 +31,7 @@ class PackReader {
      * @async
      * @param {Object} requirements
      * @param {string} packDirectory
-     * @returns {Object}
+     * @returns {RequirementCollection}
      */
     async _getRequirements(requirements, packDirectory) {
         return new RequirementCollection(...(await Promise.all(
