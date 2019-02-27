@@ -1,85 +1,80 @@
-import { promises as fsp } from 'fs';
-
+import { promises as fsp } from 'fs'
+import glob from 'glob'
 /**
  * Wraps the filesystem utilities to provide a better interface
  */
 class FsWrapper {
-  /**
-   * resolves the symbolic links then reads the file
-   * @param {string} url
-   * @returns {Promise}
-   */
-  getFileContent(url) {
-    return fsp
-      .realpath(url)
-      .then(
-        realurl =>
-          new Promise((resolve, reject) => {
-            fsp
-              .access(realurl)
-              .then(() => {
-                resolve(realurl);
-              })
-              .catch(err => {
-                reject(err);
-              });
-          })
-      )
-      .then(realurl => fsp.readFile(realurl, 'utf8'));
-  }
-
-  /**
-   *
-   * @param {string} source the source code
-   * @param {string} output what to give back (which variable)
-   * @param {Object} vars what should we define first
-   * @returns {any}
-   */
-  _getOutputFromSource(source, output, vars = {}) {
-    try {
-      const out = new Function(
-        ...Object.keys(vars),
-        `${source}\n return ${output}`
-      )(...Object.values(vars));
-      console.log(out);
-
-      return out;
-    } catch (err) {
-      console.error(err);
-      return null;
+    /**
+     * resolves the symbolic links then reads the file
+     * @async
+     * @param {string} url
+     * @returns {string}
+     */
+    async getFileContent(url) {
+        let realpath = await fsp.realpath(path)
+        let file = await fsp.readFile(realpath, 'utf8')
+        return file
     }
-  }
 
-  /**
-   * reads a file then executes it with the given output string
-   * @param {string} url to the js script
-   * @param {string} output what to give back (which variable)
-   * @returns {Promise}
-   */
-  getScript(url, output) {
-    return new Promise((resolve, reject) => {
-      console.log('Getting script:', url);
+    /**
+     *
+     * @param {string} source the source code
+     * @param {string} output what to give back (which variable)
+     * @param {Object} vars what should we define first
+     * @returns {any}
+     */
+    _getOutputFromSource(source, output, vars = {}) {
+        try {
+            const out = new Function(
+                ...Object.keys(vars),
+                `${source}\n return ${output}`
+            )(...Object.values(vars))
+            console.log(out)
 
-      fsp
-        .getFileContent(url)
-        .then(file => {
-          resolve(_getOutputFromSource(file, output));
+            return out
+        } catch (err) {
+            console.error(err)
+            return null
+        }
+    }
+
+    /**
+     * reads a file then executes it with the given output string
+     * @async
+     * @param {string} url to the js script
+     * @param {string} output what to give back (which variable)
+     * @returns {any}
+     */
+    async getScript(url, output) {
+        let file = await fsp.getFileContent(url)
+        return _getOutputFromSource(file, output)
+    }
+
+    /**
+     * resolves symbolic links then reads the given dir
+     * @async
+     * @param {string} path
+     * @returns {string[]}
+     */
+    async ls(path) {
+        let realpath = await fsp.realpath(path)
+        let dir = await fsp.readdir(realpath)
+        return dir
+    }
+
+    /**
+     * @asnyc
+     * @param {string} path
+     * @returns {string[]} 
+     */
+    glob(path) {
+        glob('**/*.js', options, function (er, files) {
+            // files is an array of filenames.
+            // If the `nonull` option is set, and nothing
+            // was found, then files is ["**/*.js"]
+            // er is an error object or null.
         })
-        .catch(error => {
-          console.error(error);
-          resolve(null);
-        });
-    });
-  }
-
-  /**
-   * resolves symbolic links then reads the given dir
-   * @param {string} path
-   * @returns {Promise}
-   */
-  ls(path) {
-    return fsp.realpath(path).then(realurl => fsp.readdir(realurl));
-  }
+    }
 }
 
-export default FsWrapper;
+export default FsWrapper
