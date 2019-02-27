@@ -12,7 +12,7 @@ describe('PackController test', () => {
                 ))]
             }
         }
-        let templateReader = {
+        let templateRenderer = {
             async renderTemplate(path,data) {
                 
             }
@@ -23,7 +23,7 @@ describe('PackController test', () => {
             }
         }
 
-        let packController = new PackController(packCollectionReader,templateReader,generator)
+        let packController = new PackController(packCollectionReader,templateRenderer,generator)
         let res = await packController.listPackages(null, {
             appName: 'TestApp',
             entities: [
