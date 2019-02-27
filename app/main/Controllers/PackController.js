@@ -92,20 +92,26 @@ class PackController extends Controller {
      * @param {string} data[].template the path of the templatefile
      */
     async generateSelectedPackages(e, data) {
-        await Promise.all(this.model.getEntities().forEach(async entity => {
-            let templates = await Promise.all(
-                data.map(template =>
-                    this.templateRenderer.renderTemplate(
-                        path.join(template.pack, template.template),
-                        { entity }
+        try {
+            let entities = this.model.getEntities()
+            await Promise.all(entities.map(async entity => {
+                
+                let templates = await Promise.all(
+                    data.map(template =>
+                        this.templateRenderer.renderTemplate(
+                            path.join(template.pack, template.template),
+                            { entity }
+                        )
                     )
                 )
-            )
 
-            this.packHandler.generate(templates)
+                return await this.generator.generate(templates)
 
-        }))
-        return { succcess: true }
+            }))
+            return { succcess: true }
+        } catch(e) {
+            return { succcess: false, msg: 'Sorry couldn\'t generate the code, details: ' + e.stack}
+        }
     }
 }
 
