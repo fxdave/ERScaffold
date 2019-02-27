@@ -1,5 +1,5 @@
 import Controller from './Controller'
-
+import FsWrapper from '../FsWrapper/FsWrapper'
 class ERModelController extends Controller {
     /**
      *
@@ -26,7 +26,7 @@ class ERModelController extends Controller {
             defaultPath: '~/.erscaffold'
         })
 
-        let err = await this.fsWrapper.writeFile(
+        let err = await this.fsWrapper.createFile(
             selectedFile,
             JSON.stringify(data)
         )
@@ -43,8 +43,8 @@ class ERModelController extends Controller {
     async import() {
         try {
             const selectedFiles = this.electronDialog.showOpenDialog()
-            let data = this.fsWrapper.readFile(selectedFiles[0])
-            return data.toString('utf8')
+            let data = await this.fsWrapper.getFileContent(selectedFiles[0])
+            return data
         } catch (e) {
             return { error: 'Sorry, couldn\'t import the file' }
         }
