@@ -6,7 +6,7 @@ import Pack from '../Model/Pack'
 import PackCollectionReader from '../PackUtils/PackCollectionReader/PackCollectionReader'
 import TemplateRenderer from '../PackUtils/TemplateRenderer/TemplateRenderer'
 import Generator from '../PackUtils/Generator/Generator'
-
+import path from 'path'
 class PackageListItem {
     constructor(id, name, packs) {
         this.entity = {
@@ -61,7 +61,7 @@ class PackController extends Controller {
 
             // getting builtin packs
             let packsFolderBuiltin = path.join(__dirname, '../../../packs')
-            let packsBuiltin = await this.packCollectionReader.getPacks(packsFolderBuiltIn)
+            let packsBuiltin = await this.packCollectionReader.getPacks(packsFolderBuiltin)
 
             // getting user packs
             let packsUser = await this._getUserPacks()
@@ -92,7 +92,7 @@ class PackController extends Controller {
      * @param {string} data[].template the path of the templatefile
      */
     async generateSelectedPackages(e, data) {
-        this.model.getEntities().forEach(async entity => {
+        await Promise.all(this.model.getEntities().forEach(async entity => {
             let templates = await Promise.all(
                 data.map(template =>
                     this.templateRenderer.renderTemplate(
@@ -104,8 +104,8 @@ class PackController extends Controller {
 
             this.packHandler.generate(templates)
 
-            return { succcess: true, msg: 'Sorry this is not implemented yet' }
-        })
+        }))
+        return { succcess: true }
     }
 }
 

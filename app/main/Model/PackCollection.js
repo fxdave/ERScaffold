@@ -4,15 +4,15 @@ class PackCollection extends Array {
     /**
      *
      * @param {PackCollection} packs
-     * @param {Entity} entiy
+     * @param {Entity} entity
      * @returns {PackCollection} with the templates with a "disabled" boolean member
      */
-    _testPacksForEntity(entiy) {
+    _testPacksForEntity(entity) {
         return this.map(
             /**
              * @param {Pack} pack
              */
-            pack => new Pack(pack.name, pack.requirementCollection.filterForEntity(entiy))
+            pack => new Pack(pack.name, pack.requirementCollection.filterForEntity(entity))
         )
     }
   
@@ -24,7 +24,7 @@ class PackCollection extends Array {
     getOptionsForEntities(entities) {
         
         return entities.map(entity => 
-            new EntityPacksPair(
+            new PackCollectionEntityPair(
                 entity,
                 this._testPacksForEntity(entity)
             )

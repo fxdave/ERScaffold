@@ -1,6 +1,6 @@
 import Requirement from './Requirement'
 import Entity from './Entity'
-
+import FilteredRequirement from './FilteredRequirement'
 class RequirementCollection extends Array {
 
     /**
@@ -13,7 +13,7 @@ class RequirementCollection extends Array {
              * @param {Requirement} requirement
              */
             requirement => {
-                return new FilteredRequirement(requirement, requirement.data(entiy) !== null)
+                return new FilteredRequirement(requirement, requirement.data(entity) !== null)
             }
         )
     }
