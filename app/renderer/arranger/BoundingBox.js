@@ -1,22 +1,23 @@
-import MathHelper from '../math/MathHelper';
+import MathHelper from '../math/MathHelper'
 
-export default function(element, to) {
-  const W = element.getClientRect().width;
+export default function (element, to) {
+    const W = element.getClientRect().width
 
-  const H = element.getClientRect().height;
+    const H = element.getClientRect().height
 
-  const abs = element.getAbsolutePosition();
+    const abs = element.getAbsolutePosition()
 
-  const nearest = MathHelper.getNearestPointToRectangle(
-    {
-      x: abs.x,
-      y: abs.y
-    },
-    to,
-    W,
-    H,
-    element._arrangerElementCentered
-  );
+    let absPos = {
+        x: abs.x,
+        y: abs.y
+    }
+    const nearest = MathHelper.getNearestPointToRectangle(
+        absPos,
+        to,
+        W,
+        H,
+        element._arrangerElementCentered
+    )
 
-  return nearest;
+    return nearest
 }

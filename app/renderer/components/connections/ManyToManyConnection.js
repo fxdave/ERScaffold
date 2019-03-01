@@ -1,5 +1,5 @@
-import Connection from './Connection';
-import Many from './Many';
+import Connection from './Connection'
+import Many from './Many'
 
 class ManyToMany extends Connection {
   fromComponent = Comp => Comp(Many);
@@ -7,4 +7,4 @@ class ManyToMany extends Connection {
   toComponent = Comp => Comp(Many);
 }
 
-export default ManyToMany;
+export default ManyToMany

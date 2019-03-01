@@ -1,5 +1,12 @@
-import { app, BrowserWindow, /* Menu, */ ipcMain, dialog } from 'electron'
-import { autoUpdater } from 'electron-updater'
+import {
+    app,
+    BrowserWindow,
+    /* Menu, */ ipcMain,
+    dialog
+} from 'electron'
+import {
+    autoUpdater
+} from 'electron-updater'
 import log from 'electron-log'
 import fs from 'fs'
 import path from 'path'
@@ -26,7 +33,7 @@ if (process.env.NODE_ENV === 'production') {
 
 if (
     process.env.NODE_ENV === 'development' ||
-  process.env.DEBUG_PROD === 'true'
+    process.env.DEBUG_PROD === 'true'
 ) {
     require('electron-debug')()
 }
@@ -56,7 +63,7 @@ app.on('window-all-closed', () => {
 app.on('ready', async () => {
     if (
         process.env.NODE_ENV === 'development' ||
-    process.env.DEBUG_PROD === 'true'
+        process.env.DEBUG_PROD === 'true'
     ) {
         await installExtensions()
     }
@@ -67,7 +74,7 @@ app.on('ready', async () => {
         height: 728
     })
 
-    mainWindow.loadURL(`file://${path.join(__dirname, '../')}/app.html`)
+    mainWindow.loadURL(`file://${path.join(__dirname, '../', 'app.html')}`)
 
     // @TODO: Use 'ready-to-show' event
     //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
@@ -94,7 +101,7 @@ app.on('ready', async () => {
 
     // Remove this if your app does not use auto updates
     // eslint-disable-next-line
-  new AppUpdater();
+    new AppUpdater();
 
     /*
         const MainMenu = Menu.buildFromTemplate(MainMenuTemplate)

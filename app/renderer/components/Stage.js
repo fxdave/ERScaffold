@@ -1,17 +1,17 @@
-import React from 'react';
-import { Stage } from 'react-konva';
+import React from 'react'
+import { Stage } from 'react-konva'
 
 class StageComponent extends React.Component {
   state = {
-    width: window.innerWidth,
-    height: window.innerHeight
+      width: window.innerWidth,
+      height: window.innerHeight
   };
 
   updateViewport = () => {
-    this.setState({
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
+      this.setState({
+          width: window.innerWidth,
+          height: window.innerHeight
+      })
   };
 
   subtractDragX = v => v - this.stage.x();
@@ -19,26 +19,26 @@ class StageComponent extends React.Component {
   subtractDragY = v => v - this.stage.y();
 
   render() {
-    return (
-      <Stage
-        onDblClick={this.props.onDblClick}
-        draggable="true"
-        width={this.state.width}
-        height={this.state.height}
-        ref={ref => (this.stage = ref)}
-      >
-        {this.props.children}
-      </Stage>
-    );
+      return (
+          <Stage
+              onDblClick={this.props.onDblClick}
+              draggable="true"
+              width={this.state.width}
+              height={this.state.height}
+              ref={ref => (this.stage = ref)}
+          >
+              {this.props.children}
+          </Stage>
+      )
   }
 
   componentDidMount = () => {
-    window.addEventListener('resize', this.updateViewport);
+      window.addEventListener('resize', this.updateViewport)
 
-    document.querySelectorAll('canvas').forEach(v => {
-      v.onmousedown = () => false;
-    });
+      document.querySelectorAll('canvas').forEach(v => {
+          v.onmousedown = () => false
+      })
   };
 }
 
-export default StageComponent;
+export default StageComponent

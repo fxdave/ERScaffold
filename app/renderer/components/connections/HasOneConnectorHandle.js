@@ -1,6 +1,6 @@
-import React from 'react';
-import ConnectorHandle from './ConnectorHandle';
-import MathHelper from '../../math/MathHelper';
+import React from 'react'
+import ConnectorHandle from './ConnectorHandle'
+import MathHelper from '../../math/MathHelper'
 
 class HasManyConnectorHandle extends ConnectorHandle {
   connectionType = 'hasOne';
@@ -8,11 +8,11 @@ class HasManyConnectorHandle extends ConnectorHandle {
   points = (from, to) => [from.x, from.y, to.x, to.y];
 
   styles() {
-    return {
-      stroke: '#ff006f',
-      strokeWidth: 4
-    };
+      return {
+          stroke: '#ff006f',
+          strokeWidth: 4
+      }
   }
 }
 
-export default HasManyConnectorHandle;
+export default HasManyConnectorHandle

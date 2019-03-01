@@ -1,6 +1,6 @@
-import { Vec2 } from 'vecjs';
+import { Vec2 } from 'vecjs'
 
-const MathHelper = {};
+const MathHelper = {}
 
 /**
  *
@@ -11,33 +11,33 @@ const MathHelper = {};
  * @returns {number[]}
  */
 MathHelper.triangularProjection = function(from, to, radius) {
-  // from_to vector's normal
-  const N = {
-    x: from.y - to.y,
-    y: to.x - from.x
-  };
+    // from_to vector's normal
+    const N = {
+        x: from.y - to.y,
+        y: to.x - from.x
+    }
 
-  // length of N
-  const l = Math.sqrt(Math.pow(N.x, 2) + Math.pow(N.y, 2));
+    // length of N
+    const l = Math.sqrt(Math.pow(N.x, 2) + Math.pow(N.y, 2))
 
-  // normalize normal vector
-  const NN = {
-    x: N.x / l,
-    y: N.y / l
-  };
+    // normalize normal vector
+    const NN = {
+        x: N.x / l,
+        y: N.y / l
+    }
 
-  const A = {
-    x: to.x + NN.x * radius,
-    y: to.y + NN.y * radius
-  };
+    const A = {
+        x: to.x + NN.x * radius,
+        y: to.y + NN.y * radius
+    }
 
-  const B = {
-    x: to.x - NN.x * radius,
-    y: to.y - NN.y * radius
-  };
+    const B = {
+        x: to.x - NN.x * radius,
+        y: to.y - NN.y * radius
+    }
 
-  return [A.x, A.y, to.x, to.y, B.x, B.y];
-};
+    return [A.x, A.y, to.x, to.y, B.x, B.y]
+}
 
 /*
 MathHelper.getNearestPointToCircle = function (centerOfCircle, to, radius) {
@@ -79,67 +79,67 @@ MathHelper.getNearestPointToCircle = function (centerOfCircle, to, radius) {
  * @param {number} h
  */
 MathHelper.getNearestPointToRectangle = function(
-  from,
-  to,
-  w,
-  h,
-  centered = false
+    from,
+    to,
+    w,
+    h,
+    centered = false
 ) {
-  const x = from.x;
+    const x = from.x
 
-  const y = from.y;
+    const y = from.y
 
-  const LTC = {
-    x: x - w / 2,
-    y: y - h / 2
-  };
+    const LTC = {
+        x: x - w / 2,
+        y: y - h / 2
+    }
 
-  if (!centered) {
-    LTC.x += w / 2;
-    LTC.y += h / 2;
-  }
+    if (!centered) {
+        LTC.x += w / 2
+        LTC.y += h / 2
+    }
 
-  const RBC = {
-    x: LTC.x + w,
-    y: LTC.y + h
-  };
+    const RBC = {
+        x: LTC.x + w,
+        y: LTC.y + h
+    }
 
-  let x_out;
-  let y_out;
+    let x_out
+    let y_out
 
-  if (to.x <= LTC.x) {
-    x_out = LTC.x;
-  } else if (to.x > LTC.x && to.x < RBC.x) {
-    x_out = to.x;
-  } else if (to.x >= RBC.x) {
-    x_out = RBC.x;
-  }
+    if (to.x <= LTC.x) {
+        x_out = LTC.x
+    } else if (to.x > LTC.x && to.x < RBC.x) {
+        x_out = to.x
+    } else if (to.x >= RBC.x) {
+        x_out = RBC.x
+    }
 
-  if (to.y <= LTC.y) {
-    y_out = LTC.y;
-  } else if (to.y > LTC.y && to.y < RBC.y) {
-    y_out = to.y;
-  } else if (to.y >= RBC.y) {
-    y_out = RBC.y;
-  }
+    if (to.y <= LTC.y) {
+        y_out = LTC.y
+    } else if (to.y > LTC.y && to.y < RBC.y) {
+        y_out = to.y
+    } else if (to.y >= RBC.y) {
+        y_out = RBC.y
+    }
 
-  if (x_out == to.x && y_out == to.y) {
-    to = new Vec2(to);
+    if (x_out == to.x && y_out == to.y) {
+        to = new Vec2(to)
 
-    const out = to
-      .sub(from)
-      .map(x => x * 0.9)
-      .add(from);
+        const out = to
+            .sub(from)
+            .map(x => x * 0.9)
+            .add(from)
 
-    x_out = out.x;
-    y_out = out.y;
-  }
+        x_out = out.x
+        y_out = out.y
+    }
 
-  return {
-    x: x_out,
-    y: y_out
-  };
-};
+    return {
+        x: x_out,
+        y: y_out
+    }
+}
 
 /**
  *
@@ -165,4 +165,4 @@ MathHelper.getSmoothPoint = function (from, half, to) {
 }
 */
 
-export default MathHelper;
+export default MathHelper
