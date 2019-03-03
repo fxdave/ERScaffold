@@ -81,18 +81,10 @@
       ]
     },
     "win": {
-      "target": [
-        "nsis",
-        "msi"
-      ]
+      "target": ["nsis", "msi"]
     },
     "linux": {
-      "target": [
-        "deb",
-        "rpm",
-        "snap",
-        "AppImage"
-      ],
+      "target": ["deb", "rpm", "snap", "AppImage"],
       "category": "Development"
     },
     "directories": {
@@ -149,17 +141,11 @@
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
       "\\.(css|less|sass|scss)$": "identity-obj-proxy"
     },
-    "moduleFileExtensions": [
-      "js",
-      "jsx",
-      "json"
-    ],
+    "moduleFileExtensions": ["js", "jsx", "json"],
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
     },
-    "setupFiles": [
-      "./internals/scripts/CheckBuiltsExist.js"
-    ]
+    "setupFiles": ["./internals/scripts/CheckBuiltsExist.js"]
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",
@@ -187,7 +173,7 @@
     "@babel/register": "^7.0.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "^23.6.0",
+    "babel-jest": "^24.1.0",
     "babel-loader": "^8.0.4",
     "babel-plugin-dev-expression": "^0.2.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.20",
@@ -224,7 +210,7 @@
     "flow-typed": "^2.5.1",
     "husky": "^1.1.4",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^23.6.0",
+    "jest": "^24.1.0",
     "lint-staged": "^8.1.0",
     "mini-css-extract-plugin": "^0.4.4",
     "node-sass": "^4.10.0",
@@ -242,14 +228,14 @@
     "stylelint-config-prettier": "^4.0.0",
     "stylelint-config-standard": "^18.2.0",
     "terser-webpack-plugin": "^1.1.0",
-    "testcafe": "^0.23.2",
-    "testcafe-browser-provider-electron": "^0.0.6",
+    "testcafe": "^15.1.317922",
+    "testcafe-browser-provider-electron": "0.0.8",
     "testcafe-live": "^0.1.4",
     "testcafe-react-selectors": "^3.0.0",
     "url-loader": "^1.1.2",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10",
+    "webpack-dev-server": "^3.2.1",
     "webpack-merge": "^4.1.4",
     "yarn": "^1.12.3"
   },

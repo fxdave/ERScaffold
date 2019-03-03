@@ -8,17 +8,6 @@
   />
   <meta name="theme-color" content="#000000" />
     <title>ER Scaffold</title>
-    <script>
-      (function() {
-        if (!process.env.HOT) {
-          const link = document.createElement('link');
-          link.rel = 'stylesheet';
-          link.href = './dist/style.css';
-          // HACK: Writing the script path should be done with webpack
-          document.getElementsByTagName('head')[0].appendChild(link);
-        }
-      }());
-    </script>
   </head>
   <body>
     <div id="root"></div>

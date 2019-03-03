@@ -17,7 +17,7 @@ describe('Generator test', () => {
 		},
 		async modifyFile (path, callback) {
             fsWrapperModifyFile = true
-            fsWrapperModifyFileCalled = {path, content, callback}
+            fsWrapperModifyFileCalled = {path, callback}
             fsWrapperModifyFileReturned = callback('old section_to_replace old')
 		}
 	}
@@ -147,7 +147,6 @@ describe('Generator test', () => {
 		assert.ok(!fsWrapperCreateFile, "shouldn't be called")
 		assert.ok(fsWrapperModifyFile, "should be called")
 		assert.ok(fsWrapperModifyFileCalled.path, templatePath)
-		assert.ok(fsWrapperModifyFileCalled.content, templateContent)
 		assert.ok(fsWrapperModifyFileReturned, 'old '+templateContent+' old')
 
 		done()

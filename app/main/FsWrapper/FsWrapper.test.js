@@ -6,7 +6,7 @@ describe("FsWrapper test", () => {
     it("should list the elements of a directory", async (done) => {
         let fsWrapper = new FsWrapper()
         let list = await fsWrapper.ls(__dirname)
-        assert.ok(list instanceof Array && list.length > 1)
+        assert.ok(list.length && list.length > 1)
         done()
     })
 
@@ -23,7 +23,7 @@ describe("FsWrapper test", () => {
 
     it("should create and read a file", async done => {
         let fsWrapper = new FsWrapper()
-        let testPath = path.join(__driname,'test')
+        let testPath = path.join(__dirname,'test')
         //create
         await fsWrapper.createFile(testPath,'test content')
         //read
@@ -37,7 +37,7 @@ describe("FsWrapper test", () => {
 
     it("should modify a file ", async done => {
         let fsWrapper = new FsWrapper()
-        let testPath = path.join(__driname,'test')
+        let testPath = path.join(__dirname,'test')
         //create
         await fsWrapper.createFile(testPath,'test content')
         //modify

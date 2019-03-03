@@ -1,11 +1,13 @@
-import { app } from 'electron'
+import { app } from 'electron';
 
-let argv
+console.log(require('electron'));
+
+let argv;
 
 if (app.isPackaged) {
-    argv = process.argv.slice(1)
+  argv = process.argv.slice(1);
 } else {
-    argv = process.argv.slice(4)
+  argv = process.argv.slice(4);
 }
 
-export default argv
+export default argv;
