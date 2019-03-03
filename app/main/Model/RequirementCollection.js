@@ -6,6 +6,7 @@ class RequirementCollection extends Array {
     /**
      * 
      * @param {Entity} entity 
+     * @returns {FilteredRequirement[]}
      */
     filterForEntity(entity) {
         return this.map(
@@ -13,7 +14,7 @@ class RequirementCollection extends Array {
              * @param {Requirement} requirement
              */
             requirement => {
-                return new FilteredRequirement(requirement, requirement.data(entity) !== null)
+                return requirement.filterForEntity(Entity)
             }
         )
     }

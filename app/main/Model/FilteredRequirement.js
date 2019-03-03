@@ -1,14 +1,16 @@
 import Requirement from './Requirement'
 
-class FilteredRequirement  {
-
+class FilteredRequirement extends Requirement  {
     /**
-     * 
-     * @param {Requirement} requirement 
+     *
+     * @param {string} name
+     * @param {RequirementCollection|undefined} children
+     * @param {Function} data
+     * @param {string} path
      * @param {boolean} enabled 
      */
-    constructor(requirement, enabled) {
-        this.requirement = requirement
+    constructor(name, children, data, path, enabled) {
+        super(name,children,data,path)
         this.enabled = enabled
     }
 }

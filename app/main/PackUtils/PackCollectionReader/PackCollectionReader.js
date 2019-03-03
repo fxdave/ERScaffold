@@ -1,4 +1,5 @@
 import PackCollection from '../../Model/PackCollection'
+import PackReader from '../PackReader/PackReader'
 import path from 'path'
 /**
  * This class provides utilities with Packs
@@ -22,9 +23,9 @@ class PackCollectionReader {
      * @returns {PackCollection}
      */
     async getPacks(folder) {
-        let packIndicesPath = path.join(folder, '/*/pack.index.js')
+        let packIndicesPath = path.join(folder, '/**/index.pack.js')
         let packIndices = await this.fsWrapper.glob(packIndicesPath)
-
+        
         let packs = await Promise.all(
             packIndices.map(packIndex => this.packReader.getPack(packIndex))
         )

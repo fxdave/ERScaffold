@@ -3,7 +3,6 @@ import Pack from './Pack'
 class PackCollection extends Array {
     /**
      *
-     * @param {PackCollection} packs
      * @param {Entity} entity
      * @returns {PackCollection} with the templates with a "disabled" boolean member
      */
@@ -25,8 +24,8 @@ class PackCollection extends Array {
         
         return entities.map(entity => 
             new PackCollectionEntityPair(
-                entity,
-                this._testPacksForEntity(entity)
+                this._testPacksForEntity(entity),
+                entity
             )
         )
     }

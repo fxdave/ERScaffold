@@ -13,7 +13,7 @@ import path from 'path'
 import process from 'process'
 import url from 'url'
 import Config from './Config/Config'
-
+import './routes'
 const ARGV = Config.ARGV
 
 export default class AppUpdater {

@@ -72,10 +72,14 @@ class PackController extends Controller {
             // and filter out which requirement is allowed for that model
             let options = packs.getOptionsForEntities(this.model.getEntities())
 
-            return options.map(
+            let out = options.map(
                 ({ entity, packs }) =>
                     new PackageListItem(entity.id, entity.name, packs)
             )
+
+            console.log(out)
+            
+            return out
         } catch (error) {
             return {
                 success: false,
@@ -87,9 +91,7 @@ class PackController extends Controller {
     /**
      *
      * @param {Object} e
-     * @param {Object[]} data the selected templates
-     * @param {string} data[].pack the name of the packfolder
-     * @param {string} data[].template the path of the templatefile
+     * @param {string[]} data the selected templates' path
      */
     async generateSelectedPackages(e, data) {
         try {
@@ -97,9 +99,9 @@ class PackController extends Controller {
             await Promise.all(entities.map(async entity => {
                 
                 let templates = await Promise.all(
-                    data.map(template =>
+                    data.map(templatePath =>
                         this.templateRenderer.renderTemplate(
-                            path.join(template.pack, template.template),
+                            templatePath,
                             { entity }
                         )
                     )

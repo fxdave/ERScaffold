@@ -54,10 +54,14 @@ class PackReader {
         let fileName = path.join(packDirectory, requirement.file)
         let req = await this.fsWrapper.getScript(fileName, 'requirement')
 
+        if(!req.name || !req.data) {
+            throw new Error('Not vaild requirement: ' + fileName + ' in pack: ' + packDirectory)
+        }
+
         if (req.children)
             req.children = await this._getRequirements(req.children, packDirectory)
 
-        return new Requirement(req.name, req.children)
+        return new Requirement(req.name, req.children, req.data, fileName)
     }
 }
 
