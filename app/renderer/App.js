@@ -87,7 +87,7 @@ class App extends Component {
               templatesToSelect: []
           })
       } else {
-          alert(`Sorry there is an error: ${data.error}`)
+          alert(`Sorry there is an error: ${data.msg}`)
       }
   };
 

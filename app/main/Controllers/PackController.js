@@ -6,6 +6,7 @@ import Pack from '../Model/Pack'
 import PackCollectionReader from '../PackUtils/PackCollectionReader/PackCollectionReader'
 import TemplateRenderer from '../PackUtils/TemplateRenderer/TemplateRenderer'
 import Generator from '../PackUtils/Generator/Generator'
+import RequirementReader from '../PackUtils/RequirementReader/RequirementReader'
 import path from 'path'
 class PackageListItem {
     constructor(id, name, packs) {
@@ -24,13 +25,15 @@ class PackController extends Controller {
      * @param {PackCollectionReader} packCollectionReader
      * @param {TemplateRenderer} templateRenderer
      * @param {Generator} generator
+     * @param {RequirementReader} requirementReader
      */
-    constructor(packCollectionReader, templateRenderer, generator) {
+    constructor(packCollectionReader, templateRenderer, generator, requirementReader) {
         super()
         this.model = null
         this.packCollectionReader = packCollectionReader
         this.templateRenderer = templateRenderer
         this.generator = generator
+        this.requirementReader = requirementReader
     }
 
     /**
@@ -98,11 +101,17 @@ class PackController extends Controller {
             let entities = this.model.getEntities()
             await Promise.all(entities.map(async entity => {
                 
+                
+                // we musn't render its children, because children requirements are passed by data too
+                let requirements = await Promise.all(data.map(reqPath => {
+                    return this.requirementReader.getRequirement(reqPath)
+                }))
+                
                 let templates = await Promise.all(
-                    data.map(templatePath =>
+                    requirements.map(req =>
                         this.templateRenderer.renderTemplate(
-                            templatePath,
-                            { entity }
+                            req.template,
+                            req.data({ entity })
                         )
                     )
                 )
@@ -112,7 +121,7 @@ class PackController extends Controller {
             }))
             return { succcess: true }
         } catch(e) {
-            return { succcess: false, msg: 'Sorry couldn\'t generate the code, details: ' + e.stack}
+            return { succcess: false, msg: 'Sorry couldn\'t generate the code, details: ' + e + e.stack}
         }
     }
 }

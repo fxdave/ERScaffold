@@ -26,7 +26,13 @@ describe('PackController test', () => {
             }
         }
 
-        let packController = new PackController(packCollectionReader,templateRenderer,generator)
+        let requirementReader = {
+            async getRequirement() {
+                return new Requirement()
+            }
+        }
+
+        let packController = new PackController(packCollectionReader,templateRenderer,generator,requirementReader)
         let res = await packController.listPackages(null, {
             appName: 'TestApp',
             entities: [
@@ -36,7 +42,7 @@ describe('PackController test', () => {
 
         })
         
-        assert.ok(res instanceof Array)
+        assert.ok(res instanceof Array, res.msg)
         done()
     })
 
@@ -59,7 +65,13 @@ describe('PackController test', () => {
             }
         }
 
-        let packController = new PackController(packCollectionReader,templateRenderer,generator)
+        let requirementReader = {
+            async getRequirement() {
+                return new Requirement("test req", new RequirementCollection(), data => data, '/path/to/req', '/path/to/template')
+            }
+        }
+
+        let packController = new PackController(packCollectionReader,templateRenderer,generator, requirementReader)
         packController.model = new ERModel({
             appName: 'TestApp',
             entities: [
@@ -72,7 +84,7 @@ describe('PackController test', () => {
         let res = await packController.generateSelectedPackages(null, [
             {pack: 'TESTPACK', template: '/path/to/testTemplate'}
         ])
-        assert.ok(res.succcess)
+        assert.ok(res.succcess, res.msg)
         done()
     })
 })

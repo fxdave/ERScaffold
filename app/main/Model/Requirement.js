@@ -8,12 +8,14 @@ class Requirement {
      * @param {RequirementCollection} children
      * @param {Function} data
      * @param {string} path
+     * @param {string} templatePath
      */
-    constructor(name, children, data, path) {
+    constructor(name, children, data, path, templatePath) {
         this.name = name
         this.children = children
         this.data = data
         this.path = path
+        this.templatePath = templatePath
     }
 
     /**
@@ -27,6 +29,7 @@ class Requirement {
             this.children.filterForEntity(entity), 
             this.data, 
             this.path,
+            this.templatePath,
             this.data(entity) !== null
         )
     }

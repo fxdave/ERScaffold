@@ -9,6 +9,7 @@ import PackReader from './PackUtils/PackReader/PackReader'
 import TemplateRenderer from './PackUtils/TemplateRenderer/TemplateRenderer'
 import Generator from './PackUtils/Generator/Generator'
 import GitWrapper from './GitWrapper/GitWrapper'
+import RequirementReader from './PackUtils/RequirementReader/RequirementReader';
 
 /**
  * Controller dependencies
@@ -17,11 +18,11 @@ import GitWrapper from './GitWrapper/GitWrapper'
 const gitWrapper = new GitWrapper()
 const fsWrapper = new FsWrapper()
 const router = new Router(ipcMain)
-const packReader = new PackReader(fsWrapper)
+const requirementReader = new RequirementReader(fsWrapper)
+const packReader = new PackReader(fsWrapper,requirementReader)
 const templateRenderer = new TemplateRenderer(fsWrapper)
 const generator = new Generator(fsWrapper, gitWrapper)
 const packCollectionReader = new PackCollectionReader(fsWrapper, packReader)
-
 /**
  * Controllers
  */
@@ -30,7 +31,8 @@ const eRModelController = new ERModelController(fsWrapper, dialog)
 const packController = new PackController(
     packCollectionReader,
     templateRenderer,
-    generator
+    generator,
+    requirementReader
 )
 
 /**

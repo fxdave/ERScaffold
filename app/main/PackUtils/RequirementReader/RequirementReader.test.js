@@ -1,11 +1,10 @@
 import assert from 'assert'
-import PackReader from './PackReader'
+import RequirementReader from './RequirementReader'
 import path from 'path'
 import Pack from '../../Model/Pack'
 import RequirementCollection from '../../Model/RequirementCollection';
-import RequirementReader from '../RequirementReader/RequirementReader';
 
-describe("Pack Reader", () => {
+describe("Requirement Reader", () => {
 
     let fileOutputs = {
         'index.pack.js' : {
@@ -39,19 +38,11 @@ describe("Pack Reader", () => {
         }
     }
 
-    it("should get a pack", async (done) => {
+    it("read a requirement", async (done) => {
         let reqReader = new RequirementReader(fsWrapper)
-        let packReader = new PackReader(fsWrapper, reqReader)
-        let pack = await packReader.getPack('/something/index.pack.js')
-
-        assert.ok(pack instanceof Pack)
-        assert.equal(pack.name, 'Basic Phoenix')
-        assert.ok(pack.requirementCollection instanceof RequirementCollection)
-        assert.equal(pack.requirementCollection.length, 1)
-        assert.equal(pack.requirementCollection[0].name, 'Create new resource')
-        assert.ok(pack.requirementCollection[0].children instanceof RequirementCollection)
-        assert.equal(pack.requirementCollection[0].children[0].name, 'Go back button')
-
+        let req = await reqReader.getRequirement("resource_new.requirement.js")
+        assert.equal(req.name, 'Create new resource')
+        assert.equal(req.children[0].name, 'Go back button')
         done()
     })
 })
