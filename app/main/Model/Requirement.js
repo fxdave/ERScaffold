@@ -5,7 +5,7 @@ class Requirement {
     /**
      *
      * @param {string} name
-     * @param {RequirementCollection|undefined} children
+     * @param {RequirementCollection} children
      * @param {Function} data
      * @param {string} path
      */
@@ -26,7 +26,7 @@ class Requirement {
             this.name, 
             this.children.filterForEntity(entity), 
             this.data, 
-            this.path, 
+            this.path,
             this.data(entity) !== null
         )
     }

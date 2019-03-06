@@ -11,7 +11,7 @@ describe('PackController test', () => {
         let packCollectionReader = {
             async getPacks(folder) {
                 return [new Pack("TESTPACK",new RequirementCollection(
-                    new Requirement("testRequirement",[],data => data)
+                    new Requirement("testRequirement",new RequirementCollection(),data => data)
                 ))]
             }
         }
@@ -44,7 +44,7 @@ describe('PackController test', () => {
         let packCollectionReader = {
             async getPacks(folder) {
                 return [new Pack("TESTPACK",new RequirementCollection(
-                    new Requirement("testRequirement",[],data => data)
+                    new Requirement("testRequirement",new RequirementCollection(),data => data)
                 ))]
             }
         }

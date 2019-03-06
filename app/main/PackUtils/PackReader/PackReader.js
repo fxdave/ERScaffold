@@ -34,9 +34,11 @@ class PackReader {
      * @returns {RequirementCollection}
      */
     async _getRequirements(requirements, packDirectory) {
-        return new RequirementCollection(...(await Promise.all(
-            requirements.map(req => this._getRequirement(req, packDirectory))
-        )))
+        if(requirements)
+            return new RequirementCollection(...(await Promise.all(
+                requirements.map(req => this._getRequirement(req, packDirectory))
+            )))
+        return new RequirementCollection()
     }
 
     /**
@@ -58,8 +60,7 @@ class PackReader {
             throw new Error('Not vaild requirement: ' + fileName + ' in pack: ' + packDirectory)
         }
 
-        if (req.children)
-            req.children = await this._getRequirements(req.children, packDirectory)
+        req.children = await this._getRequirements(req.children, packDirectory)
 
         return new Requirement(req.name, req.children, req.data, fileName)
     }

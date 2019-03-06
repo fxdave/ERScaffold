@@ -80,10 +80,10 @@ class PackController extends Controller {
             console.log(out)
             
             return out
-        } catch (error) {
+        } catch (e) {
             return {
                 success: false,
-                msg: 'Sorry couldn\'t fetch the pack, details:' + error
+                msg: 'Sorry couldn\'t fetch the pack, details:' + e.stack
             }
         }
     }

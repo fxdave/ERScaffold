@@ -1,4 +1,4 @@
-import Requirement from './Requirement'
+
 import Entity from './Entity'
 import FilteredRequirement from './FilteredRequirement'
 class RequirementCollection extends Array {
