@@ -93,11 +93,13 @@ class NameFormatter {
      */
     plural(what) {
         const tags = this.getTags(what)
-        return what.replace(
+        let out = what.replace(
             tags[tags.length - 1],
             pluralize.plural(tags[tags.length - 1]),
             what
         )
+        if(out === what) out = what + '_collection' // TODO: try to detect format
+        return out
     }
 
     /**

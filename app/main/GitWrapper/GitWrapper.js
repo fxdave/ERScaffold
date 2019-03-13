@@ -1,72 +1,135 @@
-import SimpleGit from 'simple-git'
-import Config from '../Config/Config'
+const util = require('util')
+const exec = util.promisify(require('child_process').exec)
 
-const ERSCAFFOLD_BRANCH_NAME = Config.ERSCAFFOLD_BRANCH_NAME
-const COMMIT_MESSAGE = Config.COMMIT_MESSAGE
-
-class GitWrapper {
+module.exports = class GitWrapper {
     /**
-     *
-     * @param {SimpleGit} simpleGit
+     * 
+     * @param {string} workdir 
      */
-    constructor(simpleGit) {
-        this.simpleGit = simpleGit
+    constructor(workdir) {
+        process.chdir(workdir)
     }
 
     /**
-     * Checks if the ERScaffold branch is created or not
-     * @returns {Promise} will be resolved with bool
+     * @returns {boolean}
      */
-    hasERBranch() {
-        return new Promise((resolve, reject) => {
-            this.simpleGit
-                .branchLocal()
-                .then(summary => {
-                    const interest = Object.keys(summary.branches).filter(
-                        name => name.indexOf(ERSCAFFOLD_BRANCH_NAME) != -1
-                    )
-                    resolve(interest.length == 1)
-                })
-                .catch(err => {
-                    resolve(false)
-                })
-        })
+    async isGitInstalled() {
+        try {
+            await exec('git --help')
+            return true
+        } catch (e) {
+            return false
+        }
     }
 
     /**
-     * Creates ERBranch from the current branch
-     * @returns {Promise}
+     * @returns {boolean}
      */
-    createAndCheckoutERBranch() {
-        return this.simpleGit.checkout(['-b', ERSCAFFOLD_BRANCH_NAME])
+    async isItGitRepository() {
+        try {
+            await exec('git status')
+            return true
+        } catch (e) {
+            return false
+        }
     }
 
     /**
-     * checkout to ERBranch
-     * @returns {Promise}
+     * @returns {boolean}
      */
-    checkoutERBranch() {
-        return this.simpleGit.checkout([ERSCAFFOLD_BRANCH_NAME])
+    async isTreeClean() {
+        try {
+            const res = await exec('git status')
+            return res.stdout.indexOf('nothing to commit') !== -1
+        } catch (e) {
+            return false
+        }
+    }
+
+
+    /**
+     * 
+     * @param {string} branchname 
+     * @returns {boolean}
+     */
+    async hasBranch(branchname) {
+        try {
+            await exec('git rev-parse --verify ' + branchname)
+            return true
+        } catch (e) {
+            return false
+        }
     }
 
     /**
-     * Commits modifications
-     * @returns {Promise}
+     * 
+     * @param {string} branchname 
+     * @param {boolean} create? 
      */
-    commit() {
-        return this.simpleGit.commit(COMMIT_MESSAGE, '.')
+    async checkout(branchname, create) {
+        await exec('git checkout ' + (create ? '-b ' : '') + branchname)
     }
 
     /**
-     * Rolls back to the first commit
-     * @returns {Promise}
+     * 
+     * @returns {string}
      */
-    rollbackToFirstCommit() {
-        return this.simpleGit.log(['--first-parent']).then(summary => {
-            const lastHash = summary.all[summary.length - 1].hash
-            return this.simpleGit.revert(lastHash)
-        })
+    async getBranchName() {
+        const res = await exec('git rev-parse --abbrev-ref HEAD')
+        return res.stdout.replace(/\n/g, '')
+    }
+
+    /**
+     * 
+     * @param {string} branchname 
+     * @param {boolean} create? 
+     */
+    async removeBranch(branchname) {
+        let name = await this.getBranchName()
+
+        if (name === branchname) {
+            await this.checkout('master', false)
+        }
+        await exec('git branch -d ' + branchname)
+    }
+
+    /**
+     *  
+     * @param {string} commit_id 
+     */
+    async revert(commit_id) {
+        await exec('git revert ' + commit_id)
+    }
+
+    /**
+     * 
+     * @param {string} files 
+     */
+    async add(files) {
+        await exec('git add ' + files)
+    }
+
+    /**
+     * 
+     * @param {string} message 
+     */
+    async commit(message) {
+        await exec('git commit -m "' + message.replace(/"/g, '\"') + '"')
+    }
+
+    /**
+     * @returns {string}
+     */
+    async getLastCommitID() {
+        const res = await exec('git log --format="%H" -n 1')
+        return res.stdout.replace(/\n/g, '')
+    }
+    
+    /**
+     * @returns {string}
+     */
+    async getPreviousCommitID() {
+        const res = await exec('git log --format="%H" --skip 1 -n 2')
+        return res.stdout.replace(/\n/g, '')
     }
 }
-
-export default GitWrapper

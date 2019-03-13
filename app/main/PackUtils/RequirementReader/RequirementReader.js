@@ -3,7 +3,7 @@ import RequirementCollection from '../../Model/RequirementCollection'
 import path from 'path'
 
 class RequirementReader {
-    
+
     /**
      * @param {FsWrapper} fsWrapper
      */
@@ -18,9 +18,9 @@ class RequirementReader {
      * @returns {RequirementCollection}
      */
     async getRequirements(requirements, packDirectory) {
-        if(requirements)
+        if (requirements)
             return new RequirementCollection(...(await Promise.all(
-                requirements.map(req => this.getRequirement(path.join(packDirectory,req.file)))
+                requirements.map(req => this.getRequirement(path.join(packDirectory, req.file)))
             )))
         return new RequirementCollection()
     }
@@ -33,21 +33,21 @@ class RequirementReader {
      * @returns {Requirement}
      */
     async getRequirement(pathToRequirement) {
-        
+
         // get the pack directory
         let packDirectory = path.dirname(pathToRequirement) || ''
 
         // get the file's content
         let req = await this.fsWrapper.getScript(pathToRequirement, 'requirement')
 
-        if(!req.name || !req.data) {
+        if (!req.name || !req.data) {
             throw new Error('Not vaild requirement: ' + pathToRequirement)
         }
 
         // process children
         let children = await this.getRequirements(req.children, packDirectory)
 
-        return new Requirement(req.name, children, req.data, pathToRequirement, req.template)
+        return new Requirement(req.name, children, req.data, pathToRequirement, path.join(packDirectory, req.template))
     }
 }
 

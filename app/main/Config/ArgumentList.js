@@ -7,7 +7,7 @@ let argv
 if (app.isPackaged) {
     argv = process.argv.slice(1)
 } else {
-    argv = process.argv.slice(4)
+    argv = process.argv.slice(5)
 }
 
 export default argv

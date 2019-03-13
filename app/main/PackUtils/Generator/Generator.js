@@ -1,77 +1,68 @@
+import path from 'path'
+
 class Generator {
     /**
-     *
-     * @param {FsWrapper} fsWrapper
-     */
-    constructor(fsWrapper, gitWrapper) {
+   *
+   * @param {FsWrapper} fsWrapper
+   * @param {ERGitter} eRGitter
+   */
+    constructor(fsWrapper, eRGitter) {
         this.fsWrapper = fsWrapper
-        this.gitWrapper = gitWrapper
+        this.eRGitter = eRGitter
     }
 
-    /**
-     * checks out to ER branch
-     *
-     * @param {gitWrapper} git
-     * @returns {Promise}
-     */
-    _prepareGit() {
-        return this.gitWrapper
-            .hasERBranch()
-            .then(answer => {
-                if (answer == true) {
-                    return this.gitWrapper.checkoutERBranch()
-                }
-                return this.gitWrapper.createAndCheckoutERBranch()
-            })
-            .then(() => this.gitWrapper.rollbackToFirstCommit())
-    }
 
     /**
-     * @param {gitWrapper} git
-     * @returns {Promise}
-     */
-    _finalizeGit() {
-        return this.gitWrapper.commit()
-    }
-
-    /**
-     *
-     * @async
-     * @param {RenderedTemplate} template
-     * @returns {any}
-     */
+   *
+   * @async
+   * @param {RenderedTemplate} template
+   * @returns {any}
+   */
     async _processModification(template) {
+
+        if(template.dependencies.length !== 0) {
+            await this._createModifications(template.dependencies)
+        }
+
         let templateMode = template.templateSettings.mode
 
         if (templateMode === 'creates') {
             // Creates a new file on the desired path
-            const path = template.templateSettings.path
+            const relativePath = template.templateSettings.path
+            const absolutePath = path.join(process.cwd(), relativePath)
             const content = template.content
-            return await this.fsWrapper.createFile(path, content)
+            return await this.fsWrapper.createFile(
+                absolutePath,
+                content
+            )
         }
 
         if (templateMode === 'extends') {
             // modify the file
-            const path = template.templateSettings.path
+            const relativePath = template.templateSettings.path
+            const absolutePath = path.join(process.cwd(), relativePath)
             const content = template.content
             const place = template.templateSettings.place
             const section = template.templateSettings.section
 
-            return await this.fsWrapper.modifyFile(path, old => {
-                if (place == 'replace') return old.replace(section, content)
-                if (place == 'after') return old.replace(section, section + content)
-                if (place == 'before') return old.replace(section, content + section)
+            return await this.fsWrapper.modifyFile(absolutePath, old => {
+                if (place === 'replace') return old.replace(section, content)
+                if (place === 'after') return old.replace(section, section + content)
+                if (place === 'before') return old.replace(section, content + section)
             })
         }
     }
 
     /**
-     * @asnyc
-     * @param {RenderedTemplate[]} templates
-     * @returns {any[]}
-     */
+   * @asnyc
+   * @param {RenderedTemplate[]} templates
+   */
     async _createModifications(templates) {
-        return await Promise.all(
+        templates.sort(function(a, b) {
+            return ('' + a.templateSettings.mode).localeCompare(b.templateSettings.mode)
+        })
+
+        await Promise.all(
             templates.map(template => {
                 this._processModification(template)
             })
@@ -79,14 +70,14 @@ class Generator {
     }
 
     /**
-     * @async
-     * @param {RenderedTemplate[]} templates
-     * @returns {boolean}
-     */
+   * @async
+   * @param {RenderedTemplate[]} templates
+   * @returns {boolean}
+   */
     async generate(templates) {
-        await this._prepareGit()
+        await this.eRGitter.prepare()
         await this._createModifications(templates)
-        await this._finalizeGit()
+        await this.eRGitter.finalize()
         return true
     }
 }

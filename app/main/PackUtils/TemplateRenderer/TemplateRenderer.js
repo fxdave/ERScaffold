@@ -45,7 +45,7 @@ class TemplateRenderer {
         if (meta.creates) templateMode = 'creates'
 
         // getting path
-        let path = meta[templateMode].fileName
+        let createPath = meta[templateMode].fileName
 
         // getting extends settings
         let section = meta[templateMode].section
@@ -53,7 +53,7 @@ class TemplateRenderer {
 
         let templateSettings = new TemplateSettings(
             templateMode,
-            path,
+            createPath,
             section,
             place
         )
@@ -61,18 +61,20 @@ class TemplateRenderer {
         // getting the dependencies
         let dependencies = []
         if (meta.depends_on) {
-            dependencies = meta.depends_on.map(dependency => {
+            dependencies = await Promise.all(meta.depends_on.map(dependency => {
+
                 let dependencyTemplateURL = path.join(
-                    path.dirname(templateRelativeURL),
+                    path.dirname(templateFilePath),
                     dependency.template
                 )
+
                 let dependencyTemplateData = dependency.data
-                return this.getTemplate(
-                    packDirectory,
+
+                return this.renderTemplate(
                     dependencyTemplateURL,
                     dependencyTemplateData
                 )
-            })
+            }))
         }
 
         return new RenderedTemplate(templateSettings, template_out, dependencies)

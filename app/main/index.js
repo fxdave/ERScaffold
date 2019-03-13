@@ -13,7 +13,8 @@ import path from 'path'
 import process from 'process'
 import url from 'url'
 import Config from './Config/Config'
-import './routes'
+import routes from './routes'
+
 const ARGV = Config.ARGV
 
 export default class AppUpdater {
@@ -112,12 +113,11 @@ app.on('ready', async () => {
 
     if (ARGV[0]) {
         console.log(ARGV)
-        process.chdir(ARGV[0])
+        routes(ARGV[0])
     } else {
         const selectedDir = dialog.showOpenDialog(mainWindow, {
             properties: ['openDirectory']
         })
-        process.chdir(selectedDir[0])
+        routes(selectedDir[0])
     }
-    console.log(process.cwd())
 })

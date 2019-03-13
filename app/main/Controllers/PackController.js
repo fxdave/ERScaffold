@@ -110,7 +110,7 @@ class PackController extends Controller {
                 let templates = await Promise.all(
                     requirements.map(req =>
                         this.templateRenderer.renderTemplate(
-                            req.template,
+                            req.templatePath,
                             req.data({ entity })
                         )
                     )

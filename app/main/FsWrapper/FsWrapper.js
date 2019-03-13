@@ -1,5 +1,7 @@
-import { promises as fsp } from 'fs'
+import { promises as fsp, existsSync, mkdirSync } from 'fs'
 import glob from 'glob'
+import path from 'path'
+import mkdirp from 'mkdirp'
 /**
  * Wraps the filesystem utilities to provide a better interface
  */
@@ -80,12 +82,29 @@ class FsWrapper {
     }
 
     /**
+     *
+     * @param filePath
+     * @returns {Promise<void>}
+     * @private
+     */
+    async _ensureDirectoryExistence(filePath) {
+        let dirname = path.dirname(filePath)
+        if ( existsSync(dirname)) return
+        await this._ensureDirectoryExistence(dirname)
+        await mkdirSync(dirname)
+    }
+
+    /**
    * @async
-   * @param {string} path
+   * @param {string} filePath
    * @param {string} content
    */
-    async createFile(path, content) {
-        return await fsp.writeFile(path, content, 'utf8')
+    async createFile(filePath, content) {
+        mkdirp(path.dirname(filePath),function(err) {
+            if(err)
+                console.error(err)
+        })
+        return await fsp.writeFile(filePath, content, 'utf8')
     }
 
     /**
