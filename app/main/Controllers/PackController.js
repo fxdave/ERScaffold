@@ -94,31 +94,30 @@ class PackController extends Controller {
     /**
      *
      * @param {Object} e
-     * @param {string[]} data the selected templates' path
+     * @param {string[]} requirementPaths the selected templates' path
      */
-    async generateSelectedPackages(e, data) {
+    async generateSelectedPackages(e, requirementPaths) {
         try {
             let entities = this.model.getEntities()
-            await Promise.all(entities.map(async entity => {
-                
-                
+            for(let entity of entities) {
                 // we musn't render its children, because children requirements are passed by data too
-                let requirements = await Promise.all(data.map(reqPath => {
-                    return this.requirementReader.getRequirement(reqPath)
-                }))
-                
-                let templates = await Promise.all(
-                    requirements.map(req =>
-                        this.templateRenderer.renderTemplate(
-                            req.templatePath,
-                            req.data({ entity })
-                        )
+
+                let templates = new Array(requirementPaths.length)
+
+                for(let reqIndex in requirementPaths) {
+                    let requirementPath = requirementPaths[reqIndex]
+                    let requirement = await this.requirementReader.getRequirement(requirementPath)
+                    let template = await this.templateRenderer.renderTemplate(
+                        requirement.templatePath,
+                        requirement.data({ entity })
                     )
-                )
 
-                return await this.generator.generate(templates)
+                    templates[reqIndex] = template
+                }
 
-            }))
+                await this.generator.generate(templates)
+            }
+
             return { succcess: true }
         } catch(e) {
             return { succcess: false, msg: 'Sorry couldn\'t generate the code, details: ' + e + e.stack}

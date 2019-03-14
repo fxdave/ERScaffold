@@ -1,0 +1,115 @@
+yarn run v1.13.0
+$ cross-env START_HOT=1 node -r @babel/register ./internals/scripts/CheckPortInUse.js && cross-env START_HOT=1 yarn start-renderer-dev
+$ cross-env NODE_ENV=development webpack-dev-server --config configs/webpack.config.renderer.dev.babel.js
+Starting Main Process...
+
+> electron-react-boilerplate@0.17.1 start-main-dev /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold
+> cross-env HOT=1 NODE_ENV=development electron $NODE_DEBUG_OPTION -r @babel/register ./app/main/index.js
+
+{ clipboard: [Getter],
+  crashReporter: [Getter],
+  nativeImage: [Getter],
+  shell: [Getter],
+  app: [Getter],
+  autoUpdater: [Getter],
+  BrowserView: [Getter],
+  BrowserWindow: [Getter],
+  contentTracing: [Getter],
+  dialog: [Getter],
+  globalShortcut: [Getter],
+  ipcMain: [Getter],
+  inAppPurchase: [Getter],
+  Menu: [Getter],
+  MenuItem: [Getter],
+  net: [Getter],
+  netLog: [Getter],
+  Notification: [Getter],
+  powerMonitor: [Getter],
+  powerSaveBlocker: [Getter],
+  protocol: [Getter],
+  screen: [Getter],
+  session: [Getter],
+  systemPreferences: [Getter],
+  TopLevelWindow: [Getter],
+  TouchBar: [Getter],
+  Tray: [Getter],
+  View: [Getter],
+  webContents: [Getter],
+  WebContentsView: [Getter] }
+FsWrapper: Getting matching etries to:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/**/index.pack.js
+FsWrapper: Getting the file's content on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/index.pack.js
+FsWrapper: Starting to execute the JS file on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/index.pack.js with watching output of: pack
+{ name: 'Basic Phoenix',
+  requirements:
+   [ { file: 'resource_new.requirement.js' },
+     { file: 'resource_list.requirement.js' },
+     { file: 'resource_edit.requirement.js' },
+     { file: 'resource_show.requirement.js' } ] }
+FsWrapper: Getting the file's content on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_new.requirement.js
+FsWrapper: Getting the file's content on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_list.requirement.js
+FsWrapper: Getting the file's content on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_edit.requirement.js
+FsWrapper: Getting the file's content on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_show.requirement.js
+FsWrapper: Starting to execute the JS file on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_new.requirement.js with watching output of: requirement
+{ name: 'Create new resource',
+  template: './template/new.template.ejs',
+  data: [Function: data],
+  children: [ { file: 'resource_new_go_back_button.requirement.js' } ] }
+FsWrapper: Getting the file's content on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_new_go_back_button.requirement.js
+FsWrapper: Starting to execute the JS file on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_show.requirement.js with watching output of: requirement
+{ name: 'Show a resource',
+  template: './template/show.template.ejs',
+  data: [Function: data],
+  children:
+   [ { file: 'resource_show_go_back_button.requirement.js' },
+     { file: 'resource_show_edit_button.requirement.js' } ] }
+FsWrapper: Getting the file's content on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_show_go_back_button.requirement.js
+FsWrapper: Getting the file's content on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_show_edit_button.requirement.js
+FsWrapper: Starting to execute the JS file on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_edit.requirement.js with watching output of: requirement
+{ name: 'Edit resource',
+  template: './template/edit.template.ejs',
+  data: [Function: data],
+  children: [ { file: 'resource_edit_go_back_button.requirement.js' } ] }
+FsWrapper: Getting the file's content on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_edit_go_back_button.requirement.js
+FsWrapper: Starting to execute the JS file on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_list.requirement.js with watching output of: requirement
+{ name: 'List resources',
+  template: './template/index.template.ejs',
+  data: [Function: data],
+  children:
+   [ { file: 'resource_list_delete_button.requirement.js' },
+     { file: 'resource_list_edit_button.requirement.js' },
+     { file: 'resource_list_show_button.requirement.js' } ] }
+FsWrapper: Getting the file's content on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_list_delete_button.requirement.js
+FsWrapper: Getting the file's content on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_list_edit_button.requirement.js
+FsWrapper: Getting the file's content on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_list_show_button.requirement.js
+FsWrapper: Starting to execute the JS file on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_new_go_back_button.requirement.js with watching output of: requirement
+{ name: 'Go back button',
+  template: './template/new_go_back.template.ejs',
+  data: [Function: data] }
+FsWrapper: Starting to execute the JS file on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_show_go_back_button.requirement.js with watching output of: requirement
+{ name: 'Go back button',
+  template: './template/show_go_back.template.ejs',
+  data: [Function: data] }
+FsWrapper: Starting to execute the JS file on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_show_edit_button.requirement.js with watching output of: requirement
+{ name: 'Edit button',
+  template: './template/show_edit_button.template.ejs',
+  data: [Function: data] }
+FsWrapper: Starting to execute the JS file on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_edit_go_back_button.requirement.js with watching output of: requirement
+{ name: 'Go back button',
+  template: './template/edit_go_back.template.ejs',
+  data: [Function: data] }
+FsWrapper: Starting to execute the JS file on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_list_delete_button.requirement.js with watching output of: requirement
+{ name: 'Delete button',
+  template: './template/index_delete_button.template.ejs',
+  data: [Function: data] }
+FsWrapper: Starting to execute the JS file on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_list_edit_button.requirement.js with watching output of: requirement
+{ name: 'Edit button',
+  template: './template/index_edit_button.template.ejs',
+  data: [Function: data] }
+FsWrapper: Starting to execute the JS file on:  /run/media/dbiro/ProjectSSD/projectFiles/Web_Programming/ERScaffold/packs/BASIC_PHOENIX/resource_list_show_button.requirement.js with watching output of: requirement
+{ name: 'Show button',
+  template: './template/index_show_button.template.ejs',
+  data: [Function: data] }
+[ PackageListItem {
+    entity: { id: 1, name: 'Music' },
+    packs: PackCollection [ [Pack] ] } ]
+Done in 291.97s.

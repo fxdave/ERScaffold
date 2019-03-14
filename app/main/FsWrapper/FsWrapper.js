@@ -2,10 +2,16 @@ import { promises as fsp, existsSync, mkdirSync } from 'fs'
 import glob from 'glob'
 import path from 'path'
 import mkdirp from 'mkdirp'
+import Logger from '../Logger/Logger'
+
 /**
  * Wraps the filesystem utilities to provide a better interface
  */
 class FsWrapper {
+
+    constructor() {
+        this.logger = new Logger('FsWrapper')
+    }
     /**
    * resolves the symbolic links then reads the file
    * @async
@@ -13,6 +19,7 @@ class FsWrapper {
    * @returns {string}
    */
     async getFileContent(path) {
+        this.logger.log('Getting the file\'s content on: ', path)
         let realpath = await fsp.realpath(path)
         let file = await fsp.readFile(realpath, 'utf8')
         return file
@@ -49,6 +56,7 @@ class FsWrapper {
    */
     async getScript(url, output) {
         let file = await this.getFileContent(url)
+        this.logger.log('Starting to execute the JS file on: ', url, 'with watching output of:', output)
         return this._getOutputFromSource(file, output)
     }
 
@@ -60,16 +68,18 @@ class FsWrapper {
    */
     async ls(path) {
         let realpath = await fsp.realpath(path)
+        this.logger.log('Reading directory: ', path)
         let dir = await fsp.readdir(realpath)
         return dir
     }
 
     /**
-   * @asnyc
-   * @param {string} path
-   * @returns {string[]}
-   */
+     * @asnyc
+     * @param {string} path
+     * @returns {string[]}
+     */
     async glob(path) {
+        this.logger.log('Getting matching etries to: ', path)
         return await new Promise((resolve, reject) => {
             glob(path, function(er, files) {
                 if (er) {
@@ -91,6 +101,7 @@ class FsWrapper {
         let dirname = path.dirname(filePath)
         if ( existsSync(dirname)) return
         await this._ensureDirectoryExistence(dirname)
+        this.logger.log('Creating directory: ', dirname)
         await mkdirSync(dirname)
     }
 
@@ -100,11 +111,13 @@ class FsWrapper {
    * @param {string} content
    */
     async createFile(filePath, content) {
+        this.logger.log('Creating file: ', filePath, 'with content:', content)
         mkdirp(path.dirname(filePath),function(err) {
             if(err)
                 console.error(err)
         })
-        return await fsp.writeFile(filePath, content, 'utf8')
+        this.logger.log('Start writing the file')
+        await fsp.writeFile(filePath, content, 'utf8') 
     }
 
     /**
@@ -112,9 +125,13 @@ class FsWrapper {
    * @param {string} path
    * @param {Function} callback
    */
-    async modifyFile(path, callback) {
+    async modifyFile(path, callback) { 
         let oldContent = await this.getFileContent(path)
-        return await fsp.writeFile(path, callback(oldContent), 'utf8')
+        let newContent = callback(oldContent)
+        this.logger.log('Starting to modify file :', path, 'from the old content:', oldContent, 'to the new:', newContent)
+       
+        await fsp.writeFile(path, newContent, 'utf8')
+
     }
 }
 

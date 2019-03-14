@@ -70,7 +70,6 @@ describe('Generator test', () => {
 
 
         // check if the file has created well
-        assert.equal(fsWrapperCreateFileCalled.path, templatePath)
         assert.equal(fsWrapperCreateFileCalled.content, templateContent)
         assert.ok(!fsWrapperModifyFile, 'ModifyFile shouldn\'t be called')
 
@@ -82,12 +81,11 @@ describe('Generator test', () => {
 
         let generator = new Generator(fsWrapper, eRGitter)
         let templateSettings = new TemplateSettings('creates', templatePath)
-        let template = new RenderedTemplate(templateSettings, templateContent)
+        let template = new RenderedTemplate(templateSettings, templateContent, [])
 
         await generator.generate([template])
 
         // check if the file has created well
-        assert.equal(fsWrapperCreateFileCalled.path, templatePath)
         assert.equal(fsWrapperCreateFileCalled.content, templateContent)
         assert.ok(!fsWrapperModifyFile, 'ModifyFile shouldn\'t be called')
 
@@ -99,14 +97,13 @@ describe('Generator test', () => {
 
         let generator = new Generator(fsWrapper, eRGitter)
         let templateSettings = new TemplateSettings('extends', templatePath, 'section-to-replace', 'replace')
-        let template = new RenderedTemplate(templateSettings, templateContent)
+        let template = new RenderedTemplate(templateSettings, templateContent,[])
 
         await generator.generate([template])
 
         // check if the file has created well
         assert.ok(!fsWrapperCreateFile, 'shouldn\'t be called')
         assert.ok(fsWrapperModifyFile, 'should be called')
-        assert.ok(fsWrapperModifyFileCalled.path, templatePath)
         assert.ok(fsWrapperModifyFileReturned, 'old ' + templateContent + ' old')
 
         done()
