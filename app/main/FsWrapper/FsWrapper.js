@@ -98,6 +98,7 @@ class FsWrapper {
      * @private
      */
     async _ensureDirectoryExistence(filePath) {
+        this.logger.log('Ensuring directory existance on: ', filePath)
         let dirname = path.dirname(filePath)
         if ( existsSync(dirname)) return
         await this._ensureDirectoryExistence(dirname)
@@ -111,11 +112,13 @@ class FsWrapper {
    * @param {string} content
    */
     async createFile(filePath, content) {
-        this.logger.log('Creating file: ', filePath)
-        mkdirp(path.dirname(filePath),function(err) {
+        await new Promise((resolve,reject) => mkdirp(path.dirname(filePath),function(err) {
             if(err)
-                console.error(err)
-        })
+                reject(err)
+            resolve(true)
+        }))
+
+        this.logger.log('Creating file: ', filePath)
         await fsp.writeFile(filePath, content, 'utf8') 
     }
 

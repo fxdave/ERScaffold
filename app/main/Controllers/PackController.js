@@ -118,9 +118,9 @@ class PackController extends Controller {
             
             await this.generator.generate(templates)
 
-            return { succcess: true }
+            return { success: true }
         } catch(e) {
-            return { succcess: false, msg: 'Sorry couldn\'t generate the code, details: ' + e + e.stack}
+            return { success: false, msg: 'Sorry couldn\'t generate the code, details: ' + e + e.stack}
         }
     }
 }
