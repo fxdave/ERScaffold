@@ -14,6 +14,7 @@ class ERModel {
      * @param {Object} data
      */
     constructor(data) {
+        this.appName = data.appName
         this.entities = {}
         this.connections = []
 

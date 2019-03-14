@@ -108,7 +108,10 @@ class PackController extends Controller {
                     let requirement = await this.requirementReader.getRequirement(requirementPath)
                     let template = await this.templateRenderer.renderTemplate(
                         requirement.templatePath,
-                        requirement.data({ entity })
+                        {
+                            ...requirement.data({ entity }),
+                            appName: this.model.appName
+                        }
                     )
 
                     templates.push(template)
