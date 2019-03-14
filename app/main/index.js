@@ -116,6 +116,9 @@ app.on('ready', async () => {
         routes(ARGV[0])
     } else {
         const selectedDir = dialog.showOpenDialog(mainWindow, {
+            title: "Please select your project directory",
+            buttonLabel: "Select",
+            message: "Yout project must be ready for use, this tool will extend it.",
             properties: ['openDirectory']
         })
         routes(selectedDir[0])

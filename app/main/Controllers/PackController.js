@@ -99,10 +99,9 @@ class PackController extends Controller {
     async generateSelectedPackages(e, requirementPaths) {
         try {
             let entities = this.model.getEntities()
+            let templates = []
             for(let entity of entities) {
                 // we musn't render its children, because children requirements are passed by data too
-
-                let templates = new Array(requirementPaths.length)
 
                 for(let reqIndex in requirementPaths) {
                     let requirementPath = requirementPaths[reqIndex]
@@ -112,11 +111,12 @@ class PackController extends Controller {
                         requirement.data({ entity })
                     )
 
-                    templates[reqIndex] = template
+                    templates.push(template)
                 }
 
-                await this.generator.generate(templates)
             }
+            
+            await this.generator.generate(templates)
 
             return { succcess: true }
         } catch(e) {

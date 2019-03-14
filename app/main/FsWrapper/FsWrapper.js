@@ -111,12 +111,11 @@ class FsWrapper {
    * @param {string} content
    */
     async createFile(filePath, content) {
-        this.logger.log('Creating file: ', filePath, 'with content:', content)
+        this.logger.log('Creating file: ', filePath)
         mkdirp(path.dirname(filePath),function(err) {
             if(err)
                 console.error(err)
         })
-        this.logger.log('Start writing the file')
         await fsp.writeFile(filePath, content, 'utf8') 
     }
 
@@ -128,7 +127,7 @@ class FsWrapper {
     async modifyFile(path, callback) { 
         let oldContent = await this.getFileContent(path)
         let newContent = callback(oldContent)
-        this.logger.log('Starting to modify file :', path, 'from the old content:', oldContent, 'to the new:', newContent)
+        this.logger.log('Starting to modify file :', path)
        
         await fsp.writeFile(path, newContent, 'utf8')
 

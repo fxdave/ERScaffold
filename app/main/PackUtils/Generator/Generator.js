@@ -51,6 +51,8 @@ class Generator {
                     if (place === 'after') return old.replace(section, section + content)
                     if (place === 'before') return old.replace(section, content + section)
                 })
+            } else {
+                this.logger.log('Wrong template mode in template: ', template)
             }
 
             this.alreadyCreatedTemplates.push(templateID)
@@ -67,21 +69,43 @@ class Generator {
    * @param {RenderedTemplate[]} templates
    */
     async _createModifications(templates) {
-        templates.sort(function(a, b) {
-            return ('' + a.templateSettings.mode).localeCompare(b.templateSettings.mode)
-        })
+        let orderedTemplates = this._makingOrder(templates)
 
-        this.logger.log('Start generating templates: ', templates)
 
-        for(let template of templates)
+
+        for(let item of orderedTemplates) {
+            console.log(item.templateSettings.mode, item.templateSettings.path)
+        }
+
+        for(let template of orderedTemplates)
             await this._processModification(template)
     }
 
+    _makingOrder(templates) {
+        
+        for(let template of templates) {
+            let templateID = JSON.stringify(template)
+            if(!this.toGenerate[templateID]) {
+                this.toGenerate[templateID] = template
+                this._makingOrder(template.dependencies)
+            }
+        }
+
+        let templateArray = Object.values(this.toGenerate)
+
+        templateArray.sort(function(a, b) {
+            return ('' + a.templateSettings.mode).localeCompare(b.templateSettings.mode)
+        })
+
+        return templateArray
+    }
+
     /**
-   * @async
-   * @param {RenderedTemplate[]} templates
-   */
+     * @async
+     * @param {RenderedTemplate[]} templates
+     */
     async generate(templates) {
+        this.toGenerate = {}
         await this.eRGitter.prepare()
         await this._createModifications(templates)
         await this.eRGitter.finalize()

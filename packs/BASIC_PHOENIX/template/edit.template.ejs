@@ -8,7 +8,7 @@ let meta = {
 		+ Formatter.snakeCase(APPNAME) 
 		+ "_web/templates/" 
 		+ Formatter.snakeCase(entity.getName()) 
-		+ "/form.html.eex"
+		+ "/edit.html.eex"
 	},
 	depends_on: [
 		{ template: "../controller/action_edit.template.ejs", data: {entity: entity} },
