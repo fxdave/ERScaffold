@@ -63,7 +63,7 @@ class PackController extends Controller {
             this.model = new ERModel(model)
 
             // getting builtin packs
-            let packsFolderBuiltin = path.join(__dirname, '../../../packs')
+            let packsFolderBuiltin = path.join(path.dirname(__dirname), 'packs')
             let packsBuiltin = await this.packCollectionReader.getPacks(packsFolderBuiltin)
 
             // getting user packs
