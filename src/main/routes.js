@@ -1,8 +1,10 @@
 import ERModelController from './Controllers/ERModelController'
 import Router from './Utils/Router'
 import PackController from './Controllers/PackController'
-import { ipcMain } from 'electron'
-import { dialog } from 'electron'
+const {
+    ipcMain,
+    dialog
+} = eval('require')('electron')
 import FsWrapper from './FsWrapper/FsWrapper'
 import PackCollectionReader from './PackUtils/PackCollectionReader/PackCollectionReader'
 import PackReader from './PackUtils/PackReader/PackReader'

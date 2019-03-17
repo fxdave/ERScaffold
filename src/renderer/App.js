@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ipcRenderer } from 'electron'
+const { ipcRenderer } = eval('require')('electron')
 import Viewport from './components/Viewport'
 import TemplateSelector from './components/TemplateSelector'
 

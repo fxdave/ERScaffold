@@ -1,4 +1,4 @@
-import { ipcMain } from 'electron'
+const { ipcMain } = eval('require')('electron')
 
 class Router {
 
