@@ -1,5 +1,5 @@
 {
-    "name": "electrontest",
+    "name": "erscaffold",
     "version": "1.0.0",
     "description": "",
     "main": "src/build/main.js",
@@ -18,7 +18,8 @@
         "dev": "npm run build-dev; electron .",
         "build-prod": "env NODE_ENV=production webpack; sucrase ./src/main -d ./src/build --transforms jsx,imports",
         "build-dev": "env NODE_ENV=development webpack; sucrase ./src/main -d ./src/build --transforms jsx,imports",
-        "package-linux": "electron-builder build --linux"
+        "package-linux": "electron-builder build --linux",
+        "package-mac": "electron-builder build --mac"
     },
     "author": "",
     "license": "ISC",
