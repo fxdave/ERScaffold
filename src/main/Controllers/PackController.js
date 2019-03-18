@@ -8,6 +8,8 @@ import TemplateRenderer from '../PackUtils/TemplateRenderer/TemplateRenderer'
 import Generator from '../PackUtils/Generator/Generator'
 import RequirementReader from '../PackUtils/RequirementReader/RequirementReader'
 import path from 'path'
+import Config from '../Config/Config'
+
 class PackageListItem {
     constructor(id, name, packs) {
         this.entity = {
@@ -63,7 +65,7 @@ class PackController extends Controller {
             this.model = new ERModel(model)
 
             // getting builtin packs
-            let packsFolderBuiltin = path.join(path.dirname(__dirname), '..', '..', 'resources', 'packs')
+            let packsFolderBuiltin = Config.builtinPacksFolderPath
             let packsBuiltin = await this.packCollectionReader.getPacks(packsFolderBuiltin)
 
             // getting user packs
