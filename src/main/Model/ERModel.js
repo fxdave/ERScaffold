@@ -31,7 +31,10 @@ class ERModel {
             this.entities[entity.id] = new Entity(
                 entity.id,
                 entity.name,
-                entity.props.map(v => new Property(v.id, v.name))
+                entity.props.map(v => new Property(v.id, v.name)),
+                entity.x,
+                entity.y,
+                entity.context
             )
         })
     }

@@ -17,6 +17,12 @@ let meta = {
 	}
 }
 
+let props = entity.getProps().filter(prop => prop.getName() != "ID")
+
+
+function fmtName(propName) {
+    return Formatter.snakeCase(propName)
+}
 
 
 %>
@@ -26,8 +32,8 @@ defmodule <%=appcamel %>.Repo.Migrations.<%=entitypluralcamel %> do
 
   def change do
     create table(:<%=entitypluralsnake %>) do
-	  <% entity.getProps().forEach(function(p) { %>
-	  add :<%= p.getName() %>, :<%= p.getType() %>
+	  <% props.forEach(function(p) { %>
+	  add :<%= fmtName(p.getName()) %>, :<%= p.getType() %>
 	  <% }) %>
 
       timestamps()

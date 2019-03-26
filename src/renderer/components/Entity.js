@@ -96,7 +96,7 @@ class Entity extends React.Component {
   handleKeyUp = e => {
       const val = e.target.value.replace(/ /g, '').split(':')
       this.props.onChange({
-          context: val[1] ? val[1] : val[0],
+          context: val[1] ? val[1] : '',
           name: val[0]
       })
   };

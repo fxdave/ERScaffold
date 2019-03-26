@@ -1,6 +1,7 @@
 <%
 
 let entitysnake = Formatter.snakeCase(entity.name)
+let entitynormal = Formatter.normal(entity.name)
 
 let meta = {
 	creates: {
@@ -20,7 +21,7 @@ let meta = {
 
 %>
 
-<h1>Edit Pine apple</h1>
+<h1>Edit <%= entitynormal %></h1>
 
 <!-- start edit resource -->
 

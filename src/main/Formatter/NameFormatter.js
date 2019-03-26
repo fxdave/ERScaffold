@@ -1,6 +1,36 @@
 import pluralize from 'pluralize'
 
 class NameFormatter {
+
+
+    /**
+     * 
+     * @param {string[]} tags for e.g: Generated E R Model, I D
+     * @returns {string[]} for e.g: Generated ER Model, ID
+     */
+    mergeOneCharTags(tags) {
+        let newTags = []
+        // iterate trough the tags array
+        let previousTagWasOneCharLong = false
+        for(let i = 0; i< tags.length; i++ ){
+            if(tags[i].length === 1) {
+                // tag is one char long
+                if(previousTagWasOneCharLong) {
+                    newTags[i-1] = newTags[i-1] + tags[i]
+                } else {
+                    newTags.push(tags[i])
+                }
+
+                previousTagWasOneCharLong = true;
+            } else {
+                previousTagWasOneCharLong = false;
+                newTags.push(tags[i])
+            }
+        }
+
+        return newTags
+    }
+
     /**
      * Tokenizes the given string
      * @param {string} what
@@ -9,7 +39,7 @@ class NameFormatter {
     getTags(what) {
         const regex = /[A-Z]?[a-z]+|[A-Z]/g
         let m
-        const tags = []
+        let tags = []
         while ((m = regex.exec(what)) !== null) {
             // This is necessary to avoid infinite loops with zero-width matches
             if (m.index === regex.lastIndex) {
@@ -22,6 +52,8 @@ class NameFormatter {
                 tags.push(match)
             })
         }
+
+        tags = this.mergeOneCharTags(tags)
 
         return tags
     }
@@ -98,7 +130,6 @@ class NameFormatter {
             pluralize.plural(tags[tags.length - 1]),
             what
         )
-        if(out === what) out = what + '_collection' // TODO: try to detect format
         return out
     }
 

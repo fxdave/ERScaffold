@@ -1,6 +1,6 @@
 <%
 
-let contextcamel = Formatter.upperCamelCase(Formatter.plural(entity.context))
+let contextcamel = Formatter.upperCamelCase(entity.context)
 let appcamel = Formatter.upperCamelCase(APPNAME)
 let entitycamel = Formatter.upperCamelCase(entity.name)
 let entitypluralsnake = Formatter.snakeCase(Formatter.plural(entity.name))
@@ -11,9 +11,9 @@ let meta = {
 		fileName: "lib/" 
 		+ Formatter.snakeCase(APPNAME) 
 		+ "/" 
-		+ Formatter.snakeCase(Formatter.plural(entity.context)) 
+		+ Formatter.snakeCase(entity.context) 
 		+ "/" 
-		+ Formatter.snakeCase(Formatter.plural(entity.context)) 
+		+ Formatter.snakeCase(entity.context) 
         + ".ex",
         section:  "# actions with entities",
         place: "after"
@@ -34,7 +34,7 @@ let meta = {
 
   def get_<%=entitysnake %>!(id), do: Repo.get!(<%=entitycamel %>, id)
 
-  def create_<%=entitysnake %>(attrs \\ %{}) do
+  def create_<%=entitysnake %>(attrs \\\\ %{}) do
     %<%=entitycamel %>{}
     |> <%=entitycamel %>.changeset(attrs)
     |> Repo.insert()

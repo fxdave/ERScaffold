@@ -5,14 +5,14 @@ let meta = {
 		fileName: "lib/" 
 		+ Formatter.snakeCase(APPNAME) 
 		+ "/" 
-		+ Formatter.snakeCase(Formatter.plural(contextName)) 
+		+ Formatter.snakeCase(contextName) 
 		+ "/" 
-		+ Formatter.snakeCase(Formatter.plural(contextName)) 
+		+ Formatter.snakeCase(contextName) 
 		+ ".ex"
 	}
 } 
 
-let contextcamel = Formatter.upperCamelCase(Formatter.plural(contextName))
+let contextcamel = Formatter.upperCamelCase(contextName)
 let appcamel = Formatter.upperCamelCase(APPNAME)
 
 

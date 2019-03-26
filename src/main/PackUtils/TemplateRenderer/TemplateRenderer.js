@@ -69,7 +69,7 @@ class TemplateRenderer {
                 )
 
                 let dependencyTemplateData = dependency.data
-
+                dependency.data.appName = data.appName
                 return this.renderTemplate(
                     dependencyTemplateURL,
                     dependencyTemplateData

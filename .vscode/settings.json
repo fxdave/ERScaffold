@@ -31,5 +31,10 @@
     "npm-debug.log.*": true,
     "test/**/__snapshots__": true,
     "yarn.lock": true
-  }
+},
+"workbench.colorCustomizations": {
+    "activityBar.background": "#3D2A06",
+    "titleBar.activeBackground": "#553B09",
+    "titleBar.activeForeground": "#FEF9F1"
+}
 }
