@@ -1,17 +1,23 @@
-class Property {
+import IdentifiableModel from "./IdentifiableModel";
+
+class Property extends IdentifiableModel {
+
     /**
      *
      * @param {number} id
      * @param {string} name
+     * @param {number|undefined} x
+     * @param {number|undefined} y
+     * @param {number|undefined} type
      */
     constructor(id, name, x = 0, y = 0, type = 'string') {
-        (this.id = id), (this.name = name)
+        super(id)
+        this.name = name
         this.type = type
         this.default = ''
         this.x = x
         this.y = y
     }
-
     /**
      * @returns {string}
      */

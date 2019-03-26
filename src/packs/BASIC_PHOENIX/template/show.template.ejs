@@ -18,6 +18,11 @@ let meta = {
 	]
 } 
 
+
+function fmtName(propName) {
+    return Formatter.snakeCase(propName)
+}
+
 %>
 <h1>Show <%=Formatter.normal(entity.name) %></h1>
 
@@ -27,7 +32,7 @@ let meta = {
 	<% entity.getProps().forEach(function(p) { %>
 	<li>
 		<strong><%=p.getName() %>:</strong>
-		<%%= @<%=entitysnake %>.<%=p.getName() %> %%>
+		<%%= @<%=entitysnake %>.<%=fmtName(p.getName()) %> %%>
 	</li>
 	<% }) %>
 

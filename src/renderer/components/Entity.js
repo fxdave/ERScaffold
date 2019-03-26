@@ -96,7 +96,7 @@ class Entity extends React.Component {
   handleKeyUp = e => {
       const val = e.target.value.replace(/ /g, '').split(':')
       this.props.onChange({
-          context: val[1] ? val[1] : val[0],
+          context: val[1] ? val[1] : '',
           name: val[0]
       })
   };
@@ -119,8 +119,11 @@ class Entity extends React.Component {
   };
 
   handleAddProperty = () => {
+      let prop = new PropertyModel(undefined, '')
+      console.log(prop);
+      
       this.props.onChange({
-          props: [...this.props.props, new PropertyModel(1, '')]
+          props: [...this.props.props, prop]
       })
   };
 
@@ -144,6 +147,7 @@ class Entity extends React.Component {
               <Group>
                   {this.props.props.map((prop, key) => (
                       <Property
+                          key={prop.id}
                           {...prop}
                           onChange={this.handleChangeProperty(key)}
                           onDelete={this.handleDeleteProperty(prop)}

@@ -3,6 +3,7 @@
 let entitysnake = Formatter.snakeCase(entity.name)
 let entitypluralsnake = Formatter.snakeCase(Formatter.plural(entity.name))
 let entitypluralnormal = Formatter.normal(Formatter.plural(entity.name))
+let entityNormal = Formatter.normal(entity.name)
 
 let meta = {
 	creates: {
@@ -17,6 +18,12 @@ let meta = {
 		{ template: "../view/view.template.ejs", data: {entity: entity} }
 	]
 } 
+
+
+function fmtName(propName) {
+    return Formatter.snakeCase(propName)
+}
+
 
 %>
 
@@ -35,7 +42,7 @@ let meta = {
 	<%%= for <%=entitysnake %> <- @<%=entitypluralsnake %> do %%>
 		<tr>
 		<% entity.getProps().forEach(function(p) { %>
-			<td><%%= <%=entitysnake %>.<%= p.getName() %> %%></td>
+			<td><%%= <%=entitysnake %>.<%= fmtName(p.getName()) %> %%></td>
 		<% }) %>
 		
 
@@ -48,4 +55,4 @@ let meta = {
   </tbody>
 </table>
 
-<span><%%= link "New Pine apple", to: Routes.<%=entitysnake %>_path(@conn, :new) %%></span>
+<span><%%= link "New <%=entityNormal %>", to: Routes.<%=entitysnake %>_path(@conn, :new) %%></span>

@@ -1,6 +1,6 @@
 <%
 
-let contextcamel = Formatter.upperCamelCase(Formatter.plural(entity.context))
+let contextcamel = Formatter.upperCamelCase(entity.context)
 let appcamel = Formatter.upperCamelCase(APPNAME)
 let appsnake = Formatter.snakeCase(APPNAME)
 let entitycamel = Formatter.upperCamelCase(entity.name)
@@ -20,8 +20,11 @@ let meta = {
 
 %>
 
-def edit(conn, %{"id" => id}) do
-  <%=entitysnake %> = <%=contextcamel %>.get_<%=entitysnake %>!(id)
-  changeset = <%=contextcamel %>.change_<%=entitysnake %>(<%=entitysnake %>)
-  render(conn, "edit.html", <%=entitysnake %>: <%=entitysnake %>, changeset: changeset)
+def delete(conn, %{"id" => id}) do
+	<%=entitysnake %> = <%=contextcamel %>.get_<%=entitysnake %>!(id)
+	{:ok, _<%=entitysnake %>} = <%=contextcamel %>.delete_<%=entitysnake %>(<%=entitysnake %>)
+
+	conn
+	|> put_flash(:info, "<%=entitycamel %> deleted successfully.")
+	|> redirect(to: Routes.<%=entitysnake %>_path(conn, :index))
 end

@@ -1,6 +1,6 @@
 <%
 
-let contextcamel = Formatter.upperCamelCase(Formatter.plural(entity.context))
+let contextcamel = Formatter.upperCamelCase(entity.context)
 let appcamel = Formatter.upperCamelCase(APPNAME)
 let appsnake = Formatter.snakeCase(APPNAME)
 let entitycamel = Formatter.upperCamelCase(entity.name)
@@ -20,7 +20,7 @@ let meta = {
 
 %>
 
-def new(conn, _params) do
-  changeset = <%= contextcamel %>.change_<%= entitysnake %>(%<%= entitycamel %>{})
-  render(conn, "new.html", changeset: changeset)
+def index(conn, _params) do
+	<%= entitypluralsnake %> = <%=contextcamel %>.list_<%= entitypluralsnake %>()
+	render(conn, "index.html", <%= entitypluralsnake %>: <%= entitypluralsnake %>)
 end

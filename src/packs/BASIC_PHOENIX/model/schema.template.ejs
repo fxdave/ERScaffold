@@ -2,7 +2,7 @@
 
 let meta = {
 	creates: {
-		fileName: "lib/" + Formatter.snakeCase(APPNAME) + "/"+ Formatter.snakeCase(Formatter.plural(entity.context)) +"/"+ Formatter.snakeCase(entity.name) +".ex"
+		fileName: "lib/" + Formatter.snakeCase(APPNAME) + "/"+ Formatter.snakeCase(entity.context) +"/"+ Formatter.snakeCase(entity.name) +".ex"
   },
   depends_on: [
     {template: "../migration/migration.template.ejs", data: {entity: entity}}
@@ -10,9 +10,15 @@ let meta = {
 }
 
 let appcamel = Formatter.upperCamelCase(APPNAME)
-let contextcamel = Formatter.upperCamelCase(Formatter.plural(entity.context))
+let contextcamel = Formatter.upperCamelCase(entity.context)
 let entitycamel = Formatter.upperCamelCase(entity.name)
 let entitypluralsnake = Formatter.snakeCase(Formatter.plural(entity.name))
+
+let props = entity.getProps().filter(prop => prop.getName() != "ID")
+
+function fmtName(propName) {
+    return Formatter.snakeCase(propName)
+}
 
 %>
 
@@ -22,8 +28,8 @@ defmodule <%=appcamel %>.<%=contextcamel %>.<%=entitycamel %> do
 
 
   schema "<%=entitypluralsnake %>" do
-    <% entity.getProps().forEach(function(p) { %>
-    field :<%= p.getName() %>, :<%= p.getType() %>
+    <% props.forEach(function(p) { %>
+    field :<%= fmtName(p.getName()) %>, :<%= p.getType() %>
     <% }) %>
 
     timestamps()
@@ -32,9 +38,9 @@ defmodule <%=appcamel %>.<%=contextcamel %>.<%=entitycamel %> do
   @doc false
   def changeset(${ Formatter.snakeCase(entity.name) }, attrs) do
     ${ Formatter.snakeCase(entity.name) }
-    |> cast(attrs, [<%= entity.getProps().map(p => `:${p.getName()}`).join(", ") %>])
-    <% entity.getProps().forEach(function(p) { %>
-    |> validate_required([:<%=p.getName() %>])
+    |> cast(attrs, [<%= props.map(p => `:${fmtName(p.getName())}`).join(", ") %>])
+    <% props.forEach(function(p) { %>
+    |> validate_required([:<%= fmtName(p.getName()) %>])
     <% }) %>
   end
 end

@@ -13,6 +13,12 @@ let meta = {
 	]
 } 
 
+let props = entity.getProps().filter(prop => prop.getName() != "ID")
+
+function fmtName(propName) {
+    return Formatter.snakeCase(propName)
+}
+
 %>
 
 <%%= form_for @changeset, @action, fn f -> %%>
@@ -22,10 +28,10 @@ let meta = {
     </div>
   <%% end %%>
 
-  <% entity.getProps().forEach(function(p) { %>
-	<%%= label f, :<%=p.getName() %> %%>
-  	<%%= text_input f, :<%=p.getName() %> %%>
-  	<%%= error_tag f, :<%=p.getName() %> %%>
+  <% props.forEach(function(p) { %>
+	<%%= label f, :<%=fmtName(p.getName()) %> %%>
+  	<%%= text_input f, :<%=fmtName(p.getName()) %> %%>
+  	<%%= error_tag f, :<%=fmtName(p.getName()) %> %%>
   <% }) %>
 
   <div>
