@@ -104,7 +104,14 @@
 
 6.  Technologies
 
-    1. Used libraries
+    1. Choosing the right technology for the UI
+        - Why web based
+        - Why react
+        - Why not vue
+        - Why not angular
+        - Why not own
+   - 
+    2. Used libraries
 
        - Nodejs
        - Electron
@@ -112,7 +119,7 @@
        - Docker
        - Others
 
-    2. Used own librarires (publicly available on MIT license)
+    3. Used own librarires (publicly available on MIT license)
 
        - vecjs (Vector library for javascript)
        - react-konva-anchors (Positioning library for react-konva based canvas applications)
