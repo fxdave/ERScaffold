@@ -8,27 +8,65 @@
     - ...
     - ...
 4.  Motivation
+    1. Story of a dead project
+       - Order details
+       - Wordpress
+       - Woocommerce
+       - Too deep changes
+       - A lot of workarounds
+       - The end
+    2. Why say no to **Component based development**
+       - Introduction of **Component based development**
+       - Why businesses choose this development form
+       - Components are too specific, not for every kind of problems
+       - Components are more then we actually need
+       - Not every components developer friendly
+       - They are too limited
+       - changing business requirements
+    3. Why **Fast prototyping**
+       - Introduction of **Fast prototyping**
+       - Developer friendly
+       - Not limited
+       - The result has minimal overhead, but also satisfies the needs
+       - The result is a well organized project
+       - Fits well for changing business requirements
+       - Why is not **Fast prototyping** in use?
+    4. The perfect tool for **Fast prototyping**
+       - code generator for creating a production ready prototype
+       - code generator that allows us to add features after any modifications
+       - a good language for telling easily what to generate
+       - a good software for composing these language elements
+    5. It is possible to generate relational database based applications
+    6. Similar technologies
+       1. Admin page generator for _Laravel framework_
+          - Introduction of _Laravel framework_
+          - Introduction of Admin page generator
+          - What is missing
+       2. Builtin cli tool of _Phoenix framework_
+          - Introduction of _Phoenix framework_
+          - Introduction of cli tool of _Phoenix_
+          - What is missing
+       3. How is it possible to improve
+          - these tools are basically _management_ generators for only one resource
+          - adding more resource
+          - adding relations
+5.  System design
 
-    - Why say no to wordpress
-    - Fast prototyping and the changing business requirements
-
-5.  Similar technologies
-
-    - Admin page generator for Laravel framework
-    - Builtin cli tool of Phoenix framework
-
-6.  System design
-
-    1. Designer
+    1. Modeller
        1. Entity Relationship Model
           - Original target
           - Elements
           - Comparing to logic chart
-       2. Other Entity Relationship modellers (cons, pros)
-          - Draw.io
-          - ..
-          - ..
-       3. Model improvements for being able for a code generator
+       2. Existing _Entity Relationship_ modellers (cons, pros)
+          1. **Draw.io**
+             - Introduction of **Draw.io**
+             - Adventages
+             - Disadventages
+       3. Why is this modeller the best out of the internet
+          - automatic arrangement
+          - one click / actions
+          - friendly - good looking UI
+       4. Model improvements for being able for a code generator
           - Types (not ready yet)
           - Validations (not ready yet)
           - Entity's repository name
@@ -55,21 +93,24 @@
        - Test based development
        - Model View Controller
 
-7.  Technologies
+6.  Technologies
 
-    1. More important external technologies
+    1. Used libraries
+
        - Nodejs
        - Electron
        - React
        - Docker
+       - Others
+
     2. Used own librarires (publicly available on MIT license)
 
        - vecjs (Vector library for javascript)
-       - react-konva-anchors (Positioning library for konva based canvas applications)
+       - react-konva-anchors (Positioning library for react-konva based canvas applications)
        - simple-electron-react-boilerplate (Boilerplate for electron-react applications)
        - fastejs (faster and better alternative to ejs template engine)
 
-8)  End user documentation
+7.  End user documentation
 
     1.  Requirements
         - git
@@ -150,4 +191,4 @@
     8.  Contributing
         - github
 
-9)  References
+8.  References
