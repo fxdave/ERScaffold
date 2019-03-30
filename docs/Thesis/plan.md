@@ -70,7 +70,16 @@
           - Types (not ready yet)
           - Validations (not ready yet)
           - Entity's repository name
-    2. Modules and their functionalities
+    2. Backend
+       1. Converting ERModel to code
+          - Entities
+          - Connections
+          - Circular connections
+       2. Ensuring modifiability
+          - Git
+       3. Ensuring rich template set
+          - EJS - JS
+    3. Modules and their functionalities
        1. Controllers
           - PackController
           - ERModelController
@@ -86,7 +95,7 @@
           - Router
           - GitWrapper
           - FsWrapper
-    3. Conventions
+    4. Conventions
        - Importance of modularity and component reuse
        - Mutability in depth
        - Dependency injection
