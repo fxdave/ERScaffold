@@ -110,7 +110,6 @@
         - Why not vue
         - Why not angular
         - Why not own
-   - 
     2. Used libraries
 
        - Nodejs
