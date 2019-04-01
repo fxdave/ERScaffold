@@ -72,7 +72,7 @@ class Generator {
 
 
         for(let item of orderedTemplates) {
-            console.log(item.templateSettings.mode, item.templateSettings.path)
+            this.logger.log(item.templateSettings.mode, item.templateSettings.path)
         }
 
         for(let template of orderedTemplates)

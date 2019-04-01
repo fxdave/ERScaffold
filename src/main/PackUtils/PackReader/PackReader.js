@@ -23,6 +23,7 @@ class PackReader {
     async getPack(packIndexPath) {
         let pack = await this.fsWrapper.getScript(packIndexPath, 'pack')
         let packDirectory = path.dirname(packIndexPath)
+        
         let requirements = await this.requirementReader.getRequirements(pack.requirements, packDirectory)
 
         return new Pack(pack.name, requirements)

@@ -86,10 +86,11 @@ class PackController extends Controller {
                 ({ entity, packs }) =>
                     new PackageListItem(entity.id, entity.name, packs)
             )
-
-            console.log(out.packs[1])
             
-            return out
+            return {
+                success: true,
+                msg: out
+            }
         } catch (e) {
             return {
                 success: false,

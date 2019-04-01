@@ -38,10 +38,10 @@ class FsWrapper {
                 ...Object.keys(vars),
                 `${source}\n return ${output}`
             )(...Object.values(vars))
-            console.log(out)
 
             return out
         } catch (err) {
+            
             console.error(err)
             return null
         }
