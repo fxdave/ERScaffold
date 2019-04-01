@@ -4,10 +4,18 @@ const exec = util.promisify(require('child_process').exec)
 module.exports = class GitWrapper {
     /**
      * 
-     * @param {string} workdir 
+     * @param {Object} basedirContainer
+     * @param {string} basedirContainer.dir 
      */
-    constructor(workdir) {
-        process.chdir(workdir)
+    constructor(basedirContainer) {
+        this.basedirContainer = basedirContainer
+    }
+
+    /**
+     * changes the basedir
+     */
+    changeWorkDir() {
+        process.chdir(this.basedirContainer.dir)
     }
 
     /**
@@ -26,6 +34,7 @@ module.exports = class GitWrapper {
      * @returns {boolean}
      */
     async isItGitRepository() {
+        this.changeWorkDir()
         try {
             await exec('git status')
             return true
@@ -38,6 +47,7 @@ module.exports = class GitWrapper {
      * @returns {boolean}
      */
     async isTreeClean() {
+        this.changeWorkDir()
         try {
             const res = await exec('git status')
             return res.stdout.indexOf('nothing to commit') !== -1
@@ -53,6 +63,7 @@ module.exports = class GitWrapper {
      * @returns {boolean}
      */
     async hasBranch(branchname) {
+        this.changeWorkDir()
         try {
             await exec('git rev-parse --verify ' + branchname)
             return true
@@ -67,6 +78,7 @@ module.exports = class GitWrapper {
      * @param {boolean} create? 
      */
     async checkout(branchname, create) {
+        this.changeWorkDir()
         await exec('git checkout ' + (create ? '-b ' : '') + branchname)
     }
 
@@ -75,6 +87,7 @@ module.exports = class GitWrapper {
      * @returns {string}
      */
     async getBranchName() {
+        this.changeWorkDir()
         const res = await exec('git rev-parse --abbrev-ref HEAD')
         return res.stdout.replace(/\n/g, '')
     }
@@ -85,6 +98,7 @@ module.exports = class GitWrapper {
      * @param {boolean} create? 
      */
     async removeBranch(branchname) {
+        this.changeWorkDir()
         let name = await this.getBranchName()
 
         if (name === branchname) {
@@ -98,6 +112,7 @@ module.exports = class GitWrapper {
      * @param {string} commit_id 
      */
     async revert(commit_id) {
+        this.changeWorkDir()
         await exec('git revert ' + commit_id)
     }
 
@@ -106,6 +121,7 @@ module.exports = class GitWrapper {
      * @param {string} files 
      */
     async add(files) {
+        this.changeWorkDir()
         await exec('git add ' + files)
     }
 
@@ -114,6 +130,7 @@ module.exports = class GitWrapper {
      * @param {string} message 
      */
     async commit(message) {
+        this.changeWorkDir()
         await exec('git commit -m "' + message.replace(/"/g, '\"') + '"')
     }
 
@@ -121,6 +138,7 @@ module.exports = class GitWrapper {
      * @returns {string}
      */
     async getLastCommitID() {
+        this.changeWorkDir()
         const res = await exec('git log --format="%H" -n 1')
         return res.stdout.replace(/\n/g, '')
     }
@@ -129,6 +147,7 @@ module.exports = class GitWrapper {
      * @returns {string}
      */
     async getPreviousCommitID() {
+        this.changeWorkDir()
         const res = await exec('git log --format="%H" --skip 1 -n 2')
         return res.stdout.replace(/\n/g, '')
     }

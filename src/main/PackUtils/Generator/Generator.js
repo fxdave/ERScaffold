@@ -5,11 +5,9 @@ class Generator {
     /**
    *
    * @param {FsWrapper} fsWrapper
-   * @param {ERGitter} eRGitter
    */
-    constructor(fsWrapper, eRGitter) {
+    constructor(fsWrapper) {
         this.fsWrapper = fsWrapper
-        this.eRGitter = eRGitter
         this.logger = new Logger('PackUtils\\Generator')
         this.alreadyCreatedTemplates = []
     }
@@ -106,9 +104,7 @@ class Generator {
      */
     async generate(templates) {
         this.toGenerate = {}
-        await this.eRGitter.prepare()
         await this._createModifications(templates)
-        await this.eRGitter.finalize()
     }
 }
 

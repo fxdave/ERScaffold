@@ -27,6 +27,7 @@
     margin: 0;
     display: block;
     cursor: pointer;
+    height:100%;
 
     &:first-child {
       border-top-left-radius: 9px;
@@ -58,8 +59,9 @@
   }
 
   .app-name {
-    padding: 10px 10px;
-    input {
+    input {  
+      box-sizing: border-box;
+      height:100%;      
       font-size: 1em;
       padding: 10px 20px;
       border-radius: 9px;

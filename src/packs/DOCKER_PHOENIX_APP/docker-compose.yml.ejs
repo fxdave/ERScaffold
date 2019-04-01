@@ -1,0 +1,33 @@
+<%
+
+let meta = {
+	creates: {
+		fileName: "docker-compose.yml"
+	},
+	depends_on: [
+		{ template: "./docker-containers/elixir/Dockerfile.ejs", data: {} },
+		{ template: "./docker-containers/elixir/docker-entrypoint.sh.ejs", data: {} },
+	]
+} 
+
+%>version: '3'
+services:
+  web:
+    build: ./docker-containers/elixir
+    volumes:
+      - "./:/app"
+      - "./docker-containers/elixir:/scripts"
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    environment:
+      - MIX_ENV=dev
+      - SCAFFOLD_APP_NAME=<%=APPNAME %>
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres

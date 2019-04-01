@@ -87,6 +87,11 @@ body {
       border: 9px solid rgb(48, 48, 48);
       border-radius: 9px;
       padding: 9px;
+
+      transition: border-color 0.2s;
+      &.invalid {
+        border-color: rgb(255, 0, 110);
+      }
     }
 
     .hint {

@@ -17,12 +17,15 @@ class App extends Component {
         ipcRenderer.on('generateSelect', this.handleGenerateResponse)
         // register the generateSelectFinidhed that will be fired when the main has finished the generation
         ipcRenderer.on('generateSelected', this.handleGenerateSelectFinished)
+        // register the openFolder event that will be fired when the main tried to open the directory
+        ipcRenderer.on('openFolder', this.handleOpenFolderResponse)
     }
 
   state = {
       templatesToSelect: [],
       showControls: true,
-      appName: ''
+      appName: '',
+      projectFolderSelected: false
   };
 
   /**
@@ -33,6 +36,21 @@ class App extends Component {
           appName: e.target.value
       })
   };
+
+  handleOpenFolder = () => {
+      ipcRenderer.send('openFolder')
+  }
+
+  handleOpenFolderResponse = (e, response) => {
+      alert(response.msg)
+
+      if(response.success) {
+        this.setState({
+            projectFolderSelected: true
+        })
+      }
+
+  }
 
   /**
    * When the user clicks on the export button
@@ -145,6 +163,9 @@ class App extends Component {
                       />
                   </section>
                   <section className="controls">
+                      <button onClick={this.handleOpenFolder} id="openFolder">
+                        Open folder
+                      </button>
                       <button
                           onClick={this.handleExport}
                           id="export"
@@ -157,7 +178,7 @@ class App extends Component {
                       <button
                           onClick={this.handleGenerate}
                           id="generate"
-                          disabled={this.state.appName == ''} >
+                          disabled={this.state.appName == '' || !this.state.projectFolderSelected} >
                         Generate
                       </button>
                   </section>

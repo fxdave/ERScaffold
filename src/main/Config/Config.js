@@ -6,5 +6,6 @@ export default {
     builtinPacksFolderPath: PacksFolderPath,
     ARGV,
     ERSCAFFOLD_BRANCH_NAME: 'ERBranch',
-    COMMIT_MESSAGE: 'ER model has generated'
+    COMMIT_MESSAGE: 'ER model has generated',
+    defaultFileName: '.erscaffold'
 }

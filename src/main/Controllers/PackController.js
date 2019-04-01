@@ -28,14 +28,18 @@ class PackController extends Controller {
      * @param {TemplateRenderer} templateRenderer
      * @param {Generator} generator
      * @param {RequirementReader} requirementReader
+     * @param {Exporter} exporter
+     * @param {ERGitter} eRGitter
      */
-    constructor(packCollectionReader, templateRenderer, generator, requirementReader) {
+    constructor(packCollectionReader, templateRenderer, generator, requirementReader, exporter, eRGitter) {
         super()
         this.model = null
         this.packCollectionReader = packCollectionReader
         this.templateRenderer = templateRenderer
         this.generator = generator
         this.requirementReader = requirementReader
+        this.exporter = exporter
+        this.eRGitter = eRGitter
     }
 
     /**
@@ -62,6 +66,7 @@ class PackController extends Controller {
      */
     async listPackages(e, model) {
         try {
+            this.rawModel = model // stored for export
             this.model = new ERModel(model)
 
             // getting builtin packs
@@ -82,7 +87,7 @@ class PackController extends Controller {
                     new PackageListItem(entity.id, entity.name, packs)
             )
 
-            console.log(out)
+            console.log(out.packs[1])
             
             return out
         } catch (e) {
@@ -121,7 +126,14 @@ class PackController extends Controller {
 
             }
             
+            // preparing git repository
+            await this.eRGitter.prepare()
+            // generating files
             await this.generator.generate(templates)
+            // saving the diagram
+            await this.exporter.export(this.rawModel, path.join(process.cwd(), Config.defaultFileName))
+            // commit changes
+            await this.eRGitter.finalize()
 
             return { success: true }
         } catch(e) {

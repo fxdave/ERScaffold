@@ -13,33 +13,50 @@ import Generator from './PackUtils/Generator/Generator'
 import GitWrapper from './GitWrapper/GitWrapper'
 import RequirementReader from './PackUtils/RequirementReader/RequirementReader'
 import ERGitter from './PackUtils/ERGitter/ERGitter'
-
+import ProjectFolderController from './Controllers/ProjectFolderController'
+import Exporter from './Utils/Exporter'
 /**
  * Controller dependencies
  */
 
 export default function (basedir) {
 
-    const gitWrapper = new GitWrapper(basedir)
+    /**
+     * basedir 
+     */
+
+    const basedirContainer = {
+        dir: basedir
+    }
+
+    /**
+     * Controller denedencies
+     */
+
+    const gitWrapper = new GitWrapper(basedirContainer)
     const eRGitter = new ERGitter(gitWrapper)
     const fsWrapper = new FsWrapper()
     const router = new Router(ipcMain)
     const requirementReader = new RequirementReader(fsWrapper)
     const packReader = new PackReader(fsWrapper, requirementReader)
     const templateRenderer = new TemplateRenderer(fsWrapper)
-    const generator = new Generator(fsWrapper, eRGitter)
+    const exporter = new Exporter(fsWrapper)
+    const generator = new Generator(fsWrapper)
     const packCollectionReader = new PackCollectionReader(fsWrapper, packReader)
 
     /**
      * Controllers
      */
 
-    const eRModelController = new ERModelController(fsWrapper, dialog)
+    const projectFolderController = new ProjectFolderController(dialog, basedirContainer)
+    const eRModelController = new ERModelController(fsWrapper, dialog, exporter)
     const packController = new PackController(
         packCollectionReader,
         templateRenderer,
         generator,
-        requirementReader
+        requirementReader,
+        exporter,
+        eRGitter
     )
 
     /**
@@ -48,6 +65,8 @@ export default function (basedir) {
 
     router.method('export', eRModelController, 'export')
     router.method('import', eRModelController, 'import')
+
+    router.method('openFolder', projectFolderController, 'changeProjectFolder')
 
     router.method('generateSelect', packController, 'listPackages')
     router.method('generateSelected', packController, 'generateSelectedPackages')

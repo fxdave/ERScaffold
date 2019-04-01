@@ -1,15 +1,19 @@
 import Controller from './Controller'
 import FsWrapper from '../FsWrapper/FsWrapper'
+import Exporter from '../Utils/Exporter'
+import Config from '../Config/Config';
 class ERModelController extends Controller {
     /**
      *
      * @param {FsWrapper} fsWrapper
      * @param {Dialog} electronDialog
+     * @param {Exporter} exporter
      */
-    constructor(fsWrapper, electronDialog) {
+    constructor(fsWrapper, electronDialog, exporter) {
         super()
         this.fsWrapper = fsWrapper
         this.electronDialog = electronDialog
+        this.exporter = exporter
     }
 
     /**
@@ -23,13 +27,10 @@ class ERModelController extends Controller {
     async export(e, data) {
         const selectedFile = this.electronDialog.showSaveDialog({
             title: '',
-            defaultPath: '~/.erscaffold'
+            defaultPath: '~/' + Config.defaultFileName
         })
-
-        let err = await this.fsWrapper.createFile(
-            selectedFile,
-            JSON.stringify(data)
-        )
+        
+        let err = this.exporter.export(data)
 
         if (err) return { success: false, msg: 'Sorry couldn\'t export the file.' }
         return { success: true, msg: 'Successfully exported!' }

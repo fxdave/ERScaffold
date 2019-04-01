@@ -10,6 +10,10 @@ class Many extends React.Component {
         const to = this.props.to
         const normal = this.props.normal
         const coords = MathHelper.triangularProjection(trough, from, 7)
+        
+        let recursive = false
+        if(from.x == to.x && from.y == to.y)
+        recursive = true
 
         const lines = [
             { from: { x: coords[0], y: coords[1] }, trough, to, normal },
@@ -26,6 +30,7 @@ class Many extends React.Component {
                         trough={line.trough}
                         to={line.to}
                         normal={normal}
+                        recursive={recursive}
                     />
                 ))}
             </Group>

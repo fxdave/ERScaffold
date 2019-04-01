@@ -9,20 +9,10 @@ import path from "path";
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow = null;
 
-function changeDir() {
-  console.log(Config.ARGV);
+function intializeRouter() {
 
-  if (Config.ARGV[0]) {
+    // Config.ARGV[0] can be undefined
     routes(Config.ARGV[0]);
-  } else {
-    const selectedDir = dialog.showOpenDialog(mainWindow, {
-      title: "Please select your project directory",
-      buttonLabel: "Select",
-      message: "Yout project must be ready for use, this tool will extend it.",
-      properties: ["openDirectory"]
-    });
-    routes(selectedDir[0]);
-  }
 }
 
 function createWindow() {
@@ -56,7 +46,7 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.on("ready", () => {
   createWindow()
-  changeDir()
+  intializeRouter()
 });
 
 // Quit when all windows are closed.
