@@ -26,6 +26,7 @@ class Generator {
             this.logger.log('Processing template: ',template)
 
             let templateMode = template.templateSettings.mode
+            let chmod = template.templateSettings.executable ? 0o777 : undefined
 
             if (templateMode === 'creates') {
             // Creates a new file on the desired path
@@ -34,7 +35,8 @@ class Generator {
                 const content = template.content
                 await this.fsWrapper.createFile(
                     absolutePath,
-                    content
+                    content,
+                    chmod
                 )
             } else if (templateMode === 'extends') {
             // modify the file

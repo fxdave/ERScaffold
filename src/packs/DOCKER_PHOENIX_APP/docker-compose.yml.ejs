@@ -23,7 +23,7 @@ services:
       - db
     environment:
       - MIX_ENV=dev
-      - SCAFFOLD_APP_NAME=<%=APPNAME %>
+      - SCAFFOLD_APP_NAME=<%=Formatter.snakeCase(APPNAME) %>
   db:
     image: postgres
     restart: always

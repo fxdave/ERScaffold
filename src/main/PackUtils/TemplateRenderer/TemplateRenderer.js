@@ -50,12 +50,14 @@ class TemplateRenderer {
         // getting extends settings
         let section = meta[templateMode].section
         let place = meta[templateMode].place
+        let executable = meta[templateMode].executable
 
         let templateSettings = new TemplateSettings(
             templateMode,
             createPath,
             section,
-            place
+            place,
+            executable
         )
 
         // getting the dependencies
