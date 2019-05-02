@@ -90,7 +90,10 @@ class App extends Component {
    * @see handleGenerateResponse
    */
   handleGenerate = () => {
-    ipcRenderer.send("generateSelect", this.getExportData());
+      let asd = JSON.stringify(this.getExportData())
+        console.log("asd");
+        
+    //ipcRenderer.send("generateSelect", asd);
   };
 
   /**
@@ -129,9 +132,9 @@ class App extends Component {
   };
 
   getExportData = () => ({
-    ...this.getModelData(),
-    appName: this.state.appName
-  });
+        ...this.getModelData(),
+        appName: this.state.appName
+    });
 
   render() {
     return (

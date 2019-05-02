@@ -24,7 +24,7 @@ class ProjectFolderController {
         properties: ["openDirectory"]
       });
 
-      this.basedirContainer.dir = selectedDir[0];
+      this.projectFolderSelector.select(selectedDir[0])
 
       return {
           success: true,

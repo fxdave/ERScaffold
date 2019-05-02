@@ -18,13 +18,30 @@ class Viewport extends React.Component {
             this.setState(data)
         })
 
-        this.props.getModelData(() => this.state)
+        this.props.getModelData(() => this.getSerializedState())
     }
 
   state = {
       entities: [],
       conns: []
   };
+
+  getSerializedState() {
+      let entities = this.state.entities
+
+      let conns = this.state.conns.map(conn => ({
+          from: conn.from.props.id,
+          to: conn.to.props.id,
+          type: conn.type,
+          name: conn.name,
+          id: conn.id
+      }))
+
+      return {
+          entities: entities,
+          conns: conns
+      }
+  }
 
   handleAddEntity = e => {
       console.log('Entity has been added')
