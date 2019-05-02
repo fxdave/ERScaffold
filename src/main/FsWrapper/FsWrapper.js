@@ -143,6 +143,10 @@ class FsWrapper {
 
     await fsp.writeFile(path, newContent, "utf8");
   }
+
+  async realpath(path) {
+      return await fsp.realpath(path)
+  }
 }
 
 export default FsWrapper;

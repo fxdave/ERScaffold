@@ -1,31 +1,28 @@
-import { promises as fsp } from "fs";
-
 class ProjectFolderSelector {
 
     /**
      * 
      * @param {string} projectFolderUrl the default folder, default: '.'
      */
-    constructor(projectFolderUrl = '.') {
+    constructor(projectFolderUrl = '.', fsWrapper) {
         this.projectFolderUrl = projectFolderUrl
+        this.fsWrapper = fsWrapper
     }
 
     /**
      * changes current working directory
      * @param {string} projectFolderUrl 
      */
-    select(projectFolderUrl) {
-        this.projectFolderUrl = projectFolderUrl
-
-        if(projectFolderUrl != '.')
-        process.chdir(projectFolderUrl)
+    async select(projectFolderUrl) {
+        this.projectFolderUrl = await this.fsWrapper.realpath(projectFolderUrl)
+        process.chdir(this.projectFolderUrl)
     }
 
     /**
      * replaces current working directory with the given path in constructor
      */
-    apply() {
-        this.select(this.projectFolderUrl)
+    async apply() {
+        await this.select(this.projectFolderUrl)
     }
 
     /**
@@ -34,7 +31,7 @@ class ProjectFolderSelector {
      */
     async isSelected() {
         return (this.projectFolderUrl === '.' ) 
-            ? process.cwd() === await fsp.realpath('.')
+            ? process.cwd() === await this.fsWrapper.realpath('.')
             : process.cwd() === this.projectFolderUrl
 
     }
