@@ -30,7 +30,7 @@ class ERModelController extends Controller {
             defaultPath: '~/' + Config.defaultFileName
         })
         
-        let err = this.exporter.export(data)
+        let err = this.exporter.export(data, selectedFile)
 
         if (err) return { success: false, msg: 'Sorry couldn\'t export the file.' }
         return { success: true, msg: 'Successfully exported!' }

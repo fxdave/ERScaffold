@@ -19,6 +19,11 @@ class App extends Component {
     ipcRenderer.on("generateSelected", this.handleGenerateSelectFinished);
     // register the openFolder event that will be fired when the main tried to open the directory
     ipcRenderer.on("openFolder", this.handleOpenFolderResponse);
+
+    // ask wether project folder is selected or not
+    ipcRenderer.send("isProjectFolderSelected");
+    // get the answer
+    ipcRenderer.on("isProjectFolderSelected", this.handleProjectFolderSelection);
   }
 
   state = {
@@ -49,6 +54,12 @@ class App extends Component {
         projectFolderSelected: true
       });
     }
+  };
+
+  handleProjectFolderSelection = (e, response) => {
+      this.setState({
+        projectFolderSelected: response.selected
+      });
   };
 
   /**

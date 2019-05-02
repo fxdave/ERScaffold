@@ -11,7 +11,8 @@
         "sass-loader": "^7.1.0",
         "style-loader": "^0.23.1",
         "typescript": "^3.3.3333",
-        "webpack-cli": "^3.3.0"
+        "webpack-cli": "^3.3.0",
+        "jest": "^24.7.1"
     },
     "scripts": {
         "start": "npm run build-prod; electron .",
@@ -19,16 +20,19 @@
         "build-prod": "env NODE_ENV=production webpack; sucrase ./src/main -d ./src/build --transforms jsx,imports",
         "build-dev": "env NODE_ENV=development webpack; sucrase ./src/main -d ./src/build --transforms jsx,imports",
         "package-linux": "electron-builder build --linux",
-        "package-mac": "electron-builder build --mac"
+        "package-mac": "electron-builder build --mac",
+        "test": "jest src/main src/renderer"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@sucrase/jest-plugin": "^2.0.0",
         "@sucrase/webpack-loader": "^2.0.0",
         "@syncfusion/ej2-base": "^16.4.52",
         "@syncfusion/ej2-react-navigations": "^16.4.54",
         "fastejs": "^1.1.4",
         "konva": "^3.2.3",
+        "mocha": "^6.1.4",
         "pluralize": "^7.0.0",
         "react": "^16.8.4",
         "react-dom": "^16.8.4",
@@ -52,6 +56,11 @@
         ],
         "linux": {
             "target": "Appimage"
+        }
+    },
+    "jest": {
+        "transform": {
+          ".(js|jsx|ts|tsx)": "@sucrase/jest-plugin"
         }
     }
 }

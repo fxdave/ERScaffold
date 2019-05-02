@@ -6,7 +6,14 @@ import Requirement from '../Model/Requirement';
 import ERModel from '../Model/ERModel';
 import RenderedTemplate from '../Model/RenderedTemplate';
 import TemplateSettings from '../Model/TemplateSettings';
+import Exporter from '../Utils/Exporter'
 describe('PackController test', () => {
+
+    let eRGitter = {
+        prepare() {},
+        finalize() {}
+    }
+
     it('tests listPackages', async (done) => {
         let packCollectionReader = {
             async getPacks(folder) {
@@ -32,7 +39,13 @@ describe('PackController test', () => {
             }
         }
 
-        let packController = new PackController(packCollectionReader,templateRenderer,generator,requirementReader)
+
+        let fsWrapper = {
+            async createFile(path,content) {}
+        }
+
+        let exporter = new Exporter(fsWrapper)
+        let packController = new PackController(packCollectionReader,templateRenderer,generator,requirementReader,exporter,eRGitter)
         let res = await packController.listPackages(null, {
             appName: 'TestApp',
             entities: [
@@ -42,7 +55,8 @@ describe('PackController test', () => {
 
         })
         
-        assert.ok(res instanceof Array, res.msg)
+        assert.ok(res.success, res.msg)
+        assert.ok(res.msg instanceof Array, res.msg)
         done()
     })
 
@@ -71,7 +85,12 @@ describe('PackController test', () => {
             }
         }
 
-        let packController = new PackController(packCollectionReader,templateRenderer,generator, requirementReader)
+        let fsWrapper = {
+            async createFile(path,content) {}
+        }
+
+        let exporter = new Exporter(fsWrapper)
+        let packController = new PackController(packCollectionReader,templateRenderer,generator, requirementReader, exporter, eRGitter)
         packController.model = new ERModel({
             appName: 'TestApp',
             entities: [
@@ -82,9 +101,9 @@ describe('PackController test', () => {
         })
 
         let res = await packController.generateSelectedPackages(null, [
-            {pack: 'TESTPACK', template: '/path/to/testTemplate'}
+            '/path/to/testTemplate'
         ])
-        assert.ok(res.succcess, res.msg)
+        assert.ok(res.success, res.msg)
         done()
     })
 })

@@ -4,18 +4,17 @@ const exec = util.promisify(require('child_process').exec)
 module.exports = class GitWrapper {
     /**
      * 
-     * @param {Object} basedirContainer
-     * @param {string} basedirContainer.dir 
+     * @param {ProjectFolderSelector} projectFolderSelector
      */
-    constructor(basedirContainer) {
-        this.basedirContainer = basedirContainer
+    constructor(projectFolderSelector) {
+        this.projectFolderSelector = projectFolderSelector
     }
 
     /**
      * changes the basedir
      */
     changeWorkDir() {
-        process.chdir(this.basedirContainer.dir)
+        this.projectFolderSelector.apply()
     }
 
     /**

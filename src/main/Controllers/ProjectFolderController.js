@@ -4,12 +4,11 @@ class ProjectFolderController {
   /**
    *
    * @param {Dialog} dialog
-   * @param {Object} basedirContainer
-   * @param {string} basedirContainer.dir
+   * @param {ProjectFolderSelector} projectFolderSelector
    */
-  constructor(dialog, basedirContainer) {
+  constructor(dialog, projectFolderSelector) {
     this.dialog = dialog;
-    this.basedirContainer = basedirContainer;
+    this.projectFolderSelector = projectFolderSelector;
   }
 
   /**
@@ -37,6 +36,12 @@ class ProjectFolderController {
             msg: 'Sorry couldn\'t open the project folder, reason: ' + err.stack 
         }
     }
+  }
+
+  isProjectFolderSelected() {
+      return {
+          selected: this.projectFolderSelector.isSelected()
+      }
   }
 }
 

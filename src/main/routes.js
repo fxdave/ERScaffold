@@ -15,6 +15,7 @@ import RequirementReader from './PackUtils/RequirementReader/RequirementReader'
 import ERGitter from './PackUtils/ERGitter/ERGitter'
 import ProjectFolderController from './Controllers/ProjectFolderController'
 import Exporter from './Utils/Exporter'
+import ProjectFolderSelector from './Utils/ProjectFolderSelector'
 /**
  * Controller dependencies
  */
@@ -25,15 +26,13 @@ export default function (basedir) {
      * basedir 
      */
 
-    const basedirContainer = {
-        dir: basedir
-    }
-
+    const projectFolderSelector = new ProjectFolderSelector(basedir)
+    projectFolderSelector.apply();
     /**
      * Controller denedencies
      */
 
-    const gitWrapper = new GitWrapper(basedirContainer)
+    const gitWrapper = new GitWrapper(projectFolderSelector)
     const eRGitter = new ERGitter(gitWrapper)
     const fsWrapper = new FsWrapper()
     const router = new Router(ipcMain)
@@ -48,7 +47,7 @@ export default function (basedir) {
      * Controllers
      */
 
-    const projectFolderController = new ProjectFolderController(dialog, basedirContainer)
+    const projectFolderController = new ProjectFolderController(dialog, projectFolderSelector)
     const eRModelController = new ERModelController(fsWrapper, dialog, exporter)
     const packController = new PackController(
         packCollectionReader,
@@ -67,6 +66,7 @@ export default function (basedir) {
     router.method('import', eRModelController, 'import')
 
     router.method('openFolder', projectFolderController, 'changeProjectFolder')
+    router.method('isProjectFolderSelected', projectFolderController, 'isProjectFolderSelected')
 
     router.method('generateSelect', packController, 'listPackages')
     router.method('generateSelected', packController, 'generateSelectedPackages')
