@@ -22,19 +22,19 @@ import ProjectFolderSelector from './Utils/ProjectFolderSelector'
 
 export default function (basedir) {
 
-    /**
-     * basedir 
-     */
 
-    const projectFolderSelector = new ProjectFolderSelector(basedir)
-    projectFolderSelector.apply();
     /**
      * Controller denedencies
      */
 
+    const fsWrapper = new FsWrapper()
+
+    // basedir
+    const projectFolderSelector = new ProjectFolderSelector(basedir,fsWrapper)
+    projectFolderSelector.apply();
+
     const gitWrapper = new GitWrapper(projectFolderSelector)
     const eRGitter = new ERGitter(gitWrapper)
-    const fsWrapper = new FsWrapper()
     const router = new Router(ipcMain)
     const requirementReader = new RequirementReader(fsWrapper)
     const packReader = new PackReader(fsWrapper, requirementReader)
