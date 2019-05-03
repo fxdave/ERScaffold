@@ -32,7 +32,7 @@ class TemplateSelector extends React.Component {
             expanded: true,
             child: option.packs.map(pack => ({
                 isChecked: true,
-                id: `0-pack-${pack.name.replace(/[^0-9a-zA-Z\-]/g,'')}`, // 0- means that it is not a template
+                id: `0-pack-${option.entity.name.replace(/[^0-9a-zA-Z\-]/g,'')+pack.name.replace(/[^0-9a-zA-Z\-]/g,'')}`, // 0- means that it is not a template
                 name: pack.name,
                 child: this.preFormatRequirementData(pack.requirementCollection, pack)
             }))

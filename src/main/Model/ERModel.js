@@ -59,13 +59,13 @@ class ERModel {
             let fromRelation = null
             let toRelation = null
 
-            if (connection.type == 'OneToOne') {
+            if (connection.type == 'hasOne') {
                 fromRelation = HasOneRelation
                 toRelation = BelongsToRelation
-            } else if (connection.type == 'OneToMany') {
+            } else if (connection.type == 'hasMany') {
                 fromRelation = HasManyRelation
                 toRelation = BelongsToRelation
-            } else if (connection.type == 'ManyToMany') {
+            } else if (connection.type == 'belongsToMany') {
                 fromRelation = BelongsToManyRelation
                 toRelation = BelongsToManyRelation
             }
