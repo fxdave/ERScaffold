@@ -7,7 +7,7 @@ class RenderedTemplate {
      * @param {string} content
      * @param {RenderedTemplate[]} dependencies
      */
-    constructor(templateSettings, content, dependencies) {
+    constructor(templateSettings, content, dependencies = []) {
         this.templateSettings = templateSettings
         this.content = content
         this.dependencies = dependencies

@@ -51,4 +51,36 @@ describe("FsWrapper test", () => {
         done()
 
     })
+
+    it("should check existance of a path ", async done => {
+        let fsWrapper = new FsWrapper()
+        assert.equal(await fsWrapper.pathExists('.'), true)
+        assert.equal(await fsWrapper.pathExists('..'), true)
+        assert.equal(await fsWrapper.pathExists('/'), true)
+        let real = path.join(process.env['HOME'], '/.config')
+        assert.equal(await fsWrapper.pathExists(real), true)
+        
+        done()
+
+    })
+
+    it("should copy a direcotry", async done => {
+        let fsWrapper = new FsWrapper()
+        //copy . to ./test-temp
+        await fsWrapper.copy(path.join(__dirname), '/tmp/erscaffold-test-dir')
+
+        // assertion existance of ./test-temp/FsWrapper.js
+        let exsists = await fsWrapper.pathExists('/tmp/erscaffold-test-dir')
+        assert.equal(exsists,true)
+
+        //remove ./temp
+        await fsWrapper.remove('/tmp/erscaffold-test-dir')
+
+        // assertion existance of ./test-temp/FsWrapper.js after remove
+        exsists = await fsWrapper.pathExists('/tmp/erscaffold-test-dir')
+        assert.equal(exsists,false)
+
+        done()
+
+    })
 })

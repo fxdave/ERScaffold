@@ -55,7 +55,8 @@ export default function (basedir) {
         generator,
         requirementReader,
         exporter,
-        eRGitter
+        eRGitter,
+        fsWrapper
     )
 
     /**

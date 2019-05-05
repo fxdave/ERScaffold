@@ -30,8 +30,9 @@ class PackController extends Controller {
      * @param {RequirementReader} requirementReader
      * @param {Exporter} exporter
      * @param {ERGitter} eRGitter
+     * @param {FsWrapper} fsWrapper
      */
-    constructor(packCollectionReader, templateRenderer, generator, requirementReader, exporter, eRGitter) {
+    constructor(packCollectionReader, templateRenderer, generator, requirementReader, exporter, eRGitter, fsWrapper) {
         super()
         this.model = null
         this.packCollectionReader = packCollectionReader
@@ -40,22 +41,32 @@ class PackController extends Controller {
         this.requirementReader = requirementReader
         this.exporter = exporter
         this.eRGitter = eRGitter
+        this.fsWrapper = fsWrapper
     }
 
     /**
      * @asnyc
-     * @returns {Pack[]}
+     * @param {string} from
+     * @param {string} to
      */
-    async _getUserPacks() {
-        /*
-        try {
-            let packsFolderUser = `${os.homedir()}/.config/erscaffold/packs`
-            return await this.packCollectionReader.getPacks(packsFolderUser)
-        } catch {
-            return []
+    async _copyPacksIfNotExist(from, to) {
+        if(! await this.fsWrapper.pathExists(to)) {
+            await this.fsWrapper.copy(from,to)
         }
-        */
-        return [] // TODO: implement it well 
+    }
+
+    /**
+     * According to the single source of truth convention,
+     * builtin packages should be copied to the user packages directory
+     * and the softver only process with the user packages directory 
+     * @returns {PackCollection}
+     */
+    async _getPackCollection() {
+
+        await this._copyPacksIfNotExist(Config.builtinPacksFolderPath, Config.userPacksFolderPath)
+        
+        let packs = await this.packCollectionReader.getPacks(Config.userPacksFolderPath)
+        return packs
     }
 
     /**
@@ -69,16 +80,9 @@ class PackController extends Controller {
             this.rawModel = model // stored for export
             this.model = new ERModel(model)
 
-            // getting builtin packs
-            let packsFolderBuiltin = Config.builtinPacksFolderPath
-            let packsBuiltin = await this.packCollectionReader.getPacks(packsFolderBuiltin)
-
-            // getting user packs
-            let packsUser = await this._getUserPacks()
+            // get pack collection
+            let packs = await this._getPackCollection()
             
-            // get all packs together
-            let packs = new PackCollection(...packsBuiltin,...packsUser)
-
             // and filter out which requirement is allowed for that model
             let options = packs.getOptionsForEntities(this.model.getEntities())
 
@@ -121,7 +125,7 @@ class PackController extends Controller {
                             appName: this.model.appName
                         }
                     )
-
+                    if(template)
                     templates.push(template)
                 }
 

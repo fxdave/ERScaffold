@@ -3,7 +3,7 @@ import glob from "glob";
 import path from "path";
 import mkdirp from "mkdirp";
 import Logger from "../Logger/Logger";
-
+import fse from "fs-extra"
 /**
  * Wraps the filesystem utilities to provide a better interface
  */
@@ -146,6 +146,20 @@ class FsWrapper {
 
   async realpath(path) {
       return await fsp.realpath(path)
+  }
+
+
+  async pathExists(path) {
+    let exists =  await fse.pathExists(path)
+    return exists
+  }
+
+  async copy(from, to) {
+    await fse.copy(from, to)
+  }
+
+  async remove(path) {
+    await fse.remove(path)
   }
 }
 

@@ -3,7 +3,7 @@ import Formatter from '../../Formatter/NameFormatter'
 import RenderedTemplate from '../../Model/RenderedTemplate'
 import TemplateSettings from '../../Model/TemplateSettings'
 import path from 'path'
-
+import objectHash from 'object-hash'
 /**
  * Utilities for getting information from a single template, and its dependencies
  */
@@ -14,6 +14,7 @@ class TemplateRenderer {
      */
     constructor(fsWrapper) {
         this.fsWrapper = fsWrapper
+        this.renderedTemplates = {}
     }
 
     /**
@@ -22,9 +23,17 @@ class TemplateRenderer {
      * @async
      * @param {string} templateFilePath the path of the template
      * @param {Object} data the required params for render the template
-     * @returns {RenderedTemplate}
+     * @returns {RenderedTemplate|undefined}
      */
     async renderTemplate(templateFilePath, data) {
+
+        // ensure that not to render twice
+        let templateID = objectHash({templateFilePath,data})
+        if(this.renderedTemplates[templateID])
+            return undefined
+        this.renderedTemplates[templateID] = true
+
+        // start rendering with getting the file's content
         let templateFileContent = await this.fsWrapper.getFileContent(
             templateFilePath
         )
@@ -63,7 +72,8 @@ class TemplateRenderer {
         // getting the dependencies
         let dependencies = []
         if (meta.depends_on) {
-            dependencies = await Promise.all(meta.depends_on.map(dependency => {
+    
+            for(let dependency of meta.depends_on) {
 
                 let dependencyTemplateURL = path.join(
                     path.dirname(templateFilePath),
@@ -72,11 +82,14 @@ class TemplateRenderer {
 
                 let dependencyTemplateData = dependency.data
                 dependency.data.appName = data.appName
-                return this.renderTemplate(
+
+                let rendered = await this.renderTemplate(
                     dependencyTemplateURL,
                     dependencyTemplateData
                 )
-            }))
+                if(rendered)
+                dependencies.push(rendered)
+            }
         }
 
         return new RenderedTemplate(templateSettings, template_out, dependencies)
