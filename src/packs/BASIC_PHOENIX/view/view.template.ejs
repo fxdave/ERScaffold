@@ -1,13 +1,16 @@
 <%
-
+let app_name = Formatter.snakeCase(APPNAME)
+let AppName = Formatter.upperCamelCase(APPNAME)
+let entity_name = Formatter.snakeCase(entity.name)
+let EntityName = Formatter.upperCamelCase(entity.name)
 let meta = {
 	creates: {
-		fileName: "lib/" + Formatter.snakeCase(APPNAME) + "_web/views/"+ Formatter.snakeCase(entity.name) +"_view.ex"
+		fileName: "lib/" + app_name + "_web/views/"+ entity_name +"_view.ex"
 	}
 }
 
 %>
 
-defmodule <%= Formatter.upperCamelCase(APPNAME) %>Web.<%= Formatter.upperCamelCase(entity.name) %>View do
-  use <%= Formatter.upperCamelCase(APPNAME) %>Web, :view
+defmodule <%= AppName %>Web.<%= EntityName %>View do
+  use <%= AppName %>Web, :view
 end
