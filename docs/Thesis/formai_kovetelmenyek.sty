@@ -12,7 +12,7 @@
 \usepackage[section,numbib,nottoc]{tocbibind}
 \usepackage{hyperref}
 \usepackage[document]{ragged2e}
-
+\usepackage{textcomp}
 % prevent hyphenating
 \tolerance=1
 \emergencystretch=\maxdimen
@@ -76,9 +76,10 @@
 \definecolor{lightgray}{rgb}{.9,.9,.9}
 \definecolor{darkgray}{rgb}{.4,.4,.4}
 \definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+\definecolor{darkgreen}{rgb}{0.1, 0.5, 0}
 
 \lstdefinelanguage{JavaScript}{
-  keywords={break, case, catch, continue, debugger, default, delete, do, else, false, finally, for, function, if, in, instanceof, new, null, return, switch, this, throw, true, try, typeof, var, void, while, with},
+  keywords={break, case, catch, continue, debugger, default, delete, do, else, false, finally, for, function, if, in, instanceof, new, null, return, switch, this, throw, true, try, typeof, let, const, var, void, while, with},
   morecomment=[l]{//},
   morecomment=[s]{/*}{*/},
   morestring=[b]',
@@ -92,8 +93,27 @@
   sensitive=true
 }
 
+\lstdefinelanguage{GitBash}{
+  keywords={\$,git},
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  ndkeywords={commit,merge,add,init,checkout, revert},
+  otherkeywords={-a, -m, -b},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywordstyle=\color{darkgreen}\bfseries,
+  identifierstyle=\color{black},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  sensitive=true,
+  morestring=[b]",
+  morestring=[b]',
+  morestring=[b]"""
+}
+
 \lstdefinelanguage{EJS}{
-  keywords={``<\%=, <\%, \%>,break, case, catch, continue, debugger, default, delete, do, else, false, finally, for, function, if, in, instanceof, new, null, return, switch, this, throw, true, try, typeof, var, void, while, with},
+  keywords={Formatter, let, const, break, case, catch, continue, debugger, default, delete, do, else, false, finally, for, function, if, in, instanceof, new, null, return, switch, this, throw, true, try, typeof, var, void, while, with},
   morecomment=[l]{//},
   morecomment=[s]{/*}{*/},
   morestring=[b]',
@@ -104,19 +124,20 @@
   identifierstyle=\color{black},
   commentstyle=\color{purple}\ttfamily,
   stringstyle=\color{red}\ttfamily,
+  morecomment=[s][\color{darkgreen}]{<\%=}{\%>},
   sensitive=true
 }
 
 \lstdefinelanguage{JSX}{
-  keywords={break, case, catch, continue, debugger, default, delete, do, else, false, finally, for, function, if, in, instanceof, new, null, return, switch, this, throw, true, try, typeof, var, void, while, with},
+  keywords={break, let, const, case, catch, continue, debugger, default, delete, do, else, false, finally, for, function, if, in, instanceof, new, null, return, switch, this, throw, true, try, typeof, var, void, while, with},
   morecomment=[l]{//},
   otherkeywords={<, >, \/},
   morecomment=[s]{/*}{*/},
   morestring=[b]',
   morestring=[b]",
-  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywords={PositionAnchor, CustomAnchor, WidthAnchor,CenterAnchor, class, export, boolean, throw, implements, import, this},
   keywordstyle=\color{blue}\bfseries,
-  ndkeywordstyle=\color{darkgray}\bfseries,
+  ndkeywordstyle=\color{darkgreen}\bfseries,
   identifierstyle=\color{black},
   commentstyle=\color{purple}\ttfamily,
   stringstyle=\color{red}\ttfamily,
@@ -152,5 +173,6 @@
    tabsize=2,
    breaklines=true,
    showtabs=false,
-   captionpos=b
+   captionpos=b,
+   upquote=true
 }

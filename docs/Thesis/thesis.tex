@@ -45,10 +45,18 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 \newpage
 \input{contents/thanks.tex}
 \newpage
+
+\sectionfont{\centering\large\sffamily}
+
 \input{contents/tartalmi_osszefoglalo.tex}
 \newpage
 \input{contents/abstract.tex}
 \newpage
+
+\allsectionsfont{\sffamily\large} %14pt
+\subsectionfont{\sffamily\normalsize} %12pt
+\subsubsectionfont{\sffamily\normalsize} %12pt
+
 %--------------%------------------------------------------------------------------
 \pagenumbering{gobble} %ne legyen oldalszamozas a tartalomjegyzek oldalon
 %\listoftodos
@@ -91,7 +99,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 	Hátrányait minden komponensre egyedileg lehet megfogalmazni, de általánosságban legtöbb komponens dokumentációja csekély, a képességeik nagyon limitáltak, és továbbfejlesztésre nem adnak elég lehetőséget. Előfordul, hogy túl sok felesleges funkciót is tartalmaznak. Ebben az esetben sokszor az automatizáltság miatt nehéz az egyedi funkciók hozzáfejlesztése.
 
-	Az egyedi funkciók hozzáfejlesztése fontos, ugyanis az üzleti követelmények gyorsan változhatnak olyan irányba, ami egy nem előrelátható limitáltságot hoz elő a komponenseknél, ezért célszerű nem nagy komponenseket választani, hogy a cseréjük ne legyen költséges. Nagy komponensnek számít egy tartalom kezelő rendszer, mint például a WordPress. A tartalom kezelő rendszerek helyett, lehet használni keretrendszereket, amikhez csak kisebb komponensek érhetőek el, és közülük kevés biztosít felesleges funkcionalitást, valamint a cseréjük is egyszerűbb. \cite{website:cms_or_fw}
+	Az egyedi funkciók hozzáfejlesztése fontos, ugyanis az üzleti követelmények gyorsan változhatnak olyan irányba, ami egy nem előrelátható limitáltságot hoz elő a komponenseknél. Célszerű nem nagy komponenseket választani, hogy a cseréjük ne legyen költséges. Nagy komponensnek számít egy tartalom kezelő rendszer, mint például a WordPress. A tartalom kezelő rendszerek helyett, lehet használni keretrendszereket, amikhez csak kisebb komponensek érhetőek el, és közülük kevés biztosít felesleges funkcionalitást, valamint a cseréjük is egyszerűbb. \cite{website:cms_or_fw}
 
 \end{justify}
 
@@ -100,13 +108,13 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 \begin{justify}
 
-	Az ügyféltől nem szabad többet várni, minthogy megmondja, hogy jó -e így a program vagy nem. A Rapid Prototyping egy olyan programozási módszertan, aminek a lényege, hogy egy gyors prototípus segítségével a nem ismert követelményeket felderítsük. A gyors prototípus készítésére megfelelő eszközök szükségesek, ilyenek lehetnek például kódgenerátorok, terminálos kis eszközök vagy akár tervező programok. \cite{website:rapid_prototype}
+	Az ügyféltől nem szabad többet várni, minthogy megmondja, hogy jó-e így a program, vagy sem. A Rapid Prototyping egy olyan programozási módszertan, aminek a lényege, hogy egy gyors prototípus segítségével a nem ismert követelményeket felderítsük. A gyors prototípus készítésére megfelelő eszközök szükségesek, ilyenek lehetnek például kódgenerátorok, terminálos kis eszközök vagy akár tervező programok. \cite{website:rapid_prototype}
 
 	A Rapid Prototyping programozási módszer fejlesztő barát mert a programozó a fejlesztésre fókuszál és nem a komponensek integrációjára, másrészt segít a fejlesztőnek is a megfelelő project struktúra kialakításában, hiszen a prototípus még jelentősen módosítható.
 
 	A módszer egy jól strukturált, könnyen továbbfejleszthető minimális programot eredményez, ami teljesíti a szükséges követelményeket. A bővíthetősége jól illeszkedik a változó üzleti igényekre. 
 
-	Habár a módszer előnyeit tekintve nagyon kedvező lehet, legtöbbször mégis inkább az aktuális igényeknek megfelelő, kész rendszereket integrálnak egy új fejlesztése helyett. Ez egyrészt azért lehet, mert egy új rendszer fejlesztése látszólag költségesebb, és az első értékelhető eredményt jóval később kapja meg az ügyfél. Weboldalak és azok hasonlóságaik miatt, ez a folyamat könnyen felgyorsítható, ha van rá megfelelő eszköz.
+	Habár a módszer előnyeit tekintve nagyon kedvező lehet, legtöbbször mégis inkább az aktuális igényeknek megfelelő, kész rendszereket integrálnak egy új fejlesztése helyett. Ez egyrészt azért lehet, mert egy új rendszer fejlesztése látszólag költségesebb, és az első értékelhető eredményt jóval később kapja meg az ügyfél. Weboldalaknál a hasonlóságaik miatt, ez a folyamat könnyen felgyorsítható egy erre specializálódott eszköz segítségével.
 
 \end{justify}
 
@@ -115,11 +123,12 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 \begin{justify}
 
-	Kódgenerátorok alkalmazása jelentősen tudja növelni a fejlesztési sebességet. Anélkül, hogy a komponensek integrációjával törődnénk, a generált kód már tartalmazhat integrált apró komponenseket és egyben példakódot is a használatukra, ha esetleg másként szeretnénk használni. A megfelelő eszköz egy olyan kódgenerátor, ami már egyben stabil és felhasználásra kész programkódot generál, de megengedő annyira, hogy kikapcsolhatóak a nem kívánt funkciók generálása, a kívántak megtartásával.
+	Kódgenerátorok alkalmazása jelentősen tudja növelni a fejlesztési sebességet. Anélkül, hogy a komponensek integrációjával törődnénk, a generált kód már tartalmazhat integrált apró komponenseket és - ha esetleg másként szeretnénk használni - egyben példakódot is a használatukra. A megfelelő eszköz egy olyan kódgenerátor, ami már egyben stabil és felhasználásra kész programkódot generál, de megengedő annyira, hogy kikapcsolhatóak a nem kívánt funkciók generálása a kívántak megtartásával.
 
-	A weboldalak nagy része csupán csak egy tartalom kezelő rendszer. Gondoljunk csak egy egyszerű blog rendszerre, ahol van 1 oldal a bejegyzések listázására, és kell lennie egy admin felületnek, ahol ezeket a bejegyzéseket menedzselik. Ezek az oldalak általában a tartalmat egyszerű űrlapokkal kezelik (pl: hozzáadás, szerkesztés, törlés). Ezek az űrlapok építik fel az egész webes alkalmazást, az adatbázis rétegtől a kinézetig, de teli vannak olyan közös elemekkel, amelyek lehetővé teszik, hogy az űrlapok, kevés információval is generálhatóak legyenek. Ezekhez az oldalakhoz általában elég egy erőforrás név (pl: bejegyzés), az erőforrás attribútumai (pl: a bejegyzés neve) és a típusa (pl: szöveg). 
-
-	A legegyszerűbb tartalom kezelő rendszer ennyi adatból már generálható, azonban a komplexebb weboldalaknál több erőforrás is van, és ezek kapcsolódnak is egymáshoz (pl: a felhasználónak van több bejegyzése). Ha belevesszük a kapcsolatokat is az absztrakcióba, akkor a lehetőségek tárháza nyílik meg. Ha az “egy a sokhoz” (egy egyedhez több egyed tartozik) kapcsolatot nézzük, akkor létrejöhetnek olyan oldalak, amik ezt a kapcsolatot felhasználják:
+    A weboldalak nagy része csupán csak egy tartalom kezelő rendszer. Gondoljunk egy egyszerű blog rendszerre, ahol van 1 oldal a bejegyzések listázására, és kell lennie egy admin felületnek, ahol ezeket a bejegyzéseket menedzselik. Ezek az oldalak általában a tartalmat egyszerű űrlapokkal kezelik (pl.: hozzáadás, szerkesztés, törlés). Ezek az űrlapok építik fel az egész webes alkalmazást, az adatbázis rétegtől a kinézetig, de teli vannak olyan közös elemekkel, amelyek lehetővé teszik, hogy az űrlapok, kevés információval is generálhatóak legyenek. Ezekhez az oldalakhoz általában elég egy erőforrás név (pl.: bejegyzés), az erőforrás attribútumai (pl.: a bejegyzés neve) és a típusa (pl.: szöveg). 
+    
+    \label{sec:abstraction_level}
+	A legegyszerűbb tartalom kezelő rendszer ennyi adatból már generálható, azonban a komplexebb weboldalaknál több erőforrás is van, és ezek kapcsolódnak is egymáshoz (pl.: a felhasználónak van több bejegyzése). Ha belevesszük a kapcsolatokat is az absztrakcióba, akkor a lehetőségek tárháza nyílik meg. Ha az “egy a sokhoz” (egy egyedhez több egyed tartozik) kapcsolatot nézzük, akkor létrejöhetnek olyan oldalak, amik ezt a kapcsolatot felhasználják:
 
 	\begin{itemize}
 		\item csak a felhasználó bejegyzéseinek a megjelenítése
@@ -127,11 +136,11 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 		\item bejegyzés hozzáadása (felhasználóként)
 	\end{itemize}
 
-	Ha létezne egy olyan kód generátor, ami ezen absztrakciónak a lehetséges kimeneteit legenerálja, akkor már szinte csak a frontend -el kellene foglalkozni. Frontend -nek hívjuk az applikáció azon részét, ami a felhasználónak látható felület megjelenítéséért felelős. 
+	Ha létezne egy olyan kód generátor, ami ezen absztrakciónak a lehetséges kimeneteit legenerálja, akkor már szinte csak a frontend-el kellene foglalkozni. (Frontend-nek hívjuk az applikáció azon részét, ami a felhasználónak látható felület megjelenítéséért felelős.) 
 
-	Az egyedi elemeket, mint például a kinézetet nem tudja kiváltani, de példakódot biztosíthat hozzá.
+	Az egyedi elemeket - mint a felhasználói felület kinézete - nem tudja kiváltani, de példakódot biztosíthat hozzá.
 
-	Egy kódgenerátornál fontos az is, hogy gyorsan el tudjon indulni, és az absztrakció megfogalmazását egyből megkezdhessük. Webfejlesztés során egy terminál kulcsfontosságú elem, és általában nyitva van a különböző eszközök miatt (pl: Node Package Manager (NPM)). A megnyitott terminál általában az aktuális projekt könyvtárába van lépve, ami kiváló lehetőséget ad arra, hogy innen indítsuk el az ezköszt. Egy jó kódgenerátornak érdemes kezelnie egy bemenő paramétert arra a célra, hogy jelezze, hogy hol induljon el (pl: a Visual Studio Code biztosít lehetőséget arra, hogy könnyen elindítsuk az aktuális mappában: 'code .') 
+	Egy kódgenerátornál fontos az is, hogy gyorsan el tudjon indulni, és az absztrakció megfogalmazását egyből megkezdhessük. Webfejlesztés során a terminál kulcsfontosságú elem, és általában nyitva van a különböző eszközök miatt (pl: Node Package Manager (NPM)). A megnyitott terminál általában az aktuális projekt könyvtárába van lépve, ami kiváló lehetőséget ad arra, hogy innen indítsuk el az ezköszt. Egy jó kódgenerátornak érdemes kezelnie egy bemenő paramétert arra a célra, hogy jelezze, hogy hol induljon el (pl: a Visual Studio Code biztosít lehetőséget arra, hogy könnyen elindítsuk az aktuális mappában: 'code .') 
 
 	Fontos, hogy az absztrakt megfogalmazásból minél több kódot lehessen generálni, ezzel levéve a terhet a programozók válláról. Az absztrakciónak a félúton kell lennie a specifikus és általános között, hogy sokatmondó legyen a modell, de egyben egyszerű is.
 
@@ -156,9 +165,9 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 \subsubsection{A Phoenix keretrendszer beépített generátora}
 
 \begin{justify}
-	A Phoenix keretrendszer az egy elxir nyelven írt, a laravelhez hasonló MVC framework. Az elixir egy erlang alapú funkcionális nyelv. 
+	A Phoenix az egy Elxir nyelven írt, a laravelhez hasonló MVC felépítésű keretrendszer. Az elixir egy erlang alapú funkcionális nyelv. 
 
-	A phoenix biztosít egy CLI eszközt a keretrendszer egyes lehetőségeinek automatizálására, így egy egyszerű generátort is. A generátor csak erőforrás listázást, szerkesztést, hozzáadást, törlést, valamint egy külön oldalt biztosít egy erőforrásnak. Kapcsolatokat támogatja, de a generált felületen a külsőkulcsokat csupán számként kezeli. A használata elég egyszerű: 
+	A Phoenix biztosít egy CLI eszközt a keretrendszer egyes lehetőségeinek automatizálására, így egy egyszerű generátort is. A generátor csak erőforrás listázást, szerkesztést, hozzáadást, törlést, valamint egy külön oldalt biztosít egy erőforrásnak. Kapcsolatokat támogatja, de a generált felületen a külsőkulcsokat csupán számként kezeli. A használata elég egyszerű: 
 
 	\begin{figure}[h]
 		\includegraphics[width=\textwidth]{contents/images/mix_phx_gen_html.png}
@@ -166,7 +175,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 		\label{fig:mix_phx_gen_html}
 	\end{figure}
 
-	Hátránya, hogy egyszerre csak egy erőforrás generálására alkalmas, és keveset segít.
+	Hátránya, hogy egyszerre csak egy erőforrás generálására alkalmas, és viszonylag keveset segít.
 
 \end{justify}
 
@@ -177,7 +186,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 \begin{justify}
 
-	Egy kódgenerátornál fontos az is, hogy miképp adjuk át a szükséges információkat a projektről. Az egyik lehetőség a Command Line Interface (CLI) használata, ami gyors, de meg kell tanulni a használatát, valamint sok információ átadására nem alkalmas. Éppen ezért egy grafikus megfogalmazás előnyösebb lehet. Az előzőekben említett absztrakciós szintnek az Entity Relationship (ER) modell típusokkal kiegészített változata pont megfelel.
+	Egy kódgenerátornál fontos az is, hogy miképp adjuk át a szükséges információkat a projektről. Az egyik lehetőség a Command Line Interface (CLI) használata, ami gyors, de meg kell tanulni a használatát, valamint sok információ átadására nem alkalmas. Éppen ezért egy grafikus megfogalmazás előnyösebb lehet. Az \hyperref[sec:abstraction_level]{előzőekben} említett absztrakciós szintnek az Entity Relationship (ER) modell adattípusokkal kiegészített változata pont megfelel.
 
 	% from: https://medium.com/omarelgabrys-blog/database-modeling-entity-relationship-diagram-part-5-352c5a8859e5
 	\begin{figure}[h]
@@ -186,17 +195,27 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 		\label{fig:ermodell_example}
 	\end{figure}
 
-	Az ER modell a nevéből is következtethetően entitásokat és azok kapcsolatait modellezi. Az entitás az 1db elem egy erőforrásból (pl: felhasználó a felhasználókból). A rombusz egy kapcsolatot jelöl két entitás között, itt 3 féle lehet:
-	egy az egyhez (1db A entitáshoz maximum 1db B entitás tartozhat)
-	egy a sokhoz (1db A entitáshoz több B entitás is tartozhat )
-	sok a sokhoz (1db A entitáshoz több B entitás is tartozhat, és 1db B entitáshoz több A entitás is tartozhat
+    Az ER modell a nevéből is következtethetően entitásokat és azok kapcsolatait modellezi. Az entitás téglalap alakú, és egy elemet reprezentál (pl: egy felhasználó a felhasználókból). A rombusz egy kapcsolatot jelöl két entitás között. Itt 3 féle lehet:
+
+    \begin{itemize}
+        \item Egy az egyhez (1db $A$ entitáshoz maximum 1db $B$ entitás tartozhat).
+        \item Egy a sokhoz (1db $A$ entitáshoz több $B$ entitás is tartozhat).
+        \item Sok a sokhoz (1db $A$ entitáshoz több $B$ entitás is tartozhat, és 1db $B$ entitáshoz több $A$ entitás is tartozhat).
+    \end{itemize}
+\end{justify}
+\newpage
+\begin{justify}
 	Az ER modell különbséget tesz két fajta kapcsolat között:
-	erős kapcsolat (a kapcsolat megléte kötelező)
-	gyenge kapcsolat (a kapcsolat megléte opcionális)
+    
+    \begin{itemize}
+        \item Erős kapcsolat (a kapcsolat megléte kötelező).
+	    \item Gyenge kapcsolat (a kapcsolat megléte opcionális).
+    \end{itemize}
+
 	Minden entitásnak, és a kapcsolatnak lehetnek attribútumaik (pl: felhasználónak a felhasználónév). Az attribútumoknak a következő típusai vannak: 
 
 	% from:  Fogarassyné Vathy Ágnes - Adatbáziskezelő rendszerek I. - Egyed-kapcsolat modell
-	\begin{figure}[h]
+	\begin{figure}[H]
 		\includegraphics[width=\textwidth]{contents/images/ermodell_attributes.png}
 		\caption{Az attribútumok típusai \cite{book:example_er_attr} }
 		\label{fig:ermodell_attributes}
@@ -213,7 +232,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 	Egy tervezőnél létfontosságú, hogy mindent gyorsan és egyszerűen meg lehessen benne tervezni. Az alábbi ábra az alapvető lépéseket hasonlítja össze különböző tervezőprogramoknál.
 
-	\begin{table}[]
+	\begin{table}[H]
 		\centering
 		\begin{tabular}{|l|l|l|l|l|}
 			\hline
@@ -243,15 +262,16 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 	A gyors modell tervezéséhez, minden felhasználói akció lehetőleg csak 1 lépést vesz igénybe.
 
-	A felhasználók meggyőzéséért egy modern, minimalista stílusú felülettel rendelkezik, jól látható elemekkel. A kapcsolatok leegyszerűsítése érdekében a kapcsolat 1..n, n..m, stb.. jelölések helyett grafikusan ábrázolja a kardinalitást, a következő módon:
+	A felhasználók meggyőzéséért egy modern, minimalista stílusú felülettel rendelkezik, jól látható elemekkel. A kapcsolatok leegyszerűsítése érdekében a kapcsolat $1..n$, $n..m$, stb.. jelölések helyett grafikusan ábrázolja a kardinalitást, a következő módon:
 
-	\begin{figure}[h]
-		\includegraphics[width=\textwidth]{contents/images/simplified_relations.png}
+    \begin{figure}[h]
+        \centering
+		\includegraphics[width=12cm]{contents/images/simplified_relations.png}
 		\caption{Leegyszerűsített kapcsolatok}
 		\label{fig:simplified_relations}
 	\end{figure}
 
-	Ezen grafikus reprezentáció kényelmesebben olvasható, ugyanakkor, ha szükség van kötelező és opcionális kapcsolatok megfogalmazására akkor ugyanúgy jelölhetjük őket vastag, illetve vékony vonallal. 
+	Ezen grafikus reprezentáció kényelmesebben olvasható, ugyanakkor, ha szükség van kötelező és opcionális kapcsolatok megfogalmazására, ugyanúgy jelölhetjük őket vastag, illetve vékony vonallal. 
 
 \end{justify}
 
@@ -260,9 +280,9 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 \begin{justify}
 
-	Ahhoz, hogy a modellt használni lehessen webes alkalmazások generálására, szükséges pár módosítást elvégezni rajta. Az egyik ilyen módosítás az attribútumok típusokkal való kiegészítése (pl: name helyett name : string). A típusok szükségesek az űrlapok elkészítéséhez. A típusok adják meg azt, hogy milyen bemeneti mező szükséges az egyes attribútumok megadásához.
+	Ahhoz, hogy a modellt használni lehessen webes alkalmazások generálására, szükséges pár módosítást elvégezni rajta. Az egyik ilyen módosítás az attribútumok típusokkal való kiegészítése (pl.: name helyett name : string). A típusok szükségesek az űrlapok elkészítéséhez. A típusok adják meg azt, hogy milyen bemeneti mező szükséges az egyes attribútumok megadásához.
 
-	Egy kész webalkalmazás mindig foglalkozik a bemenet validálásával. A validáláshoz szükséges információkat a típus nevében szükséges lehet jelölni (pl: name : string[MIN=3, MAX= 15]).
+	Egy kész webalkalmazás mindig foglalkozik a bemenet validálásával. A validáláshoz szükséges információkat a típus nevében szükséges lehet jelölni (pl.: name : string[MIN=3, MAX= 15]).
 
 	Ha az entitások nevei az angol nyelvben megszámlálhatóak, akkor az adatbázis táblát az entitás nevének többes számú alakja alapján el lehet készíteni. Azonban, ha nem megszámlálhatóak, akkor biztosítani kell egy lehetőséget, hogy kézzel beírható legyen. Egyes Object Relation Mapping (ORM) rendszerek alapból az entitás többes számú alakját használják a Repository réteg neveként. A Repository réteg nevét fel lehet használni az adatbázistábla nevéhez is. Így az entitás nevéhez meg kell adni egy kiegészítő nevet is, ami a több ugyanolyan entitással foglalkozó absztrakcióra fog utalni. (Pl.: Music : MusicRepository)
 
@@ -283,10 +303,14 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 	\end{figure}
 
 	Ránézésre a következő oldalak jutnak eszünkbe a modell kapcsán:
-	Bejegyzések listázása
-	Bejegyzés hozzáadása
-	Bejegyzés módosítása
-	Ezek az oldalak jelentik a követelményeket a rendszerrel kapcsolatban. Ahhoz, hogy ezeket létrehozhassuk, szükséges egy olyan sabloncsomag, ami ezeknek a követelményeknek eleget tud tenni. A sablonoknak vannak függőségei, aminek célja, hogy a sablon funkcionalitásához szükséges egyéb sablonok is legenerálódhassanak.  Egy sabloncsomagon belül vannak követelményfájlok, amik leírják a követelményeket, és egy kezdő sablont biztosít minden egyes követelményhez, ami egy belépési pont a függőségi gráfban.
+
+    \begin{itemize}
+        \item Bejegyzések listázása.
+        \item Bejegyzés hozzáadása.
+        \item Bejegyzés módosítása.
+    \end{itemize}
+
+	Ezek az oldalak jelentik a követelményeket a rendszerrel kapcsolatban. Ahhoz, hogy ezeket létrehozhassuk, szükséges egy olyan sabloncsomag, ami ezeknek a követelményeknek eleget tud tenni. A sablonoknak vannak függőségeik, aminek célja, hogy a sablon funkcionalitásához szükséges egyéb sablonok is legenerálódhassanak.  Egy sabloncsomagon belül vannak követelményfájlok, amik leírják a követelményeket, és egy kezdő sablont biztosít minden egyes követelményhez, ami egy belépési pont a függőségi gráfban.
 
 	\begin{figure}[h]
 		\includegraphics[width=\textwidth]{contents/images/dependecy_graph.png}
@@ -294,15 +318,19 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 		\label{fig:dependecy_graph}
 	\end{figure}
 
-	Az ábrán látható, hogy mennyi mindent kell létrehozni egy-egy entitás esetében. A gyakorlatban ez tovább bonyolódik. Opcionális követelmények esetében, egy-egy sablon nem feltétlen külön fájl, hanem egy meglévő fájl módosítását tartalmazzák. A fenti ábra is ábrázolja a controller több metódussal való kiegészítését. Gyakorlatban ez nem csak a controllernél jelent további bontásokat, hanem külön eset kell arra is, ha valaki nem szeretné listázni az egyes erőforrásokat, és emiatt új létrehozásakor ne ajánljon fel linket az összes mutatására, ugyanis az az oldal nem fog létezni.
+	Az ábrán látható, hogy mennyi mindent kell létrehozni egy-egy entitás esetében. A gyakorlatban ez tovább bonyolódik. Opcionális követelmények esetében, egy-egy sablon nem feltétlen külön fájl létrehozására, hanem egy meglévő fájl módosítására szolgál. A fenti ábra is ábrázolja a controller több metódussal való kiegészítését. Gyakorlatban ez nem csak a controllernél jelent további bontásokat, hanem külön eset kell arra is, ha valaki nem szeretné listázni az egyes erőforrásokat, és emiatt új létrehozásakor ne ajánljon fel linket az összes mutatására, ugyanis az az oldal nem fog létezni.
 
 	A függőségi gráf nem feltétlen feszítőfa. Lehetnek körkörös függőségek, többszörös hivatkozások is. A program szempontjából ezt kezelni kell oly módon, hogy a sablonnak átadott bemeneti adatok és a fájlnév kombinációja alapján a sablon maximum egyszer generálódjon le.
 
 	A követelményfájlok megkapnak egy entitást, majd egy függvényben eldöntik, hogy arra az entitásra megvalósítható-e az aktuális követelmény. Ha megvalósítható a követelmény akkor az entitásból nyert adatok alapján (attribútumok, kapcsolatok), átadják az első sablonnak a sablon bemeneti paramétereit.
 
 	A sablonok felépítésileg két részből kell, hogy álljanak:
-	A sablon meta adatai
-	A sablon által generálandó kód
+
+    \begin{itemize}
+        \item A sablon meta adatai.
+        \item A sablon által generálandó kód.
+    \end{itemize}
+
 	A meta adatok dinamikus adatok, vagyis a bemenő paraméterként megkapott adatokból készül. Ezek írják le, hogy a sablont hova, milyen néven, milyen jogosultsággal kell legenerálni, illetve, ha meglévő fájl módosítására használjuk, akkor melyik fájl melyik szekciójába generálja és milyen művelettel (szekció cseréje, szekció előtt, szekció után). A meta adatok tartalmazzák a sablon egyes függőségeit is. 
 
 	A sablon egy egyszerű szöveg, kiegészítve változókkal vagy a használandó sablon motor által biztosított nyelvi elemekkel.
@@ -318,15 +346,17 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 	A struktúrában nagyon sok mindenre lehet következtetni. Ha csak a struktúrát nézzük akkor 6 jól elkülöníthető eset létezik:
 
 	\begin{itemize}
-		\item egy az egyhez kapcsolat
-		\item egy a sokhoz kapcsolat
-		\item sok a sokhoz kapcsolat
-		\item Rekurzív egy az egyhez kapcsolat
-		\item Rekurzív egy a sokhoz kapcsolat
-		\item Rekurzív sok a sokhoz kapcsolat
+		\item Egy az egyhez kapcsolat.
+		\item Egy a sokhoz kapcsolat.
+		\item Sok a sokhoz kapcsolat.
+		\item Rekurzív egy az egyhez kapcsolat.
+		\item Rekurzív egy a sokhoz kapcsolat.
+		\item Rekurzív sok a sokhoz kapcsolat.
 	\end{itemize}
 
-    Az egy az egyhez kapcsolat valamilyen adat kiegészítést jelent. Ha van pár attribútum, ami elég bonyolult ahhoz, hogy külön entitásként kezeljük, akkor erre az entitásra alkalmazhatjuk ezt a kapcsolattípust. Egy felhasználó lakcíme jó példával szolgál. A lakcím sok elemből áll, és lehet, hogy a kitöltése nem is kötelező. Ekkor a felhasználó entitást összekapcsolhatjuk egy “egy az egyhez” kapcsolattal a lakcím entitáshoz. (Az Entity Relationship modellben erre külön vannak összetett objektumok, gyakorlatilag a kettő megvalósítás között elhanyagolható különbség van.)
+    Az egy az egyhez kapcsolat valamilyen adat kiegészítést jelent. Ha van pár attribútum, ami elég bonyolult ahhoz, hogy külön entitásként kezeljük, akkor erre az entitásra alkalmazhatjuk ezt a kapcsolattípust. 
+    
+    Egy felhasználó lakcíme jó példával szolgál. A lakcím sok elemből áll, és lehet, hogy a kitöltése nem is kötelező. Ekkor a felhasználó entitást összekapcsolhatjuk egy “egy az egyhez” kapcsolattal a lakcím entitáshoz. (Az Entity Relationship modellben erre külön vannak összetett attribútumok, gyakorlatilag a kettő megvalósítás között elhanyagolható különbség van.)
 
     Az egy a sokhoz kapcsolat, a leggyakrabban használt kapcsolati forma. Jó példa erre egy blog rendszer, ahol a bejegyzések alá lehet írni megjegyzéseket. Ezt a kapcsolatot “van sok” (angolul: has many) kapcsolatnak szokás hívni, amiatt, mert az A entitásnak van sok B entitása. Ebben az esetben a bejegyzésnek van sok hozzászólása.
 
@@ -343,7 +373,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 		\item stb...
 	\end{itemize}
 
-    A rekurzív sok a sokhoz kapcsolat gyakorlatilag egy általános gráf szerkezet. Ilyen lehet a szociális hálózat ábrázolása is. Ez alapján a legjobb példa a szociális hálók. 
+    A rekurzív sok a sokhoz kapcsolat gyakorlatilag egy általános gráf szerkezet. Ilyen lehet a szociális hálózat ábrázolása is. Ez alapján a következő felületek képzelhetőek el: 
     \begin{itemize}
 		\item Kapcsolat hozzáadása. 
 		\item Kapcsolat törlése.
@@ -353,7 +383,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 	Fontos megemlíteni, hogy a generátor nem korlátozódik relációs adatbázisokra. Minden implementáció a sablonokon múlik. Így, ha célszerű, a sablon használhat akár gráf adatbázisokat is.   
 
-	Nem csak a struktúrából lehet következtetni az egyes legenerálandó részekre, hanem attribútumok típusaiból, neveiből, valamint entitások neveiből is. Például, ha egy entitás attribútumának a neve created\_at és dátum típusú, akkor lehet feltételezni, hogy létrehozáskor ezt a mezőt az aktuális dátummal fel kell tölteni. 
+	Nem csak a struktúrából lehet következtetni az egyes legenerálandó részekre, hanem attribútumok típusaiból, neveiből, valamint entitások neveiből is. Például, ha egy entitás attribútumának a neve created\_at és dátum típusú, akkor lehet feltételezni, hogy létrehozáskor ezt a mezőt az aktuális dátummal kell feltölteni. 
 
 	Egy másik jó példa a User entitás, aminek megléte jelenthet bejelentkezést, regisztrációt és egyéb legenerálandó részeket is.
 
@@ -367,74 +397,79 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 \begin{justify}
 
 
-	A kódgenerátorok legnagyobb hátránya, hogy generálás után, az absztrakt definíció nem módosítható anélkül, hogy a kódot újra ne kellene generálni. Egy projekt elején nem tudhatjuk az összes követelményt, ezért nem mindent csak egy részét fogjuk legenerálni, amit utána módosítunk. Később ki fognak derülni más-más eltérő igények is, amit szintén generálni szeretnék, majd ismét módosítani.
+    A kódgenerátorok legnagyobb hátránya, hogy generálás után, az absztrakt definíció nem módosítható anélkül, hogy a kódot újra ne kellene generálni. Egy projekt elején nem tudhatjuk az összes követelményt, ezért csak egy részét tudjuk legenerálni, amit utána módosítunk. Később ki fognak derülni más-más eltérő jellegű igények is, amit szintén generálni szeretnék, majd ismét módosítani. Szerencsére a Git verziókezelő erre a feladatra tökéletes. 
+    
+    A Git biztosít lehetőséget arra, hogy bizonyos funkcióknak a verzióit egy másik szálon vezéreljük. Ezeket a szálakat ágaknak (angolul: branch) hívják. Az ágakat egymásba lehet egyesíteni, ilyenkor annak az ágnak a módosításait amelyiket éppen beleegyesítünk az aktuális ágba, összefésüli, és az újakat beeszközöli. Ha az egyesítésnél komplikációk lépnek fel, akkor ezeket egyesével meg kell oldani. 
 
-	Szerencsére a git verziókezelő erre a feladatra tökéletes. A git biztosít lehetőséget arra, hogy bizonyos funkcióknak a verzióit egy másik szálon vezéreljük. Ezeket a szálakat ágaknak (angolul: branch) hívják. Az ágakat egymásba lehet egyesíteni, ilyenkor annak az ágnak a módosításait amelyiket éppen beleegyesítünk az aktuális ágba, összefésüli, és az újakat beeszközöli. Ha az egyesítésnél komplikációk lépnek fel, akkor ezeket egyesével meg kell oldani. 
-
-	A git meglétét nyugodtan lehet feltételezni, hiszen csekély számú kivételtől eltekintve minden fejlesztő, minden projectet már a git segítségével verzió-kezel.
+	A Git meglétét nyugodtan lehet feltételezni, hiszen csekély számú kivételtől eltekintve minden fejlesztő, minden projektet már a Git segítségével verzió-kezel.
 
 	A módszer a módosítás lehetőségére a következő:
 
 
-	\begin{figure}[h]
-		\includegraphics[width=\textwidth]{contents/images/git_first.png}
+    \begin{figure}[H]
+        \centering
+		\includegraphics[width=12cm]{contents/images/git_first.png}
 		\caption{Git ágak az első generálás után}
 		\label{fig:git_first}
 	\end{figure}
 
-	A generátornak megadott generálási helyen feltételezzük, hogy a project már egy git repository -ként inicializálva lett. A generálás során, a generátor létrehoz egy másik ágat ERBranch néven. 
+	A generátornak megadott generálási helyen feltételezzük, hogy a project már egy Git repository-ként inicializálva lett. A generálás során, a generátor létrehoz egy másik ágat ERBranch néven. 
 
-	\begin{lstlisting}[language=bash]
-	[generátor ]$ git checkout [-b] ERBranch 
+	\begin{lstlisting}[language=GitBash]
+	[generátor ]$ git checkout -b ERBranch 
 	\end{lstlisting}
 
-	Ezt az ágat csak a generátor használhatja. Generáláskor a generátor erre az ágra hozza létre a fájlokat. Ahhoz, hogy ez egy visszaállítható állapot legyen, a változásokat elkövetjük. 
+    Ezt az ágat csak a generátor használhatja. Generáláskor a generátor erre az ágra hozza létre a fájlokat. 
+    
+    Ahhoz, hogy ez egy visszaállítható állapot legyen, a változásokat elkövetjük. 
 
-	\begin{lstlisting}[language=bash]
-	[generátor ]$ git commit -a -m ‘Generation is succeded’
+	\begin{lstlisting}[language=GitBash]
+	[generátor ]$ git commit -a -m ‘Generation is succeded ’
 	\end{lstlisting}
 
 	A felhasználónak csak annyi dolga van, hogy visszamenjen arra az ágra, amelyikből az ERBranch ág leágazott, és egyesíti az ERBranch ág módosításaival.
 
-	\begin{lstlisting}[language=bash]
-	[felhasználó ]$ git checkout master
+	\begin{lstlisting}[language=GitBash]
+	[felhasználó ]$ git checkout [-b] master
 	[felhasználó ]$ git merge ERBranch
 	\end{lstlisting}
 
-	Az egyesítés közben felléphetnek konfliktusok (git conflict), amit az egyesítéshez meg kell oldani. Egyesítés után készen áll a program a módosításra.
+	Az egyesítés közben felléphetnek konfliktusok (Git conflict), amit az egyesítéshez meg kell oldani. Egyesítés után készen áll a program a módosításra alacsony szinten.
 
-	A fejlesztés során fény derülhet arra, hogy a modellt ki kell még egészíteni. Nagyon fontos, hogy a lokális repository tiszta legyen, azaz minden hozzáadott módosítást véglegesíteni kell előtte:
+    A fejlesztés során fény derülhet arra, hogy a modellt ki kell még egészíteni. Szerencsére a generátor erre is ad lehetőséget. 
+    
+    Nagyon fontos, hogy a lokális repository tiszta legyen, azaz minden hozzáadott módosítást véglegesíteni kell előtte:
 
-	\begin{lstlisting}[language=bash]
-	[felhasználó ]$ git commit -a -m ‘some message’
+	\begin{lstlisting}[language=GitBash]
+	[felhasználó ]$ git commit -a -m ‘some message ’
 	\end{lstlisting}
 
-	Ezt követően a generátort újra lehet alkalmazni. Az ágak ekkor az alábiak szerint fog alakulni: 
+	Ezt követően a generátort újra lehet alkalmazni. A generátor ilyenkor már a meglévő ERBranch ágra megy át, és visszaállítja az azon lévő utolsó verziót.
 
-	\begin{lstlisting}[language=bash]
+	\begin{lstlisting}[language=GitBash]
 	[generátor ]$ git checkout ERBranch
 	[generátor ]$ git revert THE_LAST_COMMIT
 	\end{lstlisting}
 
-	Ekkor a generátor újragenerálja az egész projectet, de a git szempontjából ez csak egy változásnak fog tűnni. 
+	Ekkor a generátor újragenerálja az egész projektet, de a Git szempontjából ez csak egy változtatásnak fog tűnni, amit szintén véglegesít. 
 
-	\begin{lstlisting}[language=bash]
-	[generátor ]$ git commit -a -m ‘Generation is succeded’
+	\begin{lstlisting}[language=GitBash]
+	[generátor ]$ git commit -a -m ‘Generation is succeded ’
 	\end{lstlisting}
 
-	Ismét egyesítjük az előző branch -et az ERBranch -el. 
+	Ismét visszatérünk az előző ágra, és egyesítjük azt az ERBranch nevű ággal, hogy megkapjuk a generátor módosításait. 
 
-	\begin{lstlisting}[language=bash]
+	\begin{lstlisting}[language=GitBash]
 	[felhasználó ]$ git checkout master
 	[felhasználó ]$ git merge ERBranch
-	\end{lstlisting}
-
-	\begin{figure}[h]
+    \end{lstlisting}
+    
+    Ekkor az ágak az alábbiak szerint fognak alakulni: 
+	\begin{figure}[H]
 		\includegraphics[width=\textwidth]{contents/images/git_second.png}
 		\caption{Git ágak a modell módosítása után}
 		\label{fig:git_second}
 	\end{figure}
-
 
 \end{justify}
 
@@ -445,9 +480,9 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 	A sablonok a generátor szerves részei. Ha nincsenek sablonok, akkor a generátor használhatatlan. Éppen ezért, az új sablon létrehozása a lehető legkevesebb tanulást igénybevevő megoldásnak kell lennie. 
 
-	A dinamikusság és a kevés tanulás elérése érdekében a sablonoknak egy jól ismert programozási nyelven kell íródniuk. A stackoverflow 2018 -as felmérése szerint, a legismertebb programozási nyelv a JavaScript (forrás: https://insights.stackoverflow.com/survey/2018 ). A JavaScript -et nem csak emiatt érdemes használni, hanem mert van hozzá interpeter, és a sablonokat build nélkül is lehet vele használni.
+	A dinamikusság és a kevés tanulás elérése érdekében a sablonoknak egy jól ismert programozási nyelven kell íródniuk. A Stack Overflow 2018-as felmérése szerint, a legismertebb programozási nyelv a JavaScript. \cite{website:most_known_language} A JavaScript-et nem csak emiatt érdemes használni, hanem mert van hozzá interpeter, és a sablonok gépi kódra fordítás nélkül használhatóak.
 
-	A JavaScript -hez léteznek meglévő sablon motorok, amelyekhez a fejlesztői környezetek biztosítanak szintaktikai megvilágítást.
+	A JavaScript-hez léteznek meglévő sablon motorok, amelyekhez a fejlesztői környezetek biztosítanak szintaktikai megvilágítást.
 
 
 \end{justify}
@@ -464,19 +499,21 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 	A funkcionális programozás jól ismert előnye az úgynevezett “immutablility”, ami az adattagok nem-módosíthatósága. Ha egy nagyobb projektnél erre nem figyelünk, akkor könnyen egy nem determinisztikusnak tűnő működést tapasztalhatunk az egyes fájlok szemszögéből. A nem determinisztikusnak tűnő kód szintén egy átláthatósági hiba, ezért figyelnünk kell rá. Teljesen változók nélkül nem mindig sikerül megvalósítani a szoftvert, de törekedni kell ezek használatának minimalizálására. 
 
-	A Procedurális programozásban a függvények a paraméterükben várják az egyes függőségeit. A Dependency Injection ezt a szemléletet vetíti ki az objektum orientált programozásra. Az osztályok importálása helyett a konstruktor várja a működéshez szükséges függőségeket, így az osztály a nyelvi elemeken kívül csak a konstruktorban átadott elemeket használhatja, ezért a függőségek bármikor lecserélhetőek lesznek, és ezzel együtt a tesztelhetőség is egy újabb szintre lép, mivel a unit tesztek esetében csak arra kell figyelni, hogy hogyan használja a függőségeit. Gondoljunk bele, hogy egy osztály feladata a fájlrendszer módosítása. \cite{website:dependency_injection, website:dependency_injection_procedural} Ilyenkor az osztály meg fog kapni egy fájlrendszer kezelő objektumot. A unit teszt esetében megoldható, hogy egy olyan fájlrendszer kezelő objektumot adunk át, ami nem kezeli a fájlrendszert. Ezt a megoldást hívjuk a teszteknél mockup-nak. 
+	A Procedurális programozásban a függvények paraméterként várják a függvény függőségeit. A Dependency Injection (DI) ezt a szemléletet vetíti ki az objektum orientált programozásra. Az osztályok importálása helyett a konstruktor várja a működéshez szükséges függőségeket, így az osztály a nyelvi elemeken kívül csak a konstruktorban átadott elemeket használhatja, ezért a függőségek bármikor lecserélhetőek lesznek, és ezzel együtt a tesztelhetőség is egy újabb szintre lép, mivel a unit tesztek esetében csak arra kell figyelni, hogy hogyan használja a függőségeit. \cite{website:dependency_injection, website:dependency_injection_procedural} Gondoljunk bele, hogy egy osztály feladata a fájlrendszer módosítása. Ilyenkor az osztály meg fog kapni egy fájlrendszer kezelő objektumot. A unit teszt esetében megoldható, hogy egy olyan fájlrendszer kezelő objektumot adunk át, ami nem kezeli a fájlrendszert. Ezt a megoldást hívjuk a teszteknél mockup-nak. 
 
 	A Dependency Injection azért injection mert általában egy automatikus rendszer figyeli, hogy a konstruktor milyen típusú függőségeket vár, és ezeket a függőségeket létrehozáskor be is injektálja. Sajnos az automatika nem minden nyelvel lehetséges, de automatika nélkül is hasznos a konvenció. \cite{website:dependency_injection_without_container}
 
 	Az osztályoknak átadott függőségekből egy gráf szerkezetet lehet felírni. Ha az alkalmazást rétegesen építettük fel, akkor ez a gráf egy fa szerkezet lesz. A fa levelein lehetnek olyan osztályok, amiknek a működése egy állapottól függ (pl.: fájlrendszer), ezért tesztelni csak nehezen lehet. Ezeket az osztályokat érdemes minimális funkcionalitással létrehozni, annak érdekében, hogy kevesebbet kelljen tesztelni. A programozás során az egyik legnagyobb kihívás az állapotok kezelése, mert a sok feltétel miatt nem fog látszódni a kód funkcionalitása. A többi osztályt úgy érdemes megírni, hogy ne legyen állapotuk, azaz olyan legyen, mint egy jól strukturált függvény. Ideálisan, néhány kivételtől eltekintve egy constructor, egy publikus függvény és privát metódusokból áll. 
 
-	Az ilyen esetekben az osztály elnevezése az osztály struktúrájából adódóan csak egy cselekvés és a tárgy neve lesz, amin a cselekvést végezzük. Például: TemplateRenderer. Ekkor a publikus metódust célszerű a cselekvésről elnevezni. Az előbbi példából kiindulva lehet: render. 
+	Az ilyen esetekben az osztály elnevezése az osztály struktúrájából adódóan csak egy cselekvés és a tárgy neve lesz, amin a cselekvést végezzük (pl.: TemplateRenderer). Ekkor a publikus metódust célszerű a cselekvésről elnevezni. (Az előbbi példából kiindulva lehet: render.) 
 
 	A tesztelés nagyon fontos mielőtt a szoftvert kiadhatnánk, de a tesztek nem csak a fejlesztés végén kellenek, hanem a fejlesztés segítésére is. Vannak olyan helyzetek, amikor az egyes komponensek működését nem láthatjuk a szoftverben, mert szükségesek hozzá más komponensek is, vagy túl sok lépés lenne a működését előhozni. Erre a problémára találták ki a Test Based Development nevű fejlesztési módszert, ami azt jelenti, hogy a kódunkat egyből egy unit tesztel próbáljuk ki. A tesztek miatt a szoftver minősége nő, ugyanakkor a fejlesztési idő nem feltétlen több, a fentebb említettek miatt.
 
 	Fontosk, hogy ne írjuk meg többször ugyanazt, inkább legyen általánosítva, mint kétszerezve. Egyrészt kétszer megírni több idő, másrészt, ha később módosítani kell, akkor két helyen kell átírni. 
 
-	A kód duplikálás elkerülésére jó módszer a réteges fejlesztés. A réteges fejlesztés segít elkülöníteni és csoportosítani a kód egyes funkcióit. A legismertebb réteges architektúra a Model View Controller (MVC). Fontos azonban felismerni, hogy szükség lehet további rétegekre is. A Model feladata az adatokkal kapcsolatos műveletek elvégzése, azonban szeretnénk elfüggetleníteni az üzleti logikát. Tekintsük például a következő logikát: Maximum az 5 perce íródott üzeneteket tekintsük új üzenetnek. A Controller szintén nem jó réteg erre, mert többször szeretnénk hasznáni az új üzeneteket. Ilyenkor érdemes bevezetni egy másik réteget is a Model és a Controller közé, ami ezeket lekezeli. Általában ezt a réteget hívják Repository rétegnek. Ugyanígy eljárhatunk a többi réteg esetében is.
+    A kód duplikálás elkerülésére jó módszer a réteges fejlesztés. A réteges fejlesztés segít elkülöníteni és csoportosítani a kód egyes funkcióit. A legismertebb réteges architektúra a Model View Controller (MVC). Fontos azonban felismerni, hogy szükség lehet további rétegekre is. 
+    
+    Erre egy példa Model réteg. A Model feladata az adatokkal kapcsolatos műveletek elvégzése, azonban szeretnénk elfüggetleníteni az üzleti logikát. Pl.: Egy üzenetküldő alkalmazásban maximum az 5 perce íródott üzeneteket tekintsük új üzenetnek. A Controller szintén nem jó réteg erre, mert több helyen szeretnénk lekérni az új üzeneteket. Ilyenkor érdemes bevezetni egy másik réteget is a Model és a Controller közé, ami ezeket lekezeli. Általában ezt a réteget hívják Repository rétegnek. Ugyanígy eljárhatunk a többi réteg esetében is.
 
 	Az egyedüli igazság forrás (Single source of truth) konvenció, lényege, hogy ne duplikáljunk adatot. Az adatok elérését a lehető legjobban csoportosítjuk, így elkerüljük a konzisztencia fenttartására irányuló problémákat.
 
@@ -489,13 +526,13 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 \begin{justify}
 
-	\begin{figure}[h]
+	\begin{figure}[ht]
 		\includegraphics[width=\textwidth]{contents/images/components.png}
 		\caption{A rendszer fontosabb elemei}
 		\label{fig:components}
 	\end{figure}
 
-	Az előző irányelvek szerint a rendszer fontosabb elemei a fenti ábrán láthatóak. Az ábra két részből áll. A backend és a frontend. A frontend a felhasználói felületet biztosító része a programnak, a backend pedig a felhasználói felülettől jövő kérések feldolgozásáért felelős. A kérést elsőnek egy Router kapja meg, ami a megfelelő Controller -hez irányítja azt. A Controller megvalósítja a kérés feldolgozását az erre specializálódott osztályok segítségével, és visszatér egy válasszal, ami megjelenik a felhasználói felületen. 
+	Az előző irányelvek szerint a rendszer fontosabb elemei a fenti ábrán láthatóak. Az ábra két részből áll. A backend és a frontend. A frontend a felhasználói felületet biztosító része a programnak, a backend pedig a felhasználói felülettől jövő kérések feldolgozásáért felelős. A kérést elsőnek egy Router kapja meg, ami a megfelelő Controller-hez irányítja azt. A Controller megvalósítja a kérés feldolgozását az erre specializálódott osztályok segítségével, és visszatér egy válasszal, ami megjelenik a felhasználói felületen. 
 
 
 \end{justify}
@@ -505,17 +542,17 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 \begin{justify}
 
-	A web alapú alkalmazások minden nagyobb platformon elérhetőek, kompatibilitási problémák nélkül. A web a felhasználói felületre számos lehetőséget kínál, és ezek mindegyikét egyszerűen el lehet érni. Köszönhetően a Konva.js könyvtárnak már a HTMLCanvasElement -re való rajzolás is leegyszerűsödött, így a ER modell rajzolására is megfelelő választás. Nem meglepő tehát, hogy a felhasználó felület webes felületen készült. 
+	A web alapú alkalmazások minden nagyobb platformon elérhetőek kompatibilitási problémák nélkül. A web a felhasználói felületre számos lehetőséget kínál, és ezek mindegyikét egyszerűen el lehet érni. Köszönhetően a Konva.js könyvtárnak már a HTMLCanvasElement-re való rajzolás is leegyszerűsödött, így a ER modell rajzolására is megfelelő választás. Nem meglepő tehát, hogy a felhasználó felület webes felületen készült. 
 
-	A felhasználó felület programozása olyan problémákat vet fel, amikre nem érdemes saját megoldást adni, habár az egyedi implementáció általában gyorsabb programot eredményez. Ezeket a problémákat küszöbölik ki a frontend keretrendszerek. A frontend keretrendszerek közül a legelterjedtebb a facebook által kifejlesztett React. A React a nevéből adódóan reaktív keretrendszer, azaz, ha frissül az állapot, frissül a nézet is automatikusan. A React szemlélete, hogy minden egyes elemnek külön komponenst hozzunk létre. A komponensek tartalmazhatnak több komponenst is. Minden komponensnek lehet egy saját állapota és több paramétere, így látszólag egy react -es komponens ugyanolyan, mint egy HTML DOM elem, így a HTML kontextusában kényelmesen használni.
+	A felhasználó felület programozása olyan problémákat vet fel, amikre nem érdemes saját megoldást adni, habár az egyedi implementáció általában gyorsabb programot eredményez. Ezeket a problémákat küszöbölik ki a frontend keretrendszerek. A frontend keretrendszerek közül a legelterjedtebb a facebook által kifejlesztett React. A React a nevéből adódóan reaktív keretrendszer, azaz, ha frissül az állapot, frissül a nézet is automatikusan. A React szemlélete, hogy minden egyes elemnek külön komponenst hozzunk létre. A komponensek tartalmazhatnak több komponenst is. Minden komponensnek lehet egy saját állapota és több paramétere, így látszólag egy react-es komponens ugyanolyan, mint egy HTML DOM elem, így a HTML kontextusában kényelmesen lehet használni.
 
 	A HTML DOM egy fa szerkezet. A legtöbb frontend keretrendszer ezt a szerkezetet használja az állapot változás utáni frissítéshez. A DOM strukturálisan nem tud tartalmazni általánosabb gráfot, mint például az ER modellt. Így az speciális megoldást igényel. A Vue és az Angular túl sok mindent rejt el a tényleges implementációból, így azokban ezt a speciális igényt beeszközölni nehéz lett volna. Mivel a React rejt el a legkevesebbet, így az a megfelelő keretrendszer erre a problémakörre.
 
-	Az alkalmazás kezelni fogja a fájlrendszert és a git-et, így teljesen web alapú nem lehet. Ahhoz, hogy a frontend -et megjeleníthessük asztali alkalmazásként, szükség van az Electron -ra. Az Electron egy Nodejs csomag, ami tartalmazza a Chromium böngésző egy részét, és gyakorlatilag ez adja a megjelenést. Az Electron miatt szükség van Nodejs -re, így a backend logikája is JavaScript lesz.
+	Az alkalmazás kezelni fogja a fájlrendszert és a git-et, így teljesen web alapú nem lehet. Ahhoz, hogy a frontend-et megjeleníthessük asztali alkalmazásként, szükség van az Electron-ra. Az Electron egy NodeJS csomag, ami tartalmazza a Chromium böngésző egy részét, és gyakorlatilag ez adja a megjelenést. Az Electron miatt szükség van NodeJS-re, így a backend logikája is JavaScript lesz.
 
-	A közös nyelv előnye, hogy bizonyos osztályokat egyaránt használhatunk a felhasználói felületen és a backend -en is. Így egy közös modell réteggel, biztosítani lehet kommunikációs interfészeket a két réteg között. 
+	A közös nyelv előnye, hogy bizonyos osztályokat egyaránt használhatunk a felhasználói felületen és a backend-en is. Így egy közös modell réteggel, biztosítani lehet kommunikációs interfészeket a két réteg között. 
 
-	Mindkét réteg az ECMAScript 2018 -as szabvánnyal íródott. Ezt a szabványt nem támogatja sem a Nodejs, sem a Chromium, ezért szükséges egy fordítóra, ami egyszerű JavaScriptre fordítja a kódot. A fordítást egy még nem annyira elterjedt fordító végzi: A Sucrase. A Sucrase az elterjedt Babel fordítónak egy gyorsabb és egyszerűbb alternatívája. A React esetében célszerű a JSX szabvány is, amit szintén a Sucrase fordít javascriptre. A JSX lehetővé teszi, hogy a react -es komponenseket írhassuk html elemként.
+	Mindkét réteg az ECMAScript 2018-as szabvánnyal íródott. Ezt a szabványt nem támogatja sem a NodeJS, sem a Chromium, ezért szükséges egy fordítóra, ami egyszerű JavaScript-re fordítja a kódot. A fordítást egy még nem annyira elterjedt fordító végzi: A Sucrase. A Sucrase az elterjedt Babel fordítónak egy gyorsabb és egyszerűbb alternatívája. A React esetében célszerű a JSX szabvány is, amit szintén a Sucrase fordít javascriptre. A JSX lehetővé teszi, hogy a react-es komponenseket írhassuk html elemként.
 
 
 \end{justify}
@@ -525,7 +562,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 \begin{justify}
 
-	A fejlesztés során sok olyan könyvtárat meg kellett írni, ami eddig nem volt még elérhető, de érdemes lehet felhasználni egy másik projektben is. Mivel Nodejs -ben készült a szoftver, a Node Package Manager segítségével publikálhatóak saját könyvtárak is.
+	A fejlesztés során sok olyan könyvtárat meg kellett írni, ami eddig nem volt még elérhető, de érdemes lehet felhasználni egy másik projektben is. Mivel NodeJS-ben készült a szoftver, a Node Package Manager segítségével publikálhatóak saját könyvtárak is.
 
 
 \end{justify}
@@ -534,7 +571,9 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 \begin{justify}
 
-	A felhasználói felület vektorgrafikai számításaihoz szükséges egy gyors két dimenziós függvény könyvtár. A könyvtár vecjs néven érhető el (https://www.npmjs.com/package/vecjs). A vecjs a leggyakoribb vektor műveleteket tartalmazza funkcionális paradigmákkal. Az eddig is meglévő vektor műveleteket segítő könyvtárak nem voltak alkalmasak átlátható kód írására. A legtöbb mutable volt, ami azt jelenti, hogy a művelet módosította a változót, és nem újat adott vissza. Pl.:
+    A felhasználói felület vektorgrafikai számításaihoz szükséges egy gyors két dimenziós függvény könyvtár. A könyvtár vecjs néven érhető el (https://www.npmjs.com/package/vecjs). A vecjs a leggyakoribb vektor műveleteket tartalmazza funkcionális paradigmákkal. 
+    
+    Az eddig is meglévő vektor műveleteket segítő könyvtárak nem voltak alkalmasak átlátható kód írására. A legtöbb mutable volt, ami azt jelenti, hogy a művelet módosította a változót, és nem újat adott vissza. Pl.:
 
 	\begin{lstlisting}[language=javascript]
 	a = new Vec2D(10,20)
@@ -542,7 +581,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 	a.add(b)
 	\end{lstlisting}
 
-	Ekkor az `a` értéke: Vec2D(40,60). A probléma ezzel az, hogy az `a` eredeti értékét nem érjük el a hozzáadást követően. Matematikai problémáknál jobb megoldás, ha a változók nem módosulnak. Pl.:
+	Ekkor az $ a $ értéke: $ Vec2D(40,60) $. A probléma ezzel az, hogy az $ a $ eredeti értékét nem érjük el a hozzáadást követően. Matematikai problémáknál jobb megoldás, ha a változók nem módosulnak. Pl.:
 
 	\begin{lstlisting}[language=javascript]
 	a = new Vec2D(10,20)
@@ -550,7 +589,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 	c = a.add(b)
 	\end{lstlisting}
 
-	Ebben az esetben a c kapja meg az `a`+`b` értékét, de itt az `add` függvény nem módosítja a bemenet értékét. Az implementáció lehetővé teszi, hogy a megszokott infix jelölésként alkalmazzuk az összeadást. Pl.:
+	Ebben az esetben a $ c $ kapja meg az $ a + b $ értékét, de itt az $ add $ függvény nem módosítja a bemenet értékét. Az implementáció lehetővé teszi, hogy a megszokott infix jelölésként alkalmazzuk az összeadást. Pl.:
 
 	\begin{lstlisting}[language=javascript]
 	(a) .add (b) .add (c)
@@ -562,17 +601,18 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 \begin{justify}
 
-	A konva egy canvas -re rajzolást leegyszerűsítő könyvtár, amit ha nagy projektnél használunk, akkor érdemes valamilyen frontend keretrendszerrel egybekötni. A kettő könyvtár közötti kapcsolatot - egy másik - a react-konva biztosítja. A react-konva-anchors segítségével definiálhatunk elemek közti relatív elhelyezést és méretezést, ami frissül, ha a referencia elem frissül. 
+	A Konva egy canvas-re rajzolást leegyszerűsítő könyvtár, amit ha nagy projektnél használunk, akkor érdemes valamilyen frontend keretrendszerrel egybekötni. A kettő könyvtár közötti kapcsolatot - egy másik - a react-konva biztosítja. A react-konva-anchors segítségével definiálhatunk elemek közti relatív elhelyezést és méretezést, ami automatikusan frissül, ha a referencia elem is frissül. 
 
-	A cél az volt, hogy a CSS -hez hasonló logikával lehessen megoldani a pozícionálást, de az eredmény egy sokkal általánosabb megoldás lett. Tegyük fel van két elemünk. Az egyik egy téglalap, aminek az origója a téglalap bal felső sarkában van. A másik egy kör, aminek az origója a kör közepén van. Legyen a cél az, hogy a kört a téglalap jobb felső részére szeretnénk tenni. Szeretnénk azt is elérni, hogyha változik a téglalap szélessége akkor a kör pozíciója is frissüljön. A megoldáshoz szükség van megadni a mozgatni kívánt elem origóját relatívan. A relatív origó a következőképpen számolódik:
+	A cél az volt, hogy a CSS-hez hasonló logikával lehessen megoldani a pozícionálást, de az eredmény egy sokkal általánosabb megoldás lett. Tegyük fel van két elemünk. Az egyik egy téglalap, aminek az origója a téglalap bal felső sarkában van. A másik egy kör, aminek az origója a kör közepén van. Legyen a cél az, hogy a kört a téglalap jobb felső részére szeretnénk tenni. Szeretnénk azt is elérni, hogyha változik a téglalap szélessége akkor a kör pozíciója is frissüljön. A megoldáshoz szükség van megadni a mozgatni kívánt elem origóját relatívan. A relatív origó a \ref{fig:position_anchor}. ábra szerint számolódik.
 
-	\begin{figure}[h]
-		\includegraphics[width=\textwidth]{contents/images/position_anchor.png}
+    \begin{figure}[h]
+        \centering
+		\includegraphics[width=10cm]{contents/images/position_anchor.png}
 		\caption{ Egy kör relatív kordinátarendszere}
 		\label{fig:position_anchor}
 	\end{figure}
 
-	Így tehát az (0.5,0.5) lesz a kör origója. Az origót ezután átállíthatjuk, ha esetleg nem a közepe szerint szeretnénk mozgatni, de mivel nekünk jó a közepe, ezért marad a (0.5,0.5). A referencia elemnél hasonlóan meg kell adnia az elem eredeti origóját relatívan, ezután ott is átállíthatjuk a kívánt helyre. Jelen esetben a referencia origója (0,0). Mivel mi a jobb felső sarokba szeretnénk mozgatni a kört, ezért ezt az origót átállítjuk (1,0) -ra. A horgony úgy működik, hogy az elemet eltolja a referencia elemhez úgy, hogy a két elem origója megegyezzen, így megvalósítva a százalékos elhelyezést. Szükség lehet egy utólagos nem százalékos eltolásra is (pl.: (10px, -10px)). Erre az esetre itt egy példakód:
+	Így tehát az $ (0.5,0.5) $ lesz a kör origója. Az origót ezután átállíthatjuk, ha esetleg nem a közepe szerint szeretnénk mozgatni, de mivel nekünk jó a közepe, ezért marad a $ (0.5,0.5) $. A referencia elemnél hasonlóan meg kell adnia az elem eredeti origóját relatívan, ezután ott is átállíthatjuk a kívánt helyre. Jelen esetben a referencia origója $ (0,0) $. Mivel mi a jobb felső sarokba szeretnénk mozgatni a kört, ezért ezt az origót átállítjuk $(1,0)$-ra. A horgony úgy működik, hogy az elemet eltolja a referencia elemhez úgy, hogy a két elem origója megegyezzen, így megvalósítva a százalékos elhelyezést. Szükség lehet egy utólagos nem százalékos eltolásra is (pl.: $(10px,-10px)$). Erre az esetre itt egy példakód:
 
 	\begin{lstlisting}[language=jsx]
 	<PositionAnchor 
@@ -588,7 +628,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 	change={(x, y) => this.setState({ POS: { x, y } })} />
 	\end{lstlisting}
 
-	A PositionAnchor-t lehet használni egy elem saját magának az eltolására is. Például, ha egy téglalap origója a (0,0) -ban van, a téglalap pozíciója szintén (0,0), de mi szeretnénk az origóját megváltoztatni (0.5,0.5) -re azért, hogy a koordináta-rendszerben a (0,0) pont legyen a téglalap közepe. Erre azonban túl bonyolultnak tűnhet a PositionAnchor. Ezért van egy specifikusabb változata: a CenterAnchor.
+	A $PositionAnchor$-t lehet használni egy elem saját magának az eltolására is. Például, ha egy téglalap origója a $(0,0)$-ban van, a téglalap pozíciója szintén $(0,0)$, de mi szeretnénk az origóját megváltoztatni $(0.5,0.5)$-re azért, hogy a koordináta-rendszerben a $(0,0)$ pont legyen a téglalap közepe. Erre azonban túl bonyolultnak tűnhet a $PositionAnchor$. Ezért van egy specifikusabb változata: a CenterAnchor.
 
 	\begin{lstlisting}[language=jsx]
 	<CenterAnchor
@@ -596,7 +636,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 	change={(x, y) => this.setState({ POS: { x, y } })} />
 	\end{lstlisting}
 
-	Mivel a PositionAnchor elég általános ahhoz, hogy mindenféle pozícionálást meg lehessen vele oldani, és a CenterAnchor segítségével a középrehelyezés is leegyszerűsödött, ezért a pozícionáláshoz nem kell több horgony elem. A méret kezeléséhez viszont igen. Legsűrűbben a szélességet kell horgonyozni valamilyen referencia elem méretéhez. Például egy téglalap méretét a benne lévő szöveg méretéhez. Erre szolgál a WidthAnchor.
+	Mivel a $PositionAnchor$ elég általános ahhoz, hogy mindenféle pozícionálást meg lehessen vele oldani, és a CenterAnchor segítségével a középrehelyezés is leegyszerűsödött, ezért a pozícionáláshoz nem kell több horgony elem. A méret kezeléséhez viszont igen. Legsűrűbben a szélességet kell horgonyozni valamilyen referencia elem méretéhez. Például egy téglalap méretét a benne lévő szöveg méretéhez. Erre szolgál a $WidthAnchor$.
 
 	\begin{lstlisting}[language=jsx]
 	<WidthAnchor
@@ -606,7 +646,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 	change={width => this.setState({EL_W: width })} />
 	\end{lstlisting}
 
-	A WidthAnchor a megadott referencia elem méretét leolvassa, és az elemet átméretezi úgy, hogy a padding értékét hozzáadja a mérethez. Minden esetet viszont lehetetlen lenne lefedni speciális horgonyokkal, ezért van a CustomAnchor, ami lehetőséget nyit saját megoldásokra is.
+	A $WidthAnchor$ a megadott referencia elem méretét leolvassa, és az elemet átméretezi úgy, hogy a padding értékét hozzáadja a mérethez. Minden esetet viszont lehetetlen lenne lefedni speciális horgonyokkal, ezért van a $CustomAnchor$, ami lehetőséget nyit saját megoldásokra is.
 
 	\begin{lstlisting}[language=jsx]
 	<CustomAnchor 
@@ -617,10 +657,11 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 		(el, res) => 
 		el.x() !== res.x || el.y() !== res.y 
 		}
-		change={(res)=> { this.setState({PROP: res }) } } />
+        change={(res)=> { this.setState({PROP: res }) } 
+    } />
 	\end{lstlisting}
 
-	A CustomAnchor esetében szükséges definiálni azt, hogy mikor frissítse az elemet, ezzel el lehet kerülni azt, hogy egy állandó frissítési ciklus alakuljon ki, amiatt, hogy egy horgony referencia eleme egy horgony módosítandó eleme. Meg kell adni a számítást, amit egy függvényben, kell megvalósítani.
+	A $CustomAnchor$ esetében szükséges definiálni azt, hogy mikor frissítse az elemet, ezzel el lehet kerülni azt, hogy egy állandó frissítési ciklus alakuljon ki, amiatt, hogy egy horgony referencia eleme egy horgony módosítandó eleme. Meg kell adni a számítást, amit egy függvényben, kell megvalósítani.
 
 \end{justify}
 
@@ -629,7 +670,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 \begin{justify}
 
-	Az EJS egy ismert egyszerű sablonmotor a javascript nyelvhez. A FastEJS ennek egy gyorsabb és használhatóbb implementációja. A fő ok, amiért nem volt jó az EJS az, hogy EJS -hez hasonló sablonokat is szükséges lehet generálni, azaz a sablon sablonját is meg kell írni. Az EJS erre lehetőséget nem adott, vagy csak hibásan. Az implementáció egyszerű reguláris kifejezéseket tartalmaz, és egy eval kifejezést. A regexp összeállítja a sablonból a javascriptet, az eval (evaluate) pedig lefuttatja azt.
+	Az EJS egy ismert egyszerű sablonmotor a javascript nyelvhez. A FastEJS ennek egy gyorsabb és használhatóbb implementációja. A fő ok, amiért nem volt jó az EJS az, hogy EJS-hez hasonló sablonokat is szükséges lehet generálni, azaz a sablon sablonját is meg kell írni. Az EJS erre lehetőséget nem adott, vagy csak hibásan. Az implementáció egyszerű reguláris kifejezéseket tartalmaz, és egy eval kifejezést. A regexp összeállítja a sablonból a javascriptet, az eval (evaluate) pedig lefuttatja azt.
 
 	Mivel a javascript interpretált nyelv, ezért az egész sablon motort szabadon össze lehet állítani szövegesen. Ez lehetővé teszi, hogy az egyes regexp utasítások kikapcsolhatóak legyenek. Példa a motor lehetséges regexp utasításaira:
 
@@ -675,9 +716,9 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 \begin{justify}
 
-	A sablonok bonyolultságának elkerülésére használhatunk segédosztályokat. Ilyen segédosztály a Formatter is, ami a nevek formázását segíti. A programozásban elterjedtek bizonyos elnevezési konvenciók. PL: UpperCamelCase, lowerCamelCase, kebab-case, snake\_case. Az elnevezési konvenciók segítik az osztályok, a változók és egyéb típusú nevek megkülönböztetését. A Formatter egy reguláris kifejezés segítségével alakítja át bármelyik formátumról a megadott formátumra. 
+	A sablonok bonyolultságának elkerülésére használhatunk segédosztályokat. Ilyen segédosztály a $Formatter$ is, ami a nevek formázását segíti. A programozásban elterjedtek bizonyos elnevezési konvenciók. PL: UpperCamelCase, lowerCamelCase, kebab-case, snake\_case. Az elnevezési konvenciók segítik az osztályok, a változók és egyéb típusú nevek megkülönböztetését. A $Formatter$ egy reguláris kifejezés segítségével alakítja át bármelyik formátumról a megadott formátumra. 
 
-	Nem csak a kis- és nagybetű közti alakítás szükséges, hanem egyes- és többesszám közti átváltást is el kell végezni. Például egy bejegyzés entitásból generált listázás oldalnak a címe valószínűleg bejegyzések lesz. Ezzel szemben, a Formatter csak angol kifejezéseket tud átalakítani, ugyanis a programkódban nincs szükség más nyelvű kifejezésekre. Ha a program más nyelvű lesz, azt lokalizációval szokták megoldani. A több szavas kifejezéseknél, az átalakítás csak az utolsó szóra vonatkozik (PL: UserRight -ból lesz UserRights). Ezt az átalakítást a pluralize nevű NodeJS csomag végzi.
+	Nem csak a kis- és nagybetű közti alakítás szükséges, hanem egyes- és többesszám közti átváltást is el kell végezni. Például egy bejegyzés entitásból generált listázás oldalnak a címe valószínűleg bejegyzések lesz. Ezzel szemben, a $Formatter$ csak angol kifejezéseket tud átalakítani, ugyanis a programkódban nincs szükség más nyelvű kifejezésekre. Ha a program más nyelvű lesz, azt lokalizációval szokták megoldani. A több szavas kifejezéseknél, az átalakítás csak az utolsó szóra vonatkozik (PL: UserRight-ból lesz UserRights). Ezt az átalakítást a Pluralize nevű NodeJS csomag végzi.
 
 \end{justify}
 
@@ -686,9 +727,9 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 \begin{justify}
 
-	Minden fejlesztőnek megvan a saját kódstílusa, emellett a beépített sablonok kiegészítése és felülírása kulcsfontosságú, ezért a program biztosít lehetőséget saját sablonok hozzáadására és a meglévők módosítására. Az úgynevezett “Single Source of Truth” konvenció alapján, a program csak a felhasználói sablonokat használja. A beépített sablonokat a program a felhasználói sablonok mappájába másolja generálás előtt, ha az a mappa addig nem létezett.
+	Minden fejlesztőnek megvan a saját kódstílusa, emellett a beépített sablonok kiegészítése és felülírása kulcsfontosságú, ezért a program biztosít lehetőséget saját sablonok hozzáadására és a meglévők módosítására. Az úgynevezett ``Single Source of Truth'' konvenció alapján, a program csak a felhasználói sablonokat használja. A beépített sablonokat a program a felhasználói sablonok mappájába másolja generálás előtt, ha az a mappa addig nem létezett.
 
-	A felhasználói sablonok Linux\\GNU illetve Mac típusú rendszereken a HOME környezeti változóban megadott mappát felhasználva a \$HOME/.config/erscaffold-packs mappában érhetőek el. 
+	A felhasználói sablonok Linux\\GNU illetve Mac típusú rendszereken a $HOME$ környezeti változóban megadott mappát felhasználva a \lstinline[]!$HOME/.config/erscaffold-packs! mappában érhetőek el. 
 
 	A sablon csomagok rendelkeznek egyedi tulajdonságokkal, amelyek tárolásához biztosítani kell egy fájlt. Ez a fájl az index.pack.js, ami minden csomag számára kötelező. Ez írja le a csomag nevét és a benne található követelményeket.
 
@@ -724,7 +765,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 		data(entity) {
 			return entity;
 		},
-		children: [{ file: 'resource_edit_go_back_button.requirement.js' }]
+		children: [{ file: 'edit_go_back_button.requirement.js' }]
 	};
 	\end{lstlisting}
 
@@ -745,7 +786,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 	A sablonoknak két fajtája van. Az egyik típus az amelyik létrehoz fájlokat. A másik amelyik kiegészíti a már létrehozottakat.
 
-	\begin{lstlisting}[language=javascript]
+	\begin{lstlisting}[language=ejs]
 	<%
 	// BASIC_PHOENIX/view/view.template.ejs
 
@@ -753,12 +794,10 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 	let AppName = Formatter.upperCamelCase(APPNAME)
 	let entity_name = Formatter.snakeCase(entity.name)
 	let EntityName = Formatter.upperCamelCase(entity.name)
-	let meta = {
-		creates: {
-			fileName: "lib/"  +  app_name +  "_web/views/" +  entity_name + "_view.ex"
-		}
-	}
-
+	let meta = { creates: {
+        fileName: "lib/"  +  app_name +  "_web/views/" 
+                              +  entity_name + "_view.ex"
+	}}
 	%>
 	defmodule <%= AppName %>Web.<%= EntityName %>View do
 	use <%= AppName %>Web, :view
@@ -774,39 +813,31 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 	\end{lstlisting}
 
 	Minden sablon tartalmaz egy meta nevű változót. A meta leírja a sablon generáláshoz szükséges adatokat (pl: a létrehozandó fájl elérési útja). Minden sablon a saját fejlesztésű FastEJS sablon motort használja, amivel könnyedén kilehet nyerni a rendereléskor felhasznált változókat, így a meta objektumot is. 
-
+    \newpage
 	A kiegészítő sablonoknál a meta értéke nem csak a fájl elhelyezkedését kell, hogy tartalmazza.
 
 	\begin{lstlisting}[language=ejs]
-	<%
-	// BASIC_PHOENIX/controller/action_show.template.ejs 
-	let CtxName = Formatter.upperCamelCase(entity.context)
-	let app_name = Formatter.snakeCase(APPNAME)
-	let entity_name = Formatter.snakeCase(entity.name)
+<%
+// BASIC_PHOENIX/controller/action_show.template.ejs 
+let CtxName = Formatter.upperCamelCase(entity.context)
+let app_name = Formatter.snakeCase(APPNAME)
+let entity_name = Formatter.snakeCase(entity.name)
 
-	let meta = {
-		extends: {
-			fileName: "lib/" 
-			+ app_name 
-			+ "_web/controllers/" 
-			+ entity_name 
-			+ "_controller.ex",
-			section: "# methods",
-			place: "after"
-		},
-		depends_on: [
-			{ template: "./controller.template.ejs", data: {entity: entity} }
-		]
-	}
-
-	%>
-	def show(conn, %{"id" => id}) do
-	<%= entity_name %> = <%= CtxName %>.get_<%= entity_name %>!(id)
-	render(conn, "show.html", <%= entity_name %>: <%= entity_name %>)
-	end
+let meta = { extends: {
+	fileName: CONTROLLERS_FOLDER + entity_name  + "_controller.ex",
+	section: "# methods",
+	place: "after"
+}, depends_on: [
+    {template: "./controller.template.ejs", data: {entity}}
+] }
+%> 
+def show(conn, %{"id" => id}) do
+<%= entity_name %> = <%= CtxName %>.get_<%= entity_name %>!(id)
+render(conn, "show.html", <%= entity_name %>: <%= entity_name %>)
+end
 	\end{lstlisting}
 
-	A fenti példasablon egy controller kiegészítése egy show nevű metódussal. A meta tartalmában az extends nevű objektum hívja fel a figyelmét a generátornak, hogy ez a sablon, egy másik kiegészítése. Ezen belül meg kell mondani, hogy melyik sablonfájl által generált fájlt egészítse ki, és hogy hova tegye a generált kódot a fájlon belül. A pozíció kijelölésére két paraméter szolgál. A section és a place. A section lehet egy reguláris kifejezés, illetve egyszerű szöveg típusú is. Ez mondja meg, hogy a kiegészítendő fájlban milyen kifejezést keressen. A place megmondja, hogy a kiegészítés milyen elhelyezésű legyen a megtalált kifejezéshez képest.
+	A fenti példasablon egy controller kiegészítése egy show nevű metódussal. A meta tartalmában az $extends$ nevű objektum hívja fel a figyelmét a generátornak, hogy ez a sablon, egy másik kiegészítése. Ezen belül meg kell mondani, hogy melyik sablonfájl által generált fájlt egészítse ki, és hogy hova tegye a generált kódot a fájlon belül. A pozíció kijelölésére két paraméter szolgál. A $section$ és a $place$. A section lehet egy reguláris kifejezés, illetve egyszerű szöveg típusú is. Ez mondja meg, hogy a kiegészítendő fájlban milyen kifejezést keressen. A $place$ megmondja, hogy a kiegészítés milyen elhelyezésű legyen a megtalált kifejezéshez képest.
 
 	Egy példa kimenet a fenti sablonra: 
 
@@ -820,14 +851,14 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 	A place értékének különböző fajtái lehetnek: 
 
 	\begin{itemize}
-		\item “before”
-		\item “after”
-		\item “replace”
+		\item before
+		\item after
+		\item replace
 	\end{itemize}
 
-	A “before” esetében a kiegészítés a megtalált kifejezés sora előtti sorba, az “after” esetében a megtalált kifejezés sora utáni sorba fogja helyezni a lerenderelt kiegészítő sablon tartalmát.
+	A $before$ esetében a kiegészítés a megtalált kifejezés sora előtti sorba, az $after$ esetében a megtalált kifejezés sora utáni sorba fogja helyezni a lerenderelt kiegészítő sablon tartalmát.
 
-	Lehetőség van a megtalált kifejezés cseréjére is a “replace” érték által. Ez esetben a megtalált kifejezés helyett a lerenderelt kiegészítő sablon tartalma fog bekerülni.
+	Lehetőség van a megtalált kifejezés cseréjére is a $replace$ érték által. Ez esetben a megtalált kifejezés helyett a lerenderelt kiegészítő sablon tartalma fog bekerülni.
 
 	Későbbi továbbfejlesztés során a kiegészítő sablonok át fognak alakulni, ugyanis a megtalált kifejezéstől függhet a kiegészítésnek szánt tartalom és annak elhelyezése is. Jelenleg minden típusú kifejezésre, elhelyezésre külön sablont kell létrehozni, ami növelheti a sabloncsomag átláthatóságát, viszont előfordulhat, hogy ezen sablonok közötti különbség kicsinysége miatt egyszerűbb lenne egy sablonba tömöríteni.
 
@@ -878,7 +909,9 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 \newpage
 \pagestyle{empty}
-\renewcommand{\bibsection}{\section*{  \textbf{\textit{Irodalomjegyzék}}   }}
+\setcounter{secnumdepth}{0}
+\sectionfont{\rmfamily\bfseries\itshape\large}
+%\renewcommand{\bibsection}{\section*{Irodalomjegyzék}}
 %\renewcommand{\bibname}{\textbf{\textit{Irodalomjegyzék}}}
 \begin{thebibliography}{99}
 
@@ -910,6 +943,11 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 		(letöltés dátuma 2019. május 10.)
 		{\em Rapid prototyping isn’t helpful. Or is it? - Justinmind}
 
+    \bibitem{website:most_known_language}
+        https://insights.stackoverflow.com/survey/2018
+        (letöltés dátuma 2019. május 10.)
+        {\em Developer Survey Results 2018}
+
 	\bibitem{website:component_based_development}
 		https://www.techopedia.com/definition/31002/component-based-development-cbd
 		(letöltés dátuma 2019. május 10.)
@@ -934,8 +972,10 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 \end{thebibliography}
 
 \newpage
+
+\sectionfont{\rmfamily\bfseries\large}
 \thispagestyle{empty}
-\section*{Mellékletek}
+\section{CD melléklet}
 
 A szakdolgozat CD mellékletének könyvtárszerkezete:
 
@@ -950,6 +990,7 @@ A szakdolgozat CD mellékletének könyvtárszerkezete:
             \item[] /Database Modeling Entity Relationship Diagram ERD Part 
             \item[] /Dependency Injection Constructor vs Property
             \item[] /Rapid prototyping isnt helpful Or is it Justinmind
+            \item[] /Developer Survey Results 2018 
             \item[] /What is ComponentBased Development CBD Definition from Techopedia
             \item[] /What is dependency injection How is it better than procedural code
             \item[] /Why Coding Standards Matter blogfossasiaorg
