@@ -110,7 +110,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 	Az ügyféltől nem szabad többet várni, minthogy megmondja, hogy jó-e így a program, vagy sem. A Rapid Prototyping egy olyan programozási módszertan, aminek a lényege, hogy egy gyors prototípus segítségével a nem ismert követelményeket felderítsük. A gyors prototípus készítésére megfelelő eszközök szükségesek, ilyenek lehetnek például kódgenerátorok, terminálos kis eszközök vagy akár tervező programok. \cite{website:rapid_prototype}
 
-	A Rapid Prototyping programozási módszer fejlesztő barát mert a programozó a fejlesztésre fókuszál és nem a komponensek integrációjára, másrészt segít a fejlesztőnek is a megfelelő project struktúra kialakításában, hiszen a prototípus még jelentősen módosítható.
+	A Rapid Prototyping programozási módszer fejlesztő barát mert a programozó a fejlesztésre fókuszál és nem a komponensek integrációjára, másrészt segít a fejlesztőnek is a megfelelő projekt struktúra kialakításában, hiszen a prototípus még jelentősen módosítható.
 
 	A módszer egy jól strukturált, könnyen továbbfejleszthető minimális programot eredményez, ami teljesíti a szükséges követelményeket. A bővíthetősége jól illeszkedik a változó üzleti igényekre. 
 
@@ -167,7 +167,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 \begin{justify}
 	A Phoenix az egy Elxir nyelven írt, a laravelhez hasonló MVC felépítésű keretrendszer. Az elixir egy erlang alapú funkcionális nyelv. 
 
-	A Phoenix biztosít egy CLI eszközt a keretrendszer egyes lehetőségeinek automatizálására, így egy egyszerű generátort is. A generátor csak erőforrás listázást, szerkesztést, hozzáadást, törlést, valamint egy külön oldalt biztosít egy erőforrásnak. Kapcsolatokat támogatja, de a generált felületen a külsőkulcsokat csupán számként kezeli. A használata elég egyszerű: 
+	A Phoenix biztosít egy CLI eszközt a keretrendszer egyes lehetőségeinek automatizálására, így egy egyszerű generátort is. A generátor csak erőforrás listázást, szerkesztést, hozzáadást, törlést, valamint egy külön oldalt biztosít egy erőforrásnak. Kapcsolatokat támogatja, de a generált felületen a idegen kulcsokat csupán számként kezeli. A használata elég egyszerű: 
 
 	\begin{figure}[h]
 		\includegraphics[width=\textwidth]{contents/images/mix_phx_gen_html.png}
@@ -221,7 +221,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 		\label{fig:ermodell_attributes}
 	\end{figure}
 
-	A modellt eredetileg arra tervezték, hogy akár az ügyfél által is validálható legyen a terv, így használata nagyon egyszerű, és jól dokumentálja a project szerkezetét. Hasonló absztrakció megfogalmazására képes az adatbázis logikai modell, ahol a kapcsolatok már kulcsokkal vannak ábrázolva, de az olvashatósága sokkal nehezebb, ami miatt az entity relationship modell a legmegfelelőbb a feladatra. 
+	A modellt eredetileg arra tervezték, hogy akár az ügyfél által is validálható legyen a terv, így használata nagyon egyszerű, és jól dokumentálja a projekt szerkezetét. Hasonló absztrakció megfogalmazására képes az adatbázis logikai modell, ahol a kapcsolatok már kulcsokkal vannak ábrázolva, de az olvashatósága sokkal nehezebb, ami miatt az entity relationship modell a legmegfelelőbb a feladatra. 
 
 \end{justify}
 
@@ -327,11 +327,11 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 	A sablonok felépítésileg két részből kell, hogy álljanak:
 
     \begin{itemize}
-        \item A sablon meta adatai.
+        \item A sablon metaadatai.
         \item A sablon által generálandó kód.
     \end{itemize}
 
-	A meta adatok dinamikus adatok, vagyis a bemenő paraméterként megkapott adatokból készül. Ezek írják le, hogy a sablont hova, milyen néven, milyen jogosultsággal kell legenerálni, illetve, ha meglévő fájl módosítására használjuk, akkor melyik fájl melyik szekciójába generálja és milyen művelettel (szekció cseréje, szekció előtt, szekció után). A meta adatok tartalmazzák a sablon egyes függőségeit is. 
+	A metaadatok dinamikus adatok, vagyis a bemenő paraméterként megkapott adatokból készül. Ezek írják le, hogy a sablont hova, milyen néven, milyen jogosultsággal kell legenerálni, illetve, ha meglévő fájl módosítására használjuk, akkor melyik fájl melyik szekciójába generálja és milyen művelettel (szekció cseréje, szekció előtt, szekció után). A metaadatok tartalmazzák a sablon egyes függőségeit is. 
 
 	A sablon egy egyszerű szöveg, kiegészítve változókkal vagy a használandó sablon motor által biztosított nyelvi elemekkel.
 
@@ -413,7 +413,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 		\label{fig:git_first}
 	\end{figure}
 
-	A generátornak megadott generálási helyen feltételezzük, hogy a project már egy Git repository-ként inicializálva lett. A generálás során, a generátor létrehoz egy másik ágat ERBranch néven. 
+	A generátornak megadott generálási helyen feltételezzük, hogy a projekt már egy Git repository-ként inicializálva lett. A generálás során, a generátor létrehoz egy másik ágat ERBranch néven. 
 
 	\begin{lstlisting}[language=GitBash]
 	[generátor ]$ git checkout -b ERBranch 
@@ -478,7 +478,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 \begin{justify}
 
-	A sablonok a generátor szerves részei. Ha nincsenek sablonok, akkor a generátor használhatatlan. Éppen ezért, az új sablon létrehozása a lehető legkevesebb tanulást igénybevevő megoldásnak kell lennie. 
+	A sablonok a generátor szerves részei. Ha nincsenek sablonok, akkor a generátor használhatatlan. Éppen ezért, az új sablon létrehozása a lehető legkevesebb tanulást igénybe vevő megoldásnak kell lennie. 
 
 	A dinamikusság és a kevés tanulás elérése érdekében a sablonoknak egy jól ismert programozási nyelven kell íródniuk. A Stack Overflow 2018-as felmérése szerint, a legismertebb programozási nyelv a JavaScript. \cite{website:most_known_language} A JavaScript-et nem csak emiatt érdemes használni, hanem mert van hozzá interpeter, és a sablonok gépi kódra fordítás nélkül használhatóak.
 
@@ -509,13 +509,13 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 	A tesztelés nagyon fontos mielőtt a szoftvert kiadhatnánk, de a tesztek nem csak a fejlesztés végén kellenek, hanem a fejlesztés segítésére is. Vannak olyan helyzetek, amikor az egyes komponensek működését nem láthatjuk a szoftverben, mert szükségesek hozzá más komponensek is, vagy túl sok lépés lenne a működését előhozni. Erre a problémára találták ki a Test Based Development nevű fejlesztési módszert, ami azt jelenti, hogy a kódunkat egyből egy unit tesztel próbáljuk ki. A tesztek miatt a szoftver minősége nő, ugyanakkor a fejlesztési idő nem feltétlen több, a fentebb említettek miatt.
 
-	Fontosk, hogy ne írjuk meg többször ugyanazt, inkább legyen általánosítva, mint kétszerezve. Egyrészt kétszer megírni több idő, másrészt, ha később módosítani kell, akkor két helyen kell átírni. 
+	Fontos, hogy ne írjuk meg többször ugyanazt, inkább legyen általánosítva, mint kétszerezve. Egyrészt kétszer megírni több idő, másrészt, ha később módosítani kell, akkor két helyen kell átírni. 
 
     A kód duplikálás elkerülésére jó módszer a réteges fejlesztés. A réteges fejlesztés segít elkülöníteni és csoportosítani a kód egyes funkcióit. A legismertebb réteges architektúra a Model View Controller (MVC). Fontos azonban felismerni, hogy szükség lehet további rétegekre is. 
     
     Erre egy példa Model réteg. A Model feladata az adatokkal kapcsolatos műveletek elvégzése, azonban szeretnénk elfüggetleníteni az üzleti logikát. Pl.: Egy üzenetküldő alkalmazásban maximum az 5 perce íródott üzeneteket tekintsük új üzenetnek. A Controller szintén nem jó réteg erre, mert több helyen szeretnénk lekérni az új üzeneteket. Ilyenkor érdemes bevezetni egy másik réteget is a Model és a Controller közé, ami ezeket lekezeli. Általában ezt a réteget hívják Repository rétegnek. Ugyanígy eljárhatunk a többi réteg esetében is.
 
-	Az egyedüli igazság forrás (Single source of truth) konvenció, lényege, hogy ne duplikáljunk adatot. Az adatok elérését a lehető legjobban csoportosítjuk, így elkerüljük a konzisztencia fenttartására irányuló problémákat.
+	Az egyedüli igazság forrás (Single source of truth) konvenció, lényege, hogy ne duplikáljunk adatot. Az adatok elérését a lehető legjobban csoportosítjuk, így elkerüljük a konzisztencia fenntartására irányuló problémákat.
 
 
 
@@ -597,18 +597,18 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 \end{justify}
 \newpage
-\subsubsection{React-konva-anchors - Dinamikus pozícionálást és méretezést segítő könyvtár a react-konva számára}
+\subsubsection{React-konva-anchors - Dinamikus pozicionálást és méretezést segítő könyvtár a react-konva számára}
 
 \begin{justify}
 
 	A Konva egy canvas-re rajzolást leegyszerűsítő könyvtár, amit ha nagy projektnél használunk, akkor érdemes valamilyen frontend keretrendszerrel egybekötni. A kettő könyvtár közötti kapcsolatot - egy másik - a react-konva biztosítja. A react-konva-anchors segítségével definiálhatunk elemek közti relatív elhelyezést és méretezést, ami automatikusan frissül, ha a referencia elem is frissül. 
 
-	A cél az volt, hogy a CSS-hez hasonló logikával lehessen megoldani a pozícionálást, de az eredmény egy sokkal általánosabb megoldás lett. Tegyük fel van két elemünk. Az egyik egy téglalap, aminek az origója a téglalap bal felső sarkában van. A másik egy kör, aminek az origója a kör közepén van. Legyen a cél az, hogy a kört a téglalap jobb felső részére szeretnénk tenni. Szeretnénk azt is elérni, hogyha változik a téglalap szélessége akkor a kör pozíciója is frissüljön. A megoldáshoz szükség van megadni a mozgatni kívánt elem origóját relatívan. A relatív origó a \ref{fig:position_anchor}. ábra szerint számolódik.
+	A cél az volt, hogy a CSS-hez hasonló logikával lehessen megoldani a pozicionálást, de az eredmény egy sokkal általánosabb megoldás lett. Tegyük fel van két elemünk. Az egyik egy téglalap, aminek az origója a téglalap bal felső sarkában van. A másik egy kör, aminek az origója a kör közepén van. Legyen a cél az, hogy a kört a téglalap jobb felső részére szeretnénk tenni. Szeretnénk azt is elérni, hogyha változik a téglalap szélessége akkor a kör pozíciója is frissüljön. A megoldáshoz szükség van megadni a mozgatni kívánt elem origóját relatívan. A relatív origó a \ref{fig:position_anchor}. ábra szerint számolódik.
 
     \begin{figure}[h]
         \centering
 		\includegraphics[width=10cm]{contents/images/position_anchor.png}
-		\caption{ Egy kör relatív kordinátarendszere}
+		\caption{ Egy kör relatív koordinátarendszere}
 		\label{fig:position_anchor}
 	\end{figure}
 
@@ -636,7 +636,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 	change={(x, y) => this.setState({ POS: { x, y } })} />
 	\end{lstlisting}
 
-	Mivel a $PositionAnchor$ elég általános ahhoz, hogy mindenféle pozícionálást meg lehessen vele oldani, és a CenterAnchor segítségével a középrehelyezés is leegyszerűsödött, ezért a pozícionáláshoz nem kell több horgony elem. A méret kezeléséhez viszont igen. Legsűrűbben a szélességet kell horgonyozni valamilyen referencia elem méretéhez. Például egy téglalap méretét a benne lévő szöveg méretéhez. Erre szolgál a $WidthAnchor$.
+	Mivel a $PositionAnchor$ elég általános ahhoz, hogy mindenféle pozicionálást meg lehessen vele oldani, és a CenterAnchor segítségével a középre helyezés is leegyszerűsödött, ezért a pozicionáláshoz nem kell több horgony elem. A méret kezeléséhez viszont igen. Legsűrűbben a szélességet kell horgonyozni valamilyen referencia elem méretéhez. Például egy téglalap méretét a benne lévő szöveg méretéhez. Erre szolgál a $WidthAnchor$.
 
 	\begin{lstlisting}[language=jsx]
 	<WidthAnchor
@@ -895,16 +895,16 @@ end
 \end{figure}
 
 \begin{justify}
-	A generálás előtt egy sablon kiválasztási felület ugrik fel. A kiválasztás egy fa szerkezetet mutat a sabloncsomag követelményfájlai alapján.
+	A generálás előtt egy sablon kiválasztási felület ugrik fel. A kiválasztás egy fa szerkezetet mutat a sabloncsomag követelményfájljai alapján.
 
-	Jelenleg a generátor működéséből következően minden követelményfájl megkap egy entitást, ezért minden entitásra külön-külön ki kell választani a követelményeket. Későbbi továbbfejlesztési lehetőség, hogy lehetnek majd olyan követelmények is, amelyek nem igénylenek entitásokat. Ilyen követelményeket jelenleg is létre lehet hozni úgy, hogy a követelmény $data$ nevű függvénye minden entitásra ugyan-olyan értékkel tér vissza. Ekkor a követelményhez tartozó sablonok csak egyszer generálódnak le, nem pedig minden entitásra külön. Habár használható, nem tűnik jó megoldásnak, és a tervező felületen is okozhat félreértéseket.
+	Jelenleg a generátor működéséből következően minden követelményfájl megkap egy entitást, ezért minden entitásra külön-külön ki kell választani a követelményeket. Későbbi továbbfejlesztési lehetőség, hogy lehetnek majd olyan követelmények is, amelyek nem igényelnek entitásokat. Ilyen követelményeket jelenleg is létre lehet hozni úgy, hogy a követelmény $data$ nevű függvénye minden entitásra ugyan-olyan értékkel tér vissza. Ekkor a követelményhez tartozó sablonok csak egyszer generálódnak le, nem pedig minden entitásra külön. Habár használható, nem tűnik jó megoldásnak, és a tervező felületen is okozhat félreértéseket.
 
 \end{justify}
 
 \clearpage
 \section{Hozzájárulás a fejlesztéshez}
 \begin{justify}
-	Egy szoftver fenttartása elengedhetetlen. Előfordulhatnak egyes nem előre látható hibák, amelyek kijavítása szükséges a későbbiekben is. Emellett az integrálható funkcióknak nincs határa, és egy kódgenerátor csak jobb lehet, ha többet tud segíteni. Egy ekkora méretű szoftvert nehéz egyedüli személyként karbantartani és egyben továbbfejleszteni is. Éppen ezért a szoftver nyílt forráskódú, és bárki számára ingyenes. Az alkalmazás teljes állománya megtalálható a https://github.com/fxdave/erscaffold címen.
+	Egy szoftver fenntartása elengedhetetlen. Előfordulhatnak egyes nem előre látható hibák, amelyek kijavítása szükséges a későbbiekben is. Emellett az integrálható funkcióknak nincs határa, és egy kódgenerátor csak jobb lehet, ha többet tud segíteni. Egy ekkora méretű szoftvert nehéz egyedüli személyként karbantartani és egyben továbbfejleszteni is. Éppen ezért a szoftver nyílt forráskódú, és bárki számára ingyenes. Az alkalmazás teljes állománya megtalálható a https://github.com/fxdave/erscaffold címen.
 \end{justify}
 
 \newpage
