@@ -128,7 +128,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
     A weboldalak nagy része csupán csak egy tartalom kezelő rendszer. Gondoljunk egy egyszerű blog rendszerre, ahol van 1 oldal a bejegyzések listázására, és kell lennie egy admin felületnek, ahol ezeket a bejegyzéseket menedzselik. Ezek az oldalak általában a tartalmat egyszerű űrlapokkal kezelik (pl.: hozzáadás, szerkesztés, törlés). Ezek az űrlapok építik fel az egész webes alkalmazást, az adatbázis rétegtől a kinézetig, de teli vannak olyan közös elemekkel, amelyek lehetővé teszik, hogy az űrlapok, kevés információval is generálhatóak legyenek. Ezekhez az oldalakhoz általában elég egy erőforrás név (pl.: bejegyzés), az erőforrás attribútumai (pl.: a bejegyzés neve) és a típusa (pl.: szöveg). 
     
     \label{sec:abstraction_level}
-	A legegyszerűbb tartalom kezelő rendszer ennyi adatból már generálható, azonban a komplexebb weboldalaknál több erőforrás is van, és ezek kapcsolódnak is egymáshoz (pl.: a felhasználónak van több bejegyzése). Ha belevesszük a kapcsolatokat is az absztrakcióba, akkor a lehetőségek tárháza nyílik meg. Ha az “egy a sokhoz” (egy egyedhez több egyed tartozik) kapcsolatot nézzük, akkor létrejöhetnek olyan oldalak, amik ezt a kapcsolatot felhasználják:
+	A legegyszerűbb tartalom kezelő rendszer ennyi adatból már generálható, azonban a komplexebb weboldalaknál több erőforrás is van, és ezek kapcsolódnak is egymáshoz (pl.: a felhasználónak van több bejegyzése). Ha belevesszük a kapcsolatokat is az absztrakcióba, akkor a lehetőségek tárháza nyílik meg. Ha az ``egy a sokhoz” (egy egyedhez több egyed tartozik) kapcsolatot nézzük, akkor létrejöhetnek olyan oldalak, amik ezt a kapcsolatot felhasználják:
 
 	\begin{itemize}
 		\item csak a felhasználó bejegyzéseinek a megjelenítése
@@ -262,7 +262,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 	A gyors modell tervezéséhez, minden felhasználói akció lehetőleg csak 1 lépést vesz igénybe.
 
-	A felhasználók meggyőzéséért egy modern, minimalista stílusú felülettel rendelkezik, jól látható elemekkel. A kapcsolatok leegyszerűsítése érdekében a kapcsolat $1..n$, $n..m$, stb.. jelölések helyett grafikusan ábrázolja a kardinalitást, a következő módon:
+	A felhasználók meggyőzéséért egy modern, minimalista stílusú felülettel rendelkezik, jól látható elemekkel. A kapcsolatok leegyszerűsítése érdekében a kapcsolat $1..n$, $n..m$, stb... jelölések helyett grafikusan ábrázolja a kardinalitást, a következő módon:
 
     \begin{figure}[h]
         \centering
@@ -364,7 +364,7 @@ Ide jön az eredeti vagy a fénymásolt feladatkiírás.
 
 	A rekurzív kapcsolatoknak talán legritkább változata az egy az egyhez kapcsolat. Az ilyen kapcsolat egy láncolt listához hasonló kapcsolatot ír le. Ha egy adatbázis tekintetében nézzük, és egy táblára gondolunk, akkor az ilyen tábla elkülöníthető listákat írna le. Habár használatára nehéz példát találni, a megléte nem okoz gondot, viszont szintén kibővíti a lehetséges felületeket. 
 
-	A rekurzív “egy a sokhoz” kapcsolat egy fa szerkezetet ír le. A legjobb példa erre a részlegek felépítése. Egy nagy cégnél különböző részlegek lehetnek, akár elhelyezés szerint (Berlin, Veszprém, Bécs), de minden egyes részleghez tartozhat több kisebb részleg (fejlesztői, marketing, HR), és ezeken belül is még lehetnek apró részlegek. Ekkor elképzelhetőek különböző felületek: 
+	A rekurzív ``egy a sokhoz” kapcsolat egy fa szerkezetet ír le. A legjobb példa erre a részlegek felépítése. Egy nagy cégnél különböző részlegek lehetnek, akár elhelyezés szerint (Berlin, Veszprém, Bécs), de minden egyes részleghez tartozhat több kisebb részleg (fejlesztői, marketing, HR), és ezeken belül is még lehetnek apró részlegek. Ekkor elképzelhetőek különböző felületek: 
 
 	\begin{itemize}
 		\item Új részleg hozzáadása egy meglévőhöz. 
