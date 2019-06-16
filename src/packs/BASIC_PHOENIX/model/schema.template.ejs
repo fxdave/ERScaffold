@@ -14,10 +14,38 @@ let contextcamel = Formatter.upperCamelCase(entity.context)
 let entitycamel = Formatter.upperCamelCase(entity.name)
 let entitypluralsnake = Formatter.snakeCase(Formatter.plural(entity.name))
 
-let props = entity.getProps().filter(prop => prop.getName() != "ID")
+let props = entity.getProps().filter(prop => pr() != "ID")
 
 function fmtName(propName) {
     return Formatter.snakeCase(propName)
+}
+
+function toRealType(type) {
+
+  let abstract_real_pairs = {
+    'text': 'string',
+    'email': 'string',
+    'url': 'string',
+    'phone': 'string',
+    'integer': 'integer',
+    'float': 'float',
+    'double': 'decimal',
+    'date': 'date',
+    'time': 'time',
+    'datetime': 'utc_datetime',
+    'boolean': 'boolean',
+    'string': 'string',
+    'audio': null,
+    'image': null,
+    'video': null,
+    'file': null
+  }
+
+  try {
+    return abstract_real_pairs[type]
+  } catch(e) {
+    return null
+  }
 }
 
 %>
@@ -28,8 +56,11 @@ defmodule <%=appcamel %>.<%=contextcamel %>.<%=entitycamel %> do
 
 
   schema "<%=entitypluralsnake %>" do
-    <% props.forEach(function(p) { %>
-    field :<%= fmtName(p.getName()) %>, :<%= p.getType() %>
+    <% props
+      // not the all attribute should be visible here
+      .filter(p => toRealType(p.getType()) !== null)
+      .forEach(function(p) { %>
+    field :<%= fmtName(p.getName())) %>, :<%= toRealType(p.getType()) %>
     <% }) %>
 
     timestamps()
@@ -38,9 +69,9 @@ defmodule <%=appcamel %>.<%=contextcamel %>.<%=entitycamel %> do
   @doc false
   def changeset(${ Formatter.snakeCase(entity.name) }, attrs) do
     ${ Formatter.snakeCase(entity.name) }
-    |> cast(attrs, [<%= props.map(p => `:${fmtName(p.getName())}`).join(", ") %>])
+    |> cast(attrs, [<%= props.map(p => `:${fmtName())}`).join(", ") %>])
     <% props.forEach(function(p) { %>
-    |> validate_required([:<%= fmtName(p.getName()) %>])
+    |> validate_required([:<%= fmtName()) %>])
     <% }) %>
   end
 end

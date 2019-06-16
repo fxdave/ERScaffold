@@ -29,9 +29,41 @@ function fmtName(propName) {
   <%% end %%>
 
   <% props.forEach(function(p) { %>
-	<%%= label f, :<%=fmtName(p.getName()) %> %%>
-  	<%%= text_input f, :<%=fmtName(p.getName()) %> %%>
-  	<%%= error_tag f, :<%=fmtName(p.getName()) %> %%>
+		<%%= label f, :<%=fmtName(p.getName()) %> %%>
+	<% if(p.getType() == 'text') { %>
+		<%%= textarea f, :<%=fmtName(p.getName()) %> %%>
+	<% } if(p.getType() == 'email') { %>
+		<%%= email_input f, :<%=fmtName(p.getName()) %> %%>
+	<% } if(p.getType() == 'url') { %>
+		<%%= url_input f, :<%=fmtName(p.getName()) %> %%>
+	<% } if(p.getType() == 'phone') { %>
+		<%%= telephone_input f, :<%=fmtName(p.getName()) %> %%>
+	<% } if(p.getType() == 'integer') { %>
+		<%%= number_input f, :<%=fmtName(p.getName()) %> %%>
+	<% } if(p.getType() == 'float') { %>
+		<%%= number_input f, :<%=fmtName(p.getName()) %> %%>
+	<% } if(p.getType() == 'double') { %>
+		<%%= number_input f, :<%=fmtName(p.getName()) %> %%>
+	<% } if(p.getType() == 'date') { %>
+		<%%= date_input f, :<%=fmtName(p.getName()) %> %%>
+	<% } if(p.getType() == 'time') { %>
+		<%%= time_input f, :<%=fmtName(p.getName()) %> %%>
+	<% } if(p.getType() == 'datetime') { %>
+		<%%= datetime_local_input f, :<%=fmtName(p.getName()) %> %%>
+	<% } if(p.getType() == 'boolean') { %>
+		<%%= checkbox f, :<%=fmtName(p.getName()) %> %%>
+	<% } if(p.getType() == 'string') { %>
+		<%%= text_input f, :<%=fmtName(p.getName()) %> %%>
+	<% } if(p.getType() == 'audio') { %>
+		<%%= file_input f, :<%=fmtName(p.getName()) %> %%>
+	<% } if(p.getType() == 'image') { %>
+		<%%= file_input f, :<%=fmtName(p.getName()) %> %%>
+	<% } if(p.getType() == 'video') { %>
+		<%%= file_input f, :<%=fmtName(p.getName()) %> %%>
+	<% } if(p.getType() == 'file') { %>
+		<%%= file_input f, :<%=fmtName(p.getName()) %> %%>
+	<% } %>
+		<%%= error_tag f, :<%=fmtName(p.getName()) %> %%>
   <% }) %>
 
   <div>
